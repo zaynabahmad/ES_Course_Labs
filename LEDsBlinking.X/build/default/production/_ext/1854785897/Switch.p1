@@ -1,0 +1,44 @@
+Version 4.0 HI-TECH Software Intermediate Code
+"31 ../ES_Course_Labs/HAL/Switch/../../MCAL/GPIO/GPIO_interface.h
+[; ;../ES_Course_Labs/HAL/Switch/../../MCAL/GPIO/GPIO_interface.h: 31: void GPIO_SetPinDirection(u8 Port, u8 Pin, u8 Direction);
+[v _GPIO_SetPinDirection `(v ~T0 @X0 0 ef3`uc`uc`uc ]
+"33
+[; ;../ES_Course_Labs/HAL/Switch/../../MCAL/GPIO/GPIO_interface.h: 33: u8 GPIO_GetPinValue(u8 Port, u8 Pin);
+[v _GPIO_GetPinValue `(uc ~T0 @X0 0 ef2`uc`uc ]
+"4 ../ES_Course_Labs/HAL/Switch/Switch.c
+[; ;../ES_Course_Labs/HAL/Switch/Switch.c: 4: void Switch_Init(u8 Port, u8 Pin)
+[v _Switch_Init `(v ~T0 @X0 1 ef2`uc`uc ]
+"5
+[; ;../ES_Course_Labs/HAL/Switch/Switch.c: 5: {
+{
+[e :U _Switch_Init ]
+"4
+[; ;../ES_Course_Labs/HAL/Switch/Switch.c: 4: void Switch_Init(u8 Port, u8 Pin)
+[v _Port `uc ~T0 @X0 1 r1 ]
+[v _Pin `uc ~T0 @X0 1 r2 ]
+"5
+[; ;../ES_Course_Labs/HAL/Switch/Switch.c: 5: {
+[f ]
+"6
+[; ;../ES_Course_Labs/HAL/Switch/Switch.c: 6:     GPIO_SetPinDirection(Port, Pin, 1);
+[e ( _GPIO_SetPinDirection (3 , , _Port _Pin -> -> 1 `i `uc ]
+"7
+[; ;../ES_Course_Labs/HAL/Switch/Switch.c: 7: }
+[e :UE 1 ]
+}
+"9
+[; ;../ES_Course_Labs/HAL/Switch/Switch.c: 9: u8 switch_read(u8 Port, u8 Pin) {
+[v _switch_read `(uc ~T0 @X0 1 ef2`uc`uc ]
+{
+[e :U _switch_read ]
+[v _Port `uc ~T0 @X0 1 r1 ]
+[v _Pin `uc ~T0 @X0 1 r2 ]
+[f ]
+"10
+[; ;../ES_Course_Labs/HAL/Switch/Switch.c: 10:  return GPIO_GetPinValue(Port, Pin);
+[e ) ( _GPIO_GetPinValue (2 , _Port _Pin ]
+[e $UE 2  ]
+"11
+[; ;../ES_Course_Labs/HAL/Switch/Switch.c: 11: }
+[e :UE 2 ]
+}

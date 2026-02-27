@@ -1,0 +1,406 @@
+Version 4.0 HI-TECH Software Intermediate Code
+"8 ../ES_Course_Labs/MCAL/GPIO/GPIO.c
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 8: void GPIO_SetPinDirection(u8 Port, u8 Pin, u8 Direction)
+[v _GPIO_SetPinDirection `(v ~T0 @X0 1 ef3`uc`uc`uc ]
+"9
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 9: {
+{
+[e :U _GPIO_SetPinDirection ]
+"8
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 8: void GPIO_SetPinDirection(u8 Port, u8 Pin, u8 Direction)
+[v _Port `uc ~T0 @X0 1 r1 ]
+[v _Pin `uc ~T0 @X0 1 r2 ]
+[v _Direction `uc ~T0 @X0 1 r3 ]
+"9
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 9: {
+[f ]
+"10
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 10:     switch(Port)
+[e $U 3  ]
+"11
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 11:     {
+{
+"12
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 12:         case 0:
+[e :U 4 ]
+"13
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 13:             if(Direction == 0)
+[e $ ! == -> _Direction `i -> 0 `i 5  ]
+"14
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 14:                 ( ((*((volatile u8*)0x85))) &= ~(1U << (Pin)) );
+[e =& *U -> -> 133 `i `*Vuc -> ~ << -> 1 `ui -> _Pin `i `uc ]
+[e $U 6  ]
+"15
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 15:             else
+[e :U 5 ]
+"16
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 16:                 ( ((*((volatile u8*)0x85))) |= (1U << (Pin)) );
+[e =| *U -> -> 133 `i `*Vuc -> << -> 1 `ui -> _Pin `i `uc ]
+[e :U 6 ]
+"17
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 17:         break;
+[e $U 2  ]
+"19
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 19:         case 1:
+[e :U 7 ]
+"20
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 20:             if(Direction == 0)
+[e $ ! == -> _Direction `i -> 0 `i 8  ]
+"21
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 21:                 ( ((*((volatile u8*)0x86))) &= ~(1U << (Pin)) );
+[e =& *U -> -> 134 `i `*Vuc -> ~ << -> 1 `ui -> _Pin `i `uc ]
+[e $U 9  ]
+"22
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 22:             else
+[e :U 8 ]
+"23
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 23:                 ( ((*((volatile u8*)0x86))) |= (1U << (Pin)) );
+[e =| *U -> -> 134 `i `*Vuc -> << -> 1 `ui -> _Pin `i `uc ]
+[e :U 9 ]
+"24
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 24:         break;
+[e $U 2  ]
+"26
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 26:         case 2:
+[e :U 10 ]
+"27
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 27:             if(Direction == 0)
+[e $ ! == -> _Direction `i -> 0 `i 11  ]
+"28
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 28:                 ( ((*((volatile u8*)0x87))) &= ~(1U << (Pin)) );
+[e =& *U -> -> 135 `i `*Vuc -> ~ << -> 1 `ui -> _Pin `i `uc ]
+[e $U 12  ]
+"29
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 29:             else
+[e :U 11 ]
+"30
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 30:                 ( ((*((volatile u8*)0x87))) |= (1U << (Pin)) );
+[e =| *U -> -> 135 `i `*Vuc -> << -> 1 `ui -> _Pin `i `uc ]
+[e :U 12 ]
+"31
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 31:         break;
+[e $U 2  ]
+"33
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 33:         case 3:
+[e :U 13 ]
+"34
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 34:             if(Direction == 0)
+[e $ ! == -> _Direction `i -> 0 `i 14  ]
+"35
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 35:                 ( ((*((volatile u8*)0x88))) &= ~(1U << (Pin)) );
+[e =& *U -> -> 136 `i `*Vuc -> ~ << -> 1 `ui -> _Pin `i `uc ]
+[e $U 15  ]
+"36
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 36:             else
+[e :U 14 ]
+"37
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 37:                 ( ((*((volatile u8*)0x88))) |= (1U << (Pin)) );
+[e =| *U -> -> 136 `i `*Vuc -> << -> 1 `ui -> _Pin `i `uc ]
+[e :U 15 ]
+"38
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 38:         break;
+[e $U 2  ]
+"40
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 40:         case 4:
+[e :U 16 ]
+"41
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 41:             if(Direction == 0)
+[e $ ! == -> _Direction `i -> 0 `i 17  ]
+"42
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 42:                 ( ((*((volatile u8*)0x89))) &= ~(1U << (Pin)) );
+[e =& *U -> -> 137 `i `*Vuc -> ~ << -> 1 `ui -> _Pin `i `uc ]
+[e $U 18  ]
+"43
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 43:             else
+[e :U 17 ]
+"44
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 44:                 ( ((*((volatile u8*)0x89))) |= (1U << (Pin)) );
+[e =| *U -> -> 137 `i `*Vuc -> << -> 1 `ui -> _Pin `i `uc ]
+[e :U 18 ]
+"45
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 45:         break;
+[e $U 2  ]
+"47
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 47:         default:
+[e :U 19 ]
+"48
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 48:         break;
+[e $U 2  ]
+"49
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 49:     }
+}
+[e $U 2  ]
+[e :U 3 ]
+[e [\ _Port , $ -> 0 `i 4
+ , $ -> 1 `i 7
+ , $ -> 2 `i 10
+ , $ -> 3 `i 13
+ , $ -> 4 `i 16
+ 19 ]
+[e :U 2 ]
+"50
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 50: }
+[e :UE 1 ]
+}
+"53
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 53: void GPIO_SetPinValue(u8 Port, u8 Pin, u8 Value)
+[v _GPIO_SetPinValue `(v ~T0 @X0 1 ef3`uc`uc`uc ]
+"54
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 54: {
+{
+[e :U _GPIO_SetPinValue ]
+"53
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 53: void GPIO_SetPinValue(u8 Port, u8 Pin, u8 Value)
+[v _Port `uc ~T0 @X0 1 r1 ]
+[v _Pin `uc ~T0 @X0 1 r2 ]
+[v _Value `uc ~T0 @X0 1 r3 ]
+"54
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 54: {
+[f ]
+"55
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 55:     switch(Port)
+[e $U 22  ]
+"56
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 56:     {
+{
+"57
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 57:         case 0:
+[e :U 23 ]
+"58
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 58:             if(Value == 1)
+[e $ ! == -> _Value `i -> 1 `i 24  ]
+"59
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 59:                 ( ((*((volatile u8*)0x05))) |= (1U << (Pin)) );
+[e =| *U -> -> 5 `i `*Vuc -> << -> 1 `ui -> _Pin `i `uc ]
+[e $U 25  ]
+"60
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 60:             else
+[e :U 24 ]
+"61
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 61:                 ( ((*((volatile u8*)0x05))) &= ~(1U << (Pin)) );
+[e =& *U -> -> 5 `i `*Vuc -> ~ << -> 1 `ui -> _Pin `i `uc ]
+[e :U 25 ]
+"62
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 62:         break;
+[e $U 21  ]
+"64
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 64:         case 1:
+[e :U 26 ]
+"65
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 65:             if(Value == 1)
+[e $ ! == -> _Value `i -> 1 `i 27  ]
+"66
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 66:                 ( ((*((volatile u8*)0x06))) |= (1U << (Pin)) );
+[e =| *U -> -> 6 `i `*Vuc -> << -> 1 `ui -> _Pin `i `uc ]
+[e $U 28  ]
+"67
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 67:             else
+[e :U 27 ]
+"68
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 68:                 ( ((*((volatile u8*)0x06))) &= ~(1U << (Pin)) );
+[e =& *U -> -> 6 `i `*Vuc -> ~ << -> 1 `ui -> _Pin `i `uc ]
+[e :U 28 ]
+"69
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 69:         break;
+[e $U 21  ]
+"71
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 71:         case 2:
+[e :U 29 ]
+"72
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 72:             if(Value == 1)
+[e $ ! == -> _Value `i -> 1 `i 30  ]
+"73
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 73:                 ( ((*((volatile u8*)0x07))) |= (1U << (Pin)) );
+[e =| *U -> -> 7 `i `*Vuc -> << -> 1 `ui -> _Pin `i `uc ]
+[e $U 31  ]
+"74
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 74:             else
+[e :U 30 ]
+"75
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 75:                 ( ((*((volatile u8*)0x07))) &= ~(1U << (Pin)) );
+[e =& *U -> -> 7 `i `*Vuc -> ~ << -> 1 `ui -> _Pin `i `uc ]
+[e :U 31 ]
+"76
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 76:         break;
+[e $U 21  ]
+"78
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 78:         case 3:
+[e :U 32 ]
+"79
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 79:             if(Value == 1)
+[e $ ! == -> _Value `i -> 1 `i 33  ]
+"80
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 80:                 ( ((*((volatile u8*)0x08))) |= (1U << (Pin)) );
+[e =| *U -> -> 8 `i `*Vuc -> << -> 1 `ui -> _Pin `i `uc ]
+[e $U 34  ]
+"81
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 81:             else
+[e :U 33 ]
+"82
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 82:                 ( ((*((volatile u8*)0x08))) &= ~(1U << (Pin)) );
+[e =& *U -> -> 8 `i `*Vuc -> ~ << -> 1 `ui -> _Pin `i `uc ]
+[e :U 34 ]
+"83
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 83:         break;
+[e $U 21  ]
+"85
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 85:         case 4:
+[e :U 35 ]
+"86
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 86:             if(Value == 1)
+[e $ ! == -> _Value `i -> 1 `i 36  ]
+"87
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 87:                 ( ((*((volatile u8*)0x09))) |= (1U << (Pin)) );
+[e =| *U -> -> 9 `i `*Vuc -> << -> 1 `ui -> _Pin `i `uc ]
+[e $U 37  ]
+"88
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 88:             else
+[e :U 36 ]
+"89
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 89:                 ( ((*((volatile u8*)0x09))) &= ~(1U << (Pin)) );
+[e =& *U -> -> 9 `i `*Vuc -> ~ << -> 1 `ui -> _Pin `i `uc ]
+[e :U 37 ]
+"90
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 90:         break;
+[e $U 21  ]
+"92
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 92:         default:
+[e :U 38 ]
+"93
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 93:         break;
+[e $U 21  ]
+"94
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 94:     }
+}
+[e $U 21  ]
+[e :U 22 ]
+[e [\ _Port , $ -> 0 `i 23
+ , $ -> 1 `i 26
+ , $ -> 2 `i 29
+ , $ -> 3 `i 32
+ , $ -> 4 `i 35
+ 38 ]
+[e :U 21 ]
+"95
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 95: }
+[e :UE 20 ]
+}
+"98
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 98: u8 GPIO_GetPinValue(u8 Port, u8 Pin)
+[v _GPIO_GetPinValue `(uc ~T0 @X0 1 ef2`uc`uc ]
+"99
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 99: {
+{
+[e :U _GPIO_GetPinValue ]
+"98
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 98: u8 GPIO_GetPinValue(u8 Port, u8 Pin)
+[v _Port `uc ~T0 @X0 1 r1 ]
+[v _Pin `uc ~T0 @X0 1 r2 ]
+"99
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 99: {
+[f ]
+"100
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 100:     u8 Local_Value = 0;
+[v _Local_Value `uc ~T0 @X0 1 a ]
+[e = _Local_Value -> -> 0 `i `uc ]
+"102
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 102:     switch(Port)
+[e $U 41  ]
+"103
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 103:     {
+{
+"104
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 104:         case 0:
+[e :U 42 ]
+"105
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 105:             Local_Value = ( (((*((volatile u8*)0x05))) >> (Pin)) & 1U );
+[e = _Local_Value -> & -> >> -> *U -> -> 5 `i `*Vuc `i -> _Pin `i `ui -> 1 `ui `uc ]
+"106
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 106:         break;
+[e $U 40  ]
+"108
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 108:         case 1:
+[e :U 43 ]
+"109
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 109:             Local_Value = ( (((*((volatile u8*)0x06))) >> (Pin)) & 1U );
+[e = _Local_Value -> & -> >> -> *U -> -> 6 `i `*Vuc `i -> _Pin `i `ui -> 1 `ui `uc ]
+"110
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 110:         break;
+[e $U 40  ]
+"112
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 112:         case 2:
+[e :U 44 ]
+"113
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 113:             Local_Value = ( (((*((volatile u8*)0x07))) >> (Pin)) & 1U );
+[e = _Local_Value -> & -> >> -> *U -> -> 7 `i `*Vuc `i -> _Pin `i `ui -> 1 `ui `uc ]
+"114
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 114:         break;
+[e $U 40  ]
+"116
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 116:         case 3:
+[e :U 45 ]
+"117
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 117:             Local_Value = ( (((*((volatile u8*)0x08))) >> (Pin)) & 1U );
+[e = _Local_Value -> & -> >> -> *U -> -> 8 `i `*Vuc `i -> _Pin `i `ui -> 1 `ui `uc ]
+"118
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 118:         break;
+[e $U 40  ]
+"120
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 120:         case 4:
+[e :U 46 ]
+"121
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 121:             Local_Value = ( (((*((volatile u8*)0x09))) >> (Pin)) & 1U );
+[e = _Local_Value -> & -> >> -> *U -> -> 9 `i `*Vuc `i -> _Pin `i `ui -> 1 `ui `uc ]
+"122
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 122:         break;
+[e $U 40  ]
+"124
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 124:         default:
+[e :U 47 ]
+"125
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 125:         break;
+[e $U 40  ]
+"126
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 126:     }
+}
+[e $U 40  ]
+[e :U 41 ]
+[e [\ _Port , $ -> 0 `i 42
+ , $ -> 1 `i 43
+ , $ -> 2 `i 44
+ , $ -> 3 `i 45
+ , $ -> 4 `i 46
+ 47 ]
+[e :U 40 ]
+"128
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 128:     return Local_Value;
+[e ) _Local_Value ]
+[e $UE 39  ]
+"129
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 129: }
+[e :UE 39 ]
+}
+"131
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 131: void GPIO_Init(void)
+[v _GPIO_Init `(v ~T0 @X0 1 ef ]
+"132
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 132: {
+{
+[e :U _GPIO_Init ]
+[f ]
+"133
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 133:     (*((volatile u8*)0x85)) = 0x00;
+[e = *U -> -> 133 `i `*Vuc -> -> 0 `i `uc ]
+"134
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 134:     (*((volatile u8*)0x86)) = 0xFF;
+[e = *U -> -> 134 `i `*Vuc -> -> 255 `i `uc ]
+"136
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 136:     (*((volatile u8*)0x05)) = 0x00;
+[e = *U -> -> 5 `i `*Vuc -> -> 0 `i `uc ]
+"137
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 137:     (*((volatile u8*)0x06)) = 0x00;
+[e = *U -> -> 6 `i `*Vuc -> -> 0 `i `uc ]
+"138
+[; ;../ES_Course_Labs/MCAL/GPIO/GPIO.c: 138: }
+[e :UE 48 ]
+}
