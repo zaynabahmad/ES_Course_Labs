@@ -136,3 +136,16 @@ void GPIO_Init(void)
     PORTA = GPIO_PORTA_INIT_VAL;
     PORTB = GPIO_PORTB_INIT_VAL;
 }
+
+void GPIO_TogglePin(u8 Port, u8 Pin)
+{
+    switch(Port)
+    {
+        case GPIO_PORTA: TOG_BIT(PORTA, Pin); break;
+        case GPIO_PORTB: TOG_BIT(PORTB, Pin); break;
+        case GPIO_PORTC: TOG_BIT(PORTC, Pin); break;
+        case GPIO_PORTD: TOG_BIT(PORTD, Pin); break;
+        case GPIO_PORTE: TOG_BIT(PORTE, Pin); break;
+        default: break;
+    }
+}

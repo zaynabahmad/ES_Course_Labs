@@ -5,23 +5,32 @@
 */
 #include "../HAL/LED/LED_interface.h"
 #include "../MCAL/GPIO/GPIO_interface.h"
+#include "../MCAL/GPIO/EXT_INT_Interface.h"
 
-void delay(void)
+
+
+/* LED on RC2 */
+#define MY_LED_PORT GPIO_PORTC
+#define MY_LED_PIN  0
+
+void App_OnInterrupt(void)
 {
-    unsigned int i;
-    for(i = 0; i < 50000; i++);
+    LED_Toggle(MY_LED_PORT, MY_LED_PIN);
 }
 
 void main()
 {
-    LED_Init(GPIO_PORTB, GPIO_PIN0);
+    /* Initialize LED */
+    LED_Init(MY_LED_PORT, MY_LED_PIN);
 
-    while(1)
+    /* Initialize External Interrupt INT0 */
+    EXT_INT0_Init();
+    EXT_INT0_SetEdge(RISING_EDGE);
+    EXT_INT0_SetCallback(App_OnInterrupt);
+    EXT_INT0_Enable();
+
+    while (1)
     {
-        LED_On(GPIO_PORTB, GPIO_PIN0);
-        delay();
-
-        LED_Off(GPIO_PORTB, GPIO_PIN0);
-        delay();
+        // Main loop empty
     }
 }
