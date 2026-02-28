@@ -34,7 +34,7 @@ void EXT_INT0_SetCallback(void (*ptr)(void))
     }
 }
 
-// mikroC ISR
+
 void interrupt()
 {
     if (INTF_bit == 1)
