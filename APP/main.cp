@@ -1,4 +1,4 @@
-#line 1 "C:/Users/engfa/OneDrive/Desktop/Embedded CIE 349/Embedded_Project/HAL/LED.c"
+#line 1 "C:/Users/engfa/OneDrive/Desktop/Embedded CIE 349/Embedded_Project/APP/main.c"
 #line 1 "c:/users/engfa/onedrive/desktop/embedded cie 349/embedded_project/hal/led_interface.h"
 #line 1 "c:/users/engfa/onedrive/desktop/embedded cie 349/embedded_project/services/std_types.h"
 
@@ -30,28 +30,23 @@ void GPIO_SetPinDirection(unsigned char Port, unsigned char Pin, unsigned char D
 void GPIO_SetPinValue(unsigned char Port, unsigned char Pin, unsigned char Value);
 unsigned char GPIO_GetPinValue(unsigned char Port, unsigned char Pin);
 void GPIO_Init(void);
-#line 4 "C:/Users/engfa/OneDrive/Desktop/Embedded CIE 349/Embedded_Project/HAL/LED.c"
-void LED_Init(unsigned char Port, unsigned char Pin)
+#line 9 "C:/Users/engfa/OneDrive/Desktop/Embedded CIE 349/Embedded_Project/APP/main.c"
+void delay(void)
 {
- GPIO_SetPinDirection(Port, Pin,  0 );
+ unsigned int i;
+ for(i = 0; i < 50000; i++);
 }
 
-void LED_On(unsigned char Port, unsigned char Pin)
+void main()
 {
- GPIO_SetPinValue(Port, Pin,  1 );
-}
+ LED_Init( 1 ,  0 );
 
-void LED_Off(unsigned char Port, unsigned char Pin)
-{
- GPIO_SetPinValue(Port, Pin,  0 );
-}
+ while(1)
+ {
+ LED_On( 1 ,  0 );
+ delay();
 
-void LED_Toggle(unsigned char Port, unsigned char Pin)
-{
- unsigned char current = GPIO_GetPinValue(Port, Pin);
-
- if(current ==  1 )
- GPIO_SetPinValue(Port, Pin,  0 );
- else
- GPIO_SetPinValue(Port, Pin,  1 );
+ LED_Off( 1 ,  0 );
+ delay();
+ }
 }

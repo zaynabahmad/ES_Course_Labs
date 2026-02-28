@@ -3,8 +3,8 @@
 
 
 */
-#include "../HAL/LED/LED_interface.h"
-#include "../MCAL/GPIO/GPIO_interface.h"
+#include "C:\Users\engfa\OneDrive\Desktop\Embedded CIE 349\Embedded_Project\HAL\LED_INTERFACE.h"
+#include "C:\Users\engfa\OneDrive\Desktop\Embedded CIE 349\Embedded_Project\MCAL\GPIO\GPIO_INTERFACE.h"
 
 void delay(void)
 {

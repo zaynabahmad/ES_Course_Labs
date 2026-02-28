@@ -1,23 +1,83 @@
 
 _LED_Init:
 
-;LED.c,3 :: 		void LED_Init(void)
-;LED.c,5 :: 		TRISC.F0 = 0;
-	BCF        TRISC+0, 0
-;LED.c,6 :: 		PORTC.F0 = 0;
-	BCF        PORTC+0, 0
+;LED.c,4 :: 		void LED_Init(unsigned char Port, unsigned char Pin)
+;LED.c,6 :: 		GPIO_SetPinDirection(Port, Pin, GPIO_OUTPUT);
+	MOVF       FARG_LED_Init_Port+0, 0
+	MOVWF      FARG_GPIO_SetPinDirection_Port+0
+	MOVF       FARG_LED_Init_Pin+0, 0
+	MOVWF      FARG_GPIO_SetPinDirection_Pin+0
+	CLRF       FARG_GPIO_SetPinDirection_Direction+0
+	CALL       _GPIO_SetPinDirection+0
 ;LED.c,7 :: 		}
 L_end_LED_Init:
 	RETURN
 ; end of _LED_Init
 
+_LED_On:
+
+;LED.c,9 :: 		void LED_On(unsigned char Port, unsigned char Pin)
+;LED.c,11 :: 		GPIO_SetPinValue(Port, Pin, GPIO_HIGH);
+	MOVF       FARG_LED_On_Port+0, 0
+	MOVWF      FARG_GPIO_SetPinValue_Port+0
+	MOVF       FARG_LED_On_Pin+0, 0
+	MOVWF      FARG_GPIO_SetPinValue_Pin+0
+	MOVLW      1
+	MOVWF      FARG_GPIO_SetPinValue_Value+0
+	CALL       _GPIO_SetPinValue+0
+;LED.c,12 :: 		}
+L_end_LED_On:
+	RETURN
+; end of _LED_On
+
+_LED_Off:
+
+;LED.c,14 :: 		void LED_Off(unsigned char Port, unsigned char Pin)
+;LED.c,16 :: 		GPIO_SetPinValue(Port, Pin, GPIO_LOW);
+	MOVF       FARG_LED_Off_Port+0, 0
+	MOVWF      FARG_GPIO_SetPinValue_Port+0
+	MOVF       FARG_LED_Off_Pin+0, 0
+	MOVWF      FARG_GPIO_SetPinValue_Pin+0
+	CLRF       FARG_GPIO_SetPinValue_Value+0
+	CALL       _GPIO_SetPinValue+0
+;LED.c,17 :: 		}
+L_end_LED_Off:
+	RETURN
+; end of _LED_Off
+
 _LED_Toggle:
 
-;LED.c,9 :: 		void LED_Toggle(void)
-;LED.c,11 :: 		PORTC.F0 = ~PORTC.F0;
+;LED.c,19 :: 		void LED_Toggle(unsigned char Port, unsigned char Pin)
+;LED.c,21 :: 		unsigned char current = GPIO_GetPinValue(Port, Pin);
+	MOVF       FARG_LED_Toggle_Port+0, 0
+	MOVWF      FARG_GPIO_GetPinValue_Port+0
+	MOVF       FARG_LED_Toggle_Pin+0, 0
+	MOVWF      FARG_GPIO_GetPinValue_Pin+0
+	CALL       _GPIO_GetPinValue+0
+;LED.c,23 :: 		if(current == GPIO_HIGH)
+	MOVF       R0+0, 0
+	XORLW      1
+	BTFSS      STATUS+0, 2
+	GOTO       L_LED_Toggle0
+;LED.c,24 :: 		GPIO_SetPinValue(Port, Pin, GPIO_LOW);
+	MOVF       FARG_LED_Toggle_Port+0, 0
+	MOVWF      FARG_GPIO_SetPinValue_Port+0
+	MOVF       FARG_LED_Toggle_Pin+0, 0
+	MOVWF      FARG_GPIO_SetPinValue_Pin+0
+	CLRF       FARG_GPIO_SetPinValue_Value+0
+	CALL       _GPIO_SetPinValue+0
+	GOTO       L_LED_Toggle1
+L_LED_Toggle0:
+;LED.c,26 :: 		GPIO_SetPinValue(Port, Pin, GPIO_HIGH);
+	MOVF       FARG_LED_Toggle_Port+0, 0
+	MOVWF      FARG_GPIO_SetPinValue_Port+0
+	MOVF       FARG_LED_Toggle_Pin+0, 0
+	MOVWF      FARG_GPIO_SetPinValue_Pin+0
 	MOVLW      1
-	XORWF      PORTC+0, 1
-;LED.c,12 :: 		}
+	MOVWF      FARG_GPIO_SetPinValue_Value+0
+	CALL       _GPIO_SetPinValue+0
+L_LED_Toggle1:
+;LED.c,27 :: 		}
 L_end_LED_Toggle:
 	RETURN
 ; end of _LED_Toggle
