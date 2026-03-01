@@ -18,3 +18,11 @@
 # OS files
 .DS_Store
 Thumbs.db
+
+# Ignore all files in any folder named "Project Backups"
+**/Project Backups/
+
+# Ignore all Proteus workspace and backup files
+*.pdsprj.bak
+*Autosaved.pdsprj
+*.workspace
