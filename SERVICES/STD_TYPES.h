@@ -16,7 +16,9 @@ typedef float       f32;
 typedef double      f64;
 typedef long double f128;
 
-/* Standard Values */
-#define NULL_PTR   ((void*)0)
+#ifndef NULL
+#define NULL    ((void *)0)
+#endif
+
 
 #endif
