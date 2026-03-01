@@ -1,18 +1,20 @@
 #ifndef GPIO_PRIVATE_H
 #define GPIO_PRIVATE_H
 
-/* Register Definitions for PIC16F877A */
+#include "../../SERVICES/STD_TYPES.h"
 
-#define TRISA   (*((volatile u8*)0x85))
-#define TRISB   (*((volatile u8*)0x86))
-#define TRISC   (*((volatile u8*)0x87))
-#define TRISD   (*((volatile u8*)0x88))
-#define TRISE   (*((volatile u8*)0x89))
+/* Register Definitions for PIC16F877A - Renamed to bypass mikroC built-in SFR conflicts */
 
-#define PORTA   (*((volatile u8*)0x05))
-#define PORTB   (*((volatile u8*)0x06))
-#define PORTC   (*((volatile u8*)0x07))
-#define PORTD   (*((volatile u8*)0x08))
-#define PORTE   (*((volatile u8*)0x09))
+#define GPIO_TRISA_REG   (*((volatile u8*)0x85))
+#define GPIO_TRISB_REG   (*((volatile u8*)0x86))
+#define GPIO_TRISC_REG   (*((volatile u8*)0x87))
+#define GPIO_TRISD_REG   (*((volatile u8*)0x88))
+#define GPIO_TRISE_REG   (*((volatile u8*)0x89))
+
+#define GPIO_PORTA_REG   (*((volatile u8*)0x05))
+#define GPIO_PORTB_REG   (*((volatile u8*)0x06))
+#define GPIO_PORTC_REG   (*((volatile u8*)0x07))
+#define GPIO_PORTD_REG   (*((volatile u8*)0x08))
+#define GPIO_PORTE_REG   (*((volatile u8*)0x09))
 
 #endif

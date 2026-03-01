@@ -1,0 +1,16 @@
+main
+	GPIO_Init
+	LED_Init
+		GPIO_SetPinDirection
+	Button_Init
+		GPIO_SetPinDirection
+	delay
+	LED_Toggle
+		GPIO_GetPinValue
+		GPIO_SetPinValue
+	Button_GetState
+		GPIO_GetPinValue
+	LED_On
+		GPIO_SetPinValue
+	LED_Off
+		GPIO_SetPinValue
