@@ -9,7 +9,7 @@ void delay_ms(unsigned int ms)
 {
     unsigned int i, j;
     for(i = 0; i < ms; i++)
-        for(j = 0; j < 1275; j++);  // ~1ms at 8MHz
+        for(j = 0; j < 1028; j++);
 }
 
 void main()
@@ -22,7 +22,7 @@ void main()
 
         while(1)
     {
-        if(GPIO_GetPinValue(GPIO_PORTB, GPIO_PIN2))  // Switch 1
+        if(GPIO_GetPinValue(GPIO_PORTB, GPIO_PIN2))
         {
             LED_On(GPIO_PORTB, GPIO_PIN0);
             LED_On(GPIO_PORTB, GPIO_PIN1);
@@ -31,7 +31,7 @@ void main()
             LED_Off(GPIO_PORTB, GPIO_PIN1);
             delay_ms(200);
         }
-        else if(GPIO_GetPinValue(GPIO_PORTB, GPIO_PIN3))  // Switch 2
+        else if(GPIO_GetPinValue(GPIO_PORTB, GPIO_PIN3))
         {
             LED_On(GPIO_PORTB, GPIO_PIN0);
             LED_On(GPIO_PORTB, GPIO_PIN1);
