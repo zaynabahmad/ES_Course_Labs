@@ -5,23 +5,22 @@
 */
 #include "../HAL/LED/LED_interface.h"
 #include "../MCAL/GPIO/GPIO_interface.h"
+#include "../HAL/Switch/Switch_interface.h"
+#include "../MCAL/EXT_INT/EXT_INT_interface.h"
 
-void delay(void)
-{
-    unsigned int i;
-    for(i = 0; i < 50000; i++);
+void ToggleLED(void) {
+    LED_Toggle(GPIO_PORTB, GPIO_PIN1);
 }
 
-void main()
-{
-    LED_Init(GPIO_PORTB, GPIO_PIN0);
+void main() {
+    LED_Init(GPIO_PORTB, GPIO_PIN1);
 
-    while(1)
-    {
-        LED_On(GPIO_PORTB, GPIO_PIN0);
-        delay();
+    EXT_INT0_Init();
+    EXT_INT0_SetEdge(EXT_INT_FALLING_EDGE);
+    EXT_INT0_SetCallback(ToggleLED); // Register the callback
+    EXT_INT0_Enable();
 
-        LED_Off(GPIO_PORTB, GPIO_PIN0);
-        delay();
+    while(1) {
+        // Main loop is empty; LED only toggles when button is pressed!
     }
 }
