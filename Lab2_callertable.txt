@@ -1,0 +1,16 @@
+main
+	LED_Init
+		GPIO_SetPinDirection
+		GPIO_SetPinValue
+	SWITCH_Init
+		GPIO_SetPinDirection
+	EXT_INT0_Init
+	EXT_INT0_SetCallback
+	SWITCH_Read
+		GPIO_GetPinValue
+	LED_On
+		GPIO_SetPinValue
+	LED_Off
+		GPIO_SetPinValue
+interrupt
+	____DoIFC
