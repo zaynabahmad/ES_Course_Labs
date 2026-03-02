@@ -1,5 +1,6 @@
 #include "EXT_INT_interface.h"
 #include "EXT_INT_private.h"
+#include "EXT_INT_config.h"
 #include "../GPIO/GPIO_interface.h"
 #include "../../SERVICES/BIT_MATH.h"
 
@@ -13,6 +14,8 @@ void EXT_INT_Init(void)
     
     /* Clear the interrupt flag */
     CLR_BIT(INTCON, INTF_BIT);
+    CLR_BIT(INTCON, INTE_BIT); // Ensure the external interrupt is disabled initially
+
 }
 
 void EXT_INT_Enable(void)
@@ -22,6 +25,8 @@ void EXT_INT_Enable(void)
     
     /* Enable global interrupts */
     SET_BIT(INTCON, GIE_BIT);
+
+    CLR_BIT(INTCON, INTF_BIT); // Clear any pending interrupt flag
 }
 
 void EXT_INT_Disable(void)
