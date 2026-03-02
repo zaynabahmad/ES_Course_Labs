@@ -34,6 +34,7 @@ void main()
 
     EXT_INT0_Init();
     EXT_INT0_SetCallback(App_OnInterrupt);
+    EXT_INT0_Enable();
 
 
     while (1)
