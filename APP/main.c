@@ -1,27 +1,32 @@
 /*
-* APPLICATION LAYER
-
-
+* MAIN APPLICATION LAYER
+*
+* LAB 1: Polling-based LED Sequences
+* - Uncomment lab1_init() and lab1_run()
+* - Comment out lab2_init()
+*
+* LAB 2: Interrupt-driven External Interrupt (ACTIVE)
+* - Uncomment lab2_init()
+* - Comment out lab1_init() and lab1_run()
 */
-#include "../HAL/LED/LED_interface.h"
-#include "../MCAL/GPIO/GPIO_interface.h"
 
-void delay(void)
-{
-    unsigned int i;
-    for(i = 0; i < 50000; i++);
-}
+#include "lab1.c"
+#include "lab2.c"
 
 void main()
 {
-    LED_Init(GPIO_PORTB, GPIO_PIN0);
-
+    /* LAB 1 - Polling Mode */
+    /*
+    lab1_init();
     while(1)
     {
-        LED_On(GPIO_PORTB, GPIO_PIN0);
-        delay();
-
-        LED_Off(GPIO_PORTB, GPIO_PIN0);
-        delay();
+        lab1_run();
     }
+    */
+
+    /* LAB 2 - Interrupt Mode (ACTIVE) */
+    lab2_init();
+    while(1){
+        
+    };
 }
