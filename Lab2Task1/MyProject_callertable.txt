@@ -1,0 +1,17 @@
+main
+	GPIO_Init
+	LED_Init
+		setpindirection
+			GPIO_GetTRISRegister
+		setpinvalue
+			GPIO_GetPORTRegister
+	setpindirection
+		GPIO_GetTRISRegister
+	getpinvalue
+		GPIO_GetPORTRegister
+	LED_On
+		setpinvalue
+			GPIO_GetPORTRegister
+	LED_Off
+		setpinvalue
+			GPIO_GetPORTRegister
