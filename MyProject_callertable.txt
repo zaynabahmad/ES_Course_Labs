@@ -1,0 +1,3 @@
+main
+	short_sequence
+	long_sequence
