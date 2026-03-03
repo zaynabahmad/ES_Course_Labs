@@ -3,6 +3,7 @@
 
 #include "../HAL/LED/LED_interface.h"
 #include "../MCAL/GPIO/GPIO_interface.h"
+#include "../MCAL/GPIO/EXTI0/EXTI_Interface.h"
 
 /* LED Definition */
 #define LED_PORT   GPIO_PORTB
@@ -27,3 +28,4 @@ void main(void)
     }
 
 }
+
