@@ -2,51 +2,25 @@
 #include "../HAL/LED/LED_config.h"
 #include "../HAL/SWITCH/SWITCH_interface.h"
 #include "../HAL/SWITCH/SWITCH_config.h"
+#include "../MCAL/EXT_INT/EXT_INT_interface.h"
 
-#define DELAY_SHORT  20000   /*0.2s*/
-#define DELAY_LONG   50000   /*0.5s*/
-
-void delay(unsigned int count)
+void ToggleLED_Callback(void)
 {
-    unsigned int i;
-    for(i = 0; i < count; i++);
+    LED_Toggle(LED1_PORT, LED1_PIN);
 }
 
 void main()
 {
-    LED_Init(LED1_PORT, LED1_PIN);
-    LED_Init(LED2_PORT, LED2_PIN);
+    LED_Init(LED1_PORT, LED1_PIN);          /* RD0 as output */
+    SWITCH_Init(SW1_PORT, SW1_PIN);         /* RB0 as input (HAL)*/
 
-    SWITCH_Init(SW1_PORT, SW1_PIN);
-    SWITCH_Init(SW2_PORT, SW2_PIN);
+   
+    EXT_INT0_Init();                       
+    EXT_INT0_SetCallback(ToggleLED_Callback);
 
     while(1)
     {
-        if(SWITCH_GetState(SW1_PORT, SW1_PIN) == SWITCH_PRESSED)
-        {
-            /*fast blink (0.2s ON / 0.2s OFF)*/
-            LED_On(LED1_PORT, LED1_PIN);
-            LED_On(LED2_PORT, LED2_PIN);
-            delay(DELAY_SHORT);
-            LED_Off(LED1_PORT, LED1_PIN);
-            LED_Off(LED2_PORT, LED2_PIN);
-            delay(DELAY_SHORT);
-        }
-        else if(SWITCH_GetState(SW2_PORT, SW2_PIN) == SWITCH_PRESSED)
-        {
-            /*slow blink (0.5s ON / 0.5s OFF)*/
-            LED_On(LED1_PORT, LED1_PIN);
-            LED_On(LED2_PORT, LED2_PIN);
-            delay(DELAY_LONG);
-            LED_Off(LED1_PORT, LED1_PIN);
-            LED_Off(LED2_PORT, LED2_PIN);
-            delay(DELAY_LONG);
-        }
-        else
-        {
-            /*LEDs off*/
-            LED_Off(LED1_PORT, LED1_PIN);
-            LED_Off(LED2_PORT, LED2_PIN);
-        }
+        /* CPU idles here; every button press fires INT0
+           which calls ToggleLED_Callback via MCAL ISR  */
     }
 }
