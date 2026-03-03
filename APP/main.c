@@ -1,20 +1,10 @@
 #include "../HAL/LED/LED_interface.h"
 #include "../HAL/Switch/Switch.h"
 #include "../MCAL/Exit.INT/EXT_INT_Interface.h"
+#include "../MCAL/GPIO/GPIO_interface.h"
 
-#define LED_PORT         PORTC
-#define LED_1            0
-#define LED_2            1
-#define INT_LED_PORT     PORTD
-#define INT_LED_PIN      3
 
-// Switches (Input)
-#define SW1_PORT         PORTD
-#define SW1_PIN          1
-#define SW2_PORT         PORTB
-#define SW2_PIN          2
 
-#define GPIO_HIGH        1
 
 void App_OnInterrupt(void)
 {
