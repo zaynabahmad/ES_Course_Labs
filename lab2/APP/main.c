@@ -1,12 +1,11 @@
-                                                      #include "../HAL/LED/LED_interface.h"
+#include "../HAL/LED/LED_interface.h"
 #include "../HAL/SWITCH/SWITCH_interface.h"
 #include "../MCAL/EXTI/EXTI_interface.h"
 #include "../MCAL/GPIO/GPIO_interface.h"
 
 void ToggleLed_Callback(void)
 {
-    LED_Toggle(GPIO_PORTB, GPIO_PIN1);
-}
+    LED_Toggle(GPIO_PORTB, GPIO_PIN1);  }
 
 void main()
 {
@@ -18,5 +17,6 @@ void main()
 
     while(1)
     {
+
     }
 }
