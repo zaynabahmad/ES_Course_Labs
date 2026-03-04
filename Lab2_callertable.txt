@@ -1,16 +1,20 @@
 main
+	__CC2DW
+		____DoICP
 	GPIO_Init
 	LED_Init
 		GPIO_SetPinDirection
-	Button_Init
-		GPIO_SetPinDirection
-	delay
+	GPIO_SetPinDirection
+	EXTI_Int0SetEdge
+	EXTI_Int0SetCallBack
+	EXTI_Int0Init
 	LED_Toggle
 		GPIO_GetPinValue
 		GPIO_SetPinValue
-	Button_GetState
-		GPIO_GetPinValue
+	GPIO_GetPinValue
 	LED_On
 		GPIO_SetPinValue
 	LED_Off
 		GPIO_SetPinValue
+interrupt
+	____DoIFC
