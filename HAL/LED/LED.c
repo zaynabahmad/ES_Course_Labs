@@ -3,25 +3,25 @@
 
 void LED_Init(u8 Port, u8 Pin)
 {
-    GPIO_SetPinDirection(Port, Pin, GPIO_OUTPUT);
+    SetPinDirection(Port, Pin, OUTPUT);
 }
 
 void LED_On(u8 Port, u8 Pin)
 {
-    GPIO_SetPinValue(Port, Pin, GPIO_HIGH);
+    SetPinValue(Port, Pin, HIGH);
 }
 
 void LED_Off(u8 Port, u8 Pin)
 {
-    GPIO_SetPinValue(Port, Pin, GPIO_LOW);
+    SetPinValue(Port, Pin, LOW);
 }
 
 void LED_Toggle(u8 Port, u8 Pin)
 {
-    u8 current = GPIO_GetPinValue(Port, Pin);
+    u8 current = GetPinValue(Port, Pin);
 
-    if(current == GPIO_HIGH)
-        GPIO_SetPinValue(Port, Pin, GPIO_LOW);
+    if(current == HIGH)
+        SetPinValue(Port, Pin, LOW);
     else
-        GPIO_SetPinValue(Port, Pin, GPIO_HIGH);
+        SetPinValue(Port, Pin, HIGH);
 }

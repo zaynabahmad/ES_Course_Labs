@@ -1,0 +1,12 @@
+main
+	LED_Init
+		SetPinDirection
+	Switch_Init
+		SetPinDirection
+	EXT_INT_Init
+	EXT_INT_SetEdge
+	EXT_INT_SetCallback
+	EXT_INT_Enable
+interrupt
+	EXT_INT_ISR_Handler
+		____DoIFC

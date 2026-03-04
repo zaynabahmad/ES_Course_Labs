@@ -1,44 +1,44 @@
 #include "GPIO_interface.h"
-#include "GPIO_private.h"
+#include "../MCU_Registers.h"
 #include "GPIO_config.h"
 
 #include "../../SERVICES/BIT_MATH.h"
 
 
-void GPIO_SetPinDirection(u8 Port, u8 Pin, u8 Direction)
+void SetPinDirection(u8 Port, u8 Pin, u8 Direction)
 {
     switch(Port)
     {
         case GPIO_PORTA:
-            if(Direction == GPIO_OUTPUT)
+            if(Direction == OUTPUT)
                 CLR_BIT(TRISA, Pin);
             else
                 SET_BIT(TRISA, Pin);
         break;
 
         case GPIO_PORTB:
-            if(Direction == GPIO_OUTPUT)
+            if(Direction == OUTPUT)
                 CLR_BIT(TRISB, Pin);
             else
                 SET_BIT(TRISB, Pin);
         break;
 
         case GPIO_PORTC:
-            if(Direction == GPIO_OUTPUT)
+            if(Direction == OUTPUT)
                 CLR_BIT(TRISC, Pin);
             else
                 SET_BIT(TRISC, Pin);
         break;
 
         case GPIO_PORTD:
-            if(Direction == GPIO_OUTPUT)
+            if(Direction == OUTPUT)
                 CLR_BIT(TRISD, Pin);
             else
                 SET_BIT(TRISD, Pin);
         break;
 
         case GPIO_PORTE:
-            if(Direction == GPIO_OUTPUT)
+            if(Direction == OUTPUT)
                 CLR_BIT(TRISE, Pin);
             else
                 SET_BIT(TRISE, Pin);
@@ -50,40 +50,40 @@ void GPIO_SetPinDirection(u8 Port, u8 Pin, u8 Direction)
 }
 
 
-void GPIO_SetPinValue(u8 Port, u8 Pin, u8 Value)
+void SetPinValue(u8 Port, u8 Pin, u8 Value)
 {
     switch(Port)
     {
         case GPIO_PORTA:
-            if(Value == GPIO_HIGH)
+            if(Value == HIGH)
                 SET_BIT(PORTA, Pin);
             else
                 CLR_BIT(PORTA, Pin);
         break;
 
         case GPIO_PORTB:
-            if(Value == GPIO_HIGH)
+            if(Value == HIGH)
                 SET_BIT(PORTB, Pin);
             else
                 CLR_BIT(PORTB, Pin);
         break;
 
         case GPIO_PORTC:
-            if(Value == GPIO_HIGH)
+            if(Value == HIGH)
                 SET_BIT(PORTC, Pin);
             else
                 CLR_BIT(PORTC, Pin);
         break;
 
         case GPIO_PORTD:
-            if(Value == GPIO_HIGH)
+            if(Value == HIGH)
                 SET_BIT(PORTD, Pin);
             else
                 CLR_BIT(PORTD, Pin);
         break;
 
         case GPIO_PORTE:
-            if(Value == GPIO_HIGH)
+            if(Value == HIGH)
                 SET_BIT(PORTE, Pin);
             else
                 CLR_BIT(PORTE, Pin);
@@ -95,7 +95,7 @@ void GPIO_SetPinValue(u8 Port, u8 Pin, u8 Value)
 }
 
 
-u8 GPIO_GetPinValue(u8 Port, u8 Pin)
+u8 GetPinValue(u8 Port, u8 Pin)
 {
     u8 Local_Value = 0;
 

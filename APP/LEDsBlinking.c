@@ -17,11 +17,11 @@ void main()
         Switch_Init(GPIO_PORTA, GPIO_PIN1);
     while(1)
     {
-                if ((switch_read(GPIO_PORTA, GPIO_PIN0) == GPIO_LOW) && (switch_read(GPIO_PORTA, GPIO_PIN1) == GPIO_LOW)) {
+                if ((switch_read(GPIO_PORTA, GPIO_PIN0) == LOW) && (switch_read(GPIO_PORTA, GPIO_PIN1) == LOW)) {
                         LED_Off(GPIO_PORTB, GPIO_PIN0);
                         LED_Off(GPIO_PORTB, GPIO_PIN1);
                 }
-                else if (switch_read(GPIO_PORTA, GPIO_PIN0) == GPIO_HIGH)
+                else if (switch_read(GPIO_PORTA, GPIO_PIN0) == HIGH)
                 {
                         LED_On(GPIO_PORTB, GPIO_PIN0);
                         LED_On(GPIO_PORTB, GPIO_PIN1);
@@ -30,7 +30,7 @@ void main()
                         LED_Off(GPIO_PORTB, GPIO_PIN1);
                         Delay_ms(200);
                 }
-                else if (switch_read(GPIO_PORTA, GPIO_PIN1) == GPIO_HIGH)
+                else if (switch_read(GPIO_PORTA, GPIO_PIN1) == HIGH)
                 {
                         LED_On(GPIO_PORTB, GPIO_PIN0);
                         LED_On(GPIO_PORTB, GPIO_PIN1);

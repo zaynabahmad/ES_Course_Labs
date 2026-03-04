@@ -1,11 +1,11 @@
 main
 	LED_Init
-		GPIO_SetPinDirection
+		SetPinDirection
 	Switch_Init
-		GPIO_SetPinDirection
+		SetPinDirection
 	switch_read
-		GPIO_GetPinValue
+		GetPinValue
 	LED_Off
-		GPIO_SetPinValue
+		SetPinValue
 	LED_On
-		GPIO_SetPinValue
+		SetPinValue

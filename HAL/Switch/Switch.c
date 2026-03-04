@@ -3,9 +3,9 @@
 
 void Switch_Init(u8 Port, u8 Pin)
 {
-    GPIO_SetPinDirection(Port, Pin, GPIO_INPUT);
+    SetPinDirection(Port, Pin, INPUT);
 }
 
 u8 switch_read(u8 Port, u8 Pin) {
-	return GPIO_GetPinValue(Port, Pin);
+        return GetPinValue(Port, Pin);
 }
