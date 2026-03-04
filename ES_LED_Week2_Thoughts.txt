@@ -1,0 +1,19 @@
+**Pins required**
+Three Pins total
+
+**Pins Used**
+Input Pins 
+Two for each switch
+- RBO 
+- RB1
+
+Output Pins
+One for both LEDs 
+- RC0
+
+
+*HAL
+- BLINKFAST() Turns swtiches on and off every 0.2s
+- BLINKSLOW() Turns switches on and off every 0.5s
+
+

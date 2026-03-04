@@ -1,6 +1,10 @@
+//QUESTION FOR ENG ZAYNAP
+//Including the interfaces of files from different parts of the arch is acceptable correct ?
+#include "GPIO_interface.h"
 #include "LED_interface.h"
-#include "../../MCAL/GPIO/GPIO_interface.h"
 #include "LED_config.h"
+#include "LED_private.h"
+#include "UTIL.h"
 
 void LED_Init(u8 Port, u8 Pin)
 {
@@ -31,3 +35,21 @@ void SWITCH_Init(u8 pin)
 {
     LED_Init(LED_PORT,pin);
 }
+
+void BLINKFAST(void)
+{
+    LED_On(LED_PORT,LED_PIN);
+    SHORTDELAY
+    LED_Off(LED_PORT,LED_PIN);
+    SHORTDELAY
+}
+
+
+void BLINKSLOW(void)
+{
+    LED_On(LED_PORT,LED_PIN);
+    LONGDELAY
+    LED_Off(LED_PORT,LED_PIN);
+    LONGDELAY
+}
+

@@ -11,7 +11,8 @@ INCLUDES = -IAPP -IHAL/LED -IMCAL/GPIO -ISERVICES
 SRCS = APP/main.c \
        HAL/LED/LED.c \
        MCAL/GPIO/GPIO.c \
-       MCAL/GPIO/INT.c \
+       MCAL/INT/INT.c \
+       HAL/SWITCH/SWITCH.c \
 
 # --- Output Name ---
 TARGET = firmware.hex
