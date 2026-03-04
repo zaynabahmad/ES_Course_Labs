@@ -1,58 +1,50 @@
-#include "../HAL/Led_interface.h"
-#include "../MCAL/GPIO/gpio-interface.h"
+#include <stdint.h>
 
-#define LED1_PORT   GPIO_PORTC
-#define LED1_PIN    GPIO_PIN0
-#define LED2_PORT   GPIO_PORTC
-#define LED2_PIN    GPIO_PIN1
+#define LED_TRIS    TRISC0_bit
+#define LED_PIN     PORTC0_bit
 
-#define SW1_PORT    GPIO_PORTB
-#define SW1_PIN     GPIO_PIN0
-#define SW2_PORT    GPIO_PORTB
-#define SW2_PIN     GPIO_PIN1
+#define INT0_TRIS   TRISB0_bit
 
-static void LEDs_AllOn(void){
-    LED_On(LED1_PORT, LED1_PIN);
-    LED_On(LED2_PORT, LED2_PIN);
+volatile uint8_t g_int0_event = 0;
+
+void interrupt(void)
+{
+    if (INTCON.INTF)
+    {
+        INTCON.INTF = 0;
+        LED_PIN = !LED_PIN;
+        g_int0_event = 1;
+    }
 }
 
-static void LEDs_AllOff(void){
-    LED_Off(LED1_PORT, LED1_PIN);
-    LED_Off(LED2_PORT, LED2_PIN);
+static void INT0_Init(void)
+{
+    INT0_TRIS = 1;
+
+    OPTION_REG &= 0x7F;
+    PORTB0_bit = 1;
+
+    OPTION_REG.INTEDG = 0;
+
+    INTCON.INTF = 0;
+    INTCON.INTE = 1;
+    INTCON.GIE  = 1;
 }
 
-static unsigned char SW1_IsPressed(void){
-    return (GPIO_GetPinValue(SW1_PORT, SW1_PIN) == 0);
-}
+void main(void)
+{
+    LED_TRIS = 0;
+    LED_PIN  = 0;
 
-static unsigned char SW2_IsPressed(void){
-    return (GPIO_GetPinValue(SW2_PORT, SW2_PIN) == 0);
-}
+    INT0_Init();
 
-static void RunShortSequence_Once(void){
-    LEDs_AllOn();  Delay_ms(200);
-    LEDs_AllOff(); Delay_ms(200);
-}
-
-static void RunLongSequence_Once(void){
-    LEDs_AllOn();  Delay_ms(500);
-    LEDs_AllOff(); Delay_ms(500);
-}
-
-void main(void){
-    LED_Init(LED1_PORT, LED1_PIN);
-    LED_Init(LED2_PORT, LED2_PIN);
-
-    GPIO_SetPinDirection(SW1_PORT, SW1_PIN, GPIO_INPUT);
-    GPIO_SetPinDirection(SW2_PORT, SW2_PIN, GPIO_INPUT);
-
-    OPTION_REG &= 0x7F;   // RBPU = 0
-
-    LEDs_AllOff();
-
-    while(1){
-        if (SW1_IsPressed())       RunShortSequence_Once();
-        else if (SW2_IsPressed())  RunLongSequence_Once();
-        else                       LEDs_AllOff();
+    while(1)
+    {
+        if (g_int0_event)
+        {
+            Delay_ms(150);
+            g_int0_event = 0;
+            INTCON.INTF = 0;
+        }
     }
 }
