@@ -1,34 +1,35 @@
 void main() {
-    // 1. วแลฺฯวฯวส (Setup)
-    ANSEL  = 0x00;        // สอๆํแ วแรัฬแ แฯํฬํสวแ
+    // 1. ุงูุฅุนุฏุงุฏุงุช (Setup)
+    ANSEL  = 0x00;        
     ANSELH = 0x00;
 
-    TRISB = 0x03;      // RB0 ๆ RB1 ใฯวฮแ แแาัวํั
-    TRISD = 0x00;      // ศๆัส D ฿แๅ ใฮวัฬ แแํฯวส
+    TRISB = 0x03;     
+    TRISD = 0x00;      
 
-    OPTION_REG.F7 = 0; // สÝฺํแ วแÜ Pull-ups
+    OPTION_REG.F7 = 0; 
     WPUB = 0x03;
 
-    PORTD = 0x00;      // สีÝํั วแแํฯวส
+    PORTD = 0x00;      
 
-    while(1) {         // ศฯวํษ วแอแÞษ วแใำสใัษ
+    while(1) {         
 
-        if (PORTB.F0 == 0) { // Ýอี วแาัวั วแรๆแ
+        if (PORTB.F0 == 0) { 
             PORTD = 0x03;
             delay_ms(200);
             PORTD = 0x00;
             delay_ms(200);
         }
-        else if (PORTB.F1 == 0) { // Ýอี วแาัวั วแหวไํ
+        else if (PORTB.F1 == 0) {
             PORTD = 0x03;
             delay_ms(500);
             PORTD = 0x00;
             delay_ms(500);
         }
         else {
-            PORTD = 0x00;    // แๆ ใÝํิ ึÛุ
+            PORTD = 0x00;    
         }
 
-    } // ÞÝแษ วแÜ while
+    } 
 
-} // ÞÝแษ วแÜ main (วสร฿ฯํ ลไ วแÞๆำ ฯๅ ใๆฬๆฯ ๆใÝํิ อวฬษ ศฺฯๅ)}
+
+} // ูููุฉ ุงูู€ main (ุงุชุฃูุฏู ุฅู ุงูููุณ ุฏู ู…ูุฌูุฏ ูู…ููุด ุญุงุฌุฉ ุจุนุฏู)}
