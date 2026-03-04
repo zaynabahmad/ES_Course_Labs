@@ -1,28 +1,78 @@
-/*
-* APPLICATION LAYER
-
-
-*/
+/* Include HAL layer */
 #include "../HAL/LED/LED_interface.h"
-#include "../MCAL/GPIO/GPIO_interface.h"
+#include "../HAL/SWITCH/SWITCH.h"
 
-void delay(void)
+/* Include MCAL layer */
+#include "../MCAL/TIMER0/TIMER0.h"
+#include "../MCAL/EXT_INT/ext_int0.h"
+
+/* Define our hardware pins for readability */
+#define LED_PORT 2       /* PORTC */
+#define TIMER_LED_PIN 0  /* LED toggled by Timer0 */
+#define BUTTON_LED_PIN 1 /* LED toggled by External Interrupt */
+#define SWITCH_PIN 0     /* RB0 */
+
+/* =====================================================================
+ * EXTERNAL ISR DECLARATIONS
+ * We declare these here so main() knows they exist in your MCAL files.
+ * ===================================================================== */
+extern void TIMER0_ISR(void);
+extern void EXT_INT0_ISR(void);
+
+/* =====================================================================
+ * CALLBACK FUNCTIONS (Application Logic)
+ * ===================================================================== */
+void App_Timer_Action(void)
 {
-    unsigned int i;
-    for (i = 0; i < 50000; i++)
-        ;
+    LED_Toggle(LED_PORT, TIMER_LED_PIN);
 }
 
-void main1()
+void App_Button_Action(void)
 {
-    LED_Init(GPIO_PORTB, GPIO_PIN0);
+    /* Toggles immediately when the button is pressed via EXT_INT0 */
+    LED_Toggle(LED_PORT, BUTTON_LED_PIN);
+}
 
+/* =====================================================================
+ * MASTER INTERRUPT SERVICE ROUTINE
+ * This is the ONLY 'interrupt' function allowed in the entire project!
+ * ===================================================================== */
+void interrupt(void)
+{
+    /* 1. Check and handle Timer0 Interrupts */
+    TIMER0_ISR();
+
+    /* 2. Check and handle External Button Interrupts */
+    EXT_INT0_ISR();
+}
+
+/* =====================================================================
+ * MAIN PROGRAM
+ * ===================================================================== */
+void main(void)
+{
+    /* 1. Initialize HAL Components */
+    LED_Init(LED_PORT, TIMER_LED_PIN);
+    LED_Init(LED_PORT, BUTTON_LED_PIN);
+    SWITCH_Init(SWITCH_PIN);
+
+    /* 2. Initialize and Configure MCAL: TIMER0 */
+    TIMER0_Init();
+    TIMER0_SetCallback(App_Timer_Action);
+    TIMER0_EnableInterrupt();
+
+    /* 3. Initialize and Configure MCAL: EXT_INT0 */
+    EXT_INT0_Init();
+    EXT_INT0_SetEdge(EXT_INT0_FALLING_EDGE);
+    EXT_INT0_SetCallback(App_Button_Action);
+    EXT_INT0_Enable();
+
+    /* 4. Infinite Loop */
     while (1)
     {
-        LED_On(GPIO_PORTB, GPIO_PIN0);
-        delay();
-
-        LED_Off(GPIO_PORTB, GPIO_PIN0);
-        delay();
+        /* The main loop does absolutely nothing!
+         * The CPU rests while the hardware timers and external pins
+         * handle all the timing and user input in the background.
+         */
     }
 }

@@ -2,9 +2,15 @@ main
 	LED_Init
 		GPIO_SetPinDirection
 	SWITCH_Init
+	TIMER0_Init
+	TIMER0_SetCallback
+	TIMER0_EnableInterrupt
 	EXT_INT0_Init
 	EXT_INT0_SetEdge
 	EXT_INT0_SetCallback
 	EXT_INT0_Enable
 interrupt
-	____DoIFC
+	TIMER0_ISR
+		____DoIFC
+	EXT_INT0_ISR
+		____DoIFC

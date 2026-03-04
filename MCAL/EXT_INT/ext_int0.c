@@ -53,12 +53,12 @@ void EXT_INT0_SetCallback(void (*ptr)(void))
  * Notice we still use the 'interrupt' keyword if we are targeting mikroC later,
  * but we use our custom bit math to check the flags!
  */
-void interrupt(void)
+void EXT_INT0_ISR(void)
 {
     /* Check if External Interrupt 0 flag is triggered */
     if (GET_BIT(INTCON, INTCON_INTF) == 1)
     {
-
+ 
         /* 1. Clear the flag immediately so it doesn't trigger infinitely */
         CLR_BIT(INTCON, INTCON_INTF);
 
