@@ -1,27 +1,29 @@
-/*
-* APPLICATION LAYER
-
-
-*/
 #include "../HAL/LED/LED_interface.h"
+#include "../HAL/Switch/switch_interface.h"
 #include "../MCAL/GPIO/GPIO_interface.h"
+#include "../MCAL/Interrupt/interrupt_Interface.h"
 
-void delay(void)
+void App_Toggle_LED(void)
 {
-    unsigned int i;
-    for(i = 0; i < 50000; i++);
+    LED_Toggle(GPIO_PORTB, GPIO_PIN0);
 }
 
-void main()
+void main(void)
 {
+    GPIO_Init();
+
     LED_Init(GPIO_PORTB, GPIO_PIN0);
 
-    while(1)
-    {
-        LED_On(GPIO_PORTB, GPIO_PIN0);
-        delay();
+    SWITCH_Init(GPIO_PORTB, GPIO_PIN0);
 
-        LED_Off(GPIO_PORTB, GPIO_PIN0);
-        delay();
+    EXT_INT0_Init();
+    EXT_INT0_SetEdge(RISE);
+
+    EXT_INT0_SetCallback(App_Toggle_LED);
+
+    EXT_INT0_Enable();
+
+    while (1)
+    {
     }
 }

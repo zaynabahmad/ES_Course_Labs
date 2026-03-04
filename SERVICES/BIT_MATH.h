@@ -5,5 +5,6 @@
 #define CLR_BIT(REG,BIT)      ( (REG) &= ~(1U << (BIT)) )
 #define TOG_BIT(REG,BIT)      ( (REG) ^=  (1U << (BIT)) )
 #define GET_BIT(REG,BIT)      ( ((REG) >> (BIT)) & 1U )
+#define CHECK_BIT(REG,BIT)    ( ((REG) >> (BIT)) & 1U ) 
 
 #endif
