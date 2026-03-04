@@ -3,6 +3,7 @@
 * LAB 1 - LED Sequences
 */
 
+#include "lab1.h"
 #include "../HAL/LED/LED_interface.h"
 #include "../MCAL/GPIO/GPIO_interface.h"
 

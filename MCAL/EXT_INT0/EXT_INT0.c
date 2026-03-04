@@ -57,7 +57,7 @@ void EXT_INT0_SetCallback(void (*ptr)(void))
 }
 
 
-void interrupt INT0_ISR(void) @ 0x04
+void interrupt (void)
 {
     if(GET_BIT(INTCON, INTF))
     {

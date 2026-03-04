@@ -2,6 +2,7 @@
 * LAB 2 - External Interrupt
 */
 
+#include "lab2.h"
 #include "../HAL/LED/LED_interface.h"
 #include "../HAL/SWITCH/SWITCH_interface.h"
 #include "../MCAL/EXT_INT0/EXT_INT0_interface.h"

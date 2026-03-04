@@ -3,14 +3,12 @@
 
 #include "../../SERVICES/STD_TYPES.h"
 
-/* Port IDs */
 #define GPIO_PORTA   0
 #define GPIO_PORTB   1
 #define GPIO_PORTC   2
 #define GPIO_PORTD   3
 #define GPIO_PORTE   4
 
-/* Pin IDs */
 #define GPIO_PIN0    0
 #define GPIO_PIN1    1
 #define GPIO_PIN2    2
