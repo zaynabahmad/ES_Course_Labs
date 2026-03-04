@@ -8,8 +8,8 @@ void Toggle_LED()
 {
     toggle_flag = 1;
 }
-
-void main()
+// toggle interrupt
+/*void main()
 {
     LED_Init(GPIO_PORTC,0);
     SWITCH_Init(GPIO_PORTB,0);
@@ -24,4 +24,57 @@ void main()
                 toggle_flag = 0;
              }
     }
+}      */
+
+
+//
+void ShortSequence()
+{
+    LED_On(GPIO_PORTC, 0);
+    LED_On(GPIO_PORTC, 1);
+    delay_ms(200);
+
+    LED_Off(GPIO_PORTC, 0);
+    LED_Off(GPIO_PORTC, 1);
+    delay_ms(200);
+}
+
+
+void LongSequence()
+{
+    LED_On(GPIO_PORTC, 0);
+    LED_On(GPIO_PORTC, 1);
+    delay_ms(500);
+
+    LED_Off(GPIO_PORTC, 0);
+    LED_Off(GPIO_PORTC, 1);
+    delay_ms(500);
+}
+
+void main()
+{
+
+LED_Init(GPIO_PORTC, 0);
+LED_Init(GPIO_PORTC, 1);
+
+SWITCH_Init(GPIO_PORTB, 0);
+SWITCH_Init(GPIO_PORTB, 1);
+while(1)
+{
+    if(SWITCH_Read(GPIO_PORTB, 0)&&!SWITCH_Read(GPIO_PORTB, 1) )
+    {
+        ShortSequence();
+    }
+
+    else if(SWITCH_Read(GPIO_PORTB, 1)&&!SWITCH_Read(GPIO_PORTB, 0))
+    {
+        LongSequence();
+    }
+
+    else
+    {
+        LED_Off(GPIO_PORTC, 0);
+        LED_Off(GPIO_PORTC, 1);
+    }
+}
 }
