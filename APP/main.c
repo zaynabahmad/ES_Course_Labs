@@ -9,14 +9,15 @@
 void delay(void)
 {
     unsigned int i;
-    for(i = 0; i < 50000; i++);
+    for (i = 0; i < 50000; i++)
+        ;
 }
 
-void main()
+void main1()
 {
     LED_Init(GPIO_PORTB, GPIO_PIN0);
 
-    while(1)
+    while (1)
     {
         LED_On(GPIO_PORTB, GPIO_PIN0);
         delay();

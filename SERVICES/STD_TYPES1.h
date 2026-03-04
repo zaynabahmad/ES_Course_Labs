@@ -1,5 +1,5 @@
-#ifndef STD_TYPES_H
-#define STD_TYPES_H
+#ifndef STD_TYPES1_H
+#define STD_TYPES1_H
 
 /* Standard Data Types */
 typedef unsigned char uint8;

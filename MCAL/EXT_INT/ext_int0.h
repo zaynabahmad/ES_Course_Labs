@@ -1,7 +1,7 @@
 #ifndef EXT_INT0_H
 #define EXT_INT0_H
 
-#include "SERVICES/STD_TYPES1.h"
+#include "../../SERVICES/STD_TYPES1.h"
 
 /* Macros for Edge Selection (Bonus Requirement) */
 #define EXT_INT0_FALLING_EDGE 0
