@@ -1,5 +1,10 @@
 #ifndef LED_H
 #define LED_H
-void LED_Init(void);
-void LED_Toggle(void);
+#include "Std_Types.h"
+
+void LED_Init(uint8 pin);
+void LED_On(uint8 pin);
+void LED_Off(uint8 pin);
+void LED_Toggle(uint8 pin);
+
 #endif
