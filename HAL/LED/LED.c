@@ -1,27 +1,40 @@
-#include "LED_interface.h"
-#include "../../MCAL/GPIO/GPIO_interface.h"
+//#include "LED.h"
 
-void LED_Init(u8 Port, u8 Pin)
+//void LED_Init(void)
+//{
+//    TRISD.B0 = 0;   // RD0 output
+//    PORTD.B0 = 0;   // LED OFF
+//}
+
+//void LED_Toggle(void)
+//{
+//    PORTD.B0 = ~PORTD.B0;
+//}
+
+#include "LED.h"
+
+void LED_Init(void)
 {
-    GPIO_SetPinDirection(Port, Pin, GPIO_OUTPUT);
+    TRISD.B0 = 0;   // LED1 output (RD0)
+    TRISD.B1 = 0;   // LED2 output (RD1)
+    PORTD.B0 = 0;
+    PORTD.B1 = 0;
 }
 
-void LED_On(u8 Port, u8 Pin)
+void LED_On(void)
 {
-    GPIO_SetPinValue(Port, Pin, GPIO_HIGH);
+    PORTD.B0 = 1;
+    PORTD.B1 = 1;
 }
 
-void LED_Off(u8 Port, u8 Pin)
+void LED_Off(void)
 {
-    GPIO_SetPinValue(Port, Pin, GPIO_LOW);
+    PORTD.B0 = 0;
+    PORTD.B1 = 0;
 }
 
-void LED_Toggle(u8 Port, u8 Pin)
+void LED_Toggle(void)
 {
-    u8 current = GPIO_GetPinValue(Port, Pin);
-
-    if(current == GPIO_HIGH)
-        GPIO_SetPinValue(Port, Pin, GPIO_LOW);
-    else
-        GPIO_SetPinValue(Port, Pin, GPIO_HIGH);
+    PORTD.B0 ^= 1;
+    PORTD.B1 ^= 1;
 }

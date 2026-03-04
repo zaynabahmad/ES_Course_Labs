@@ -1,0 +1,12 @@
+main
+	LED_Init
+	SWITCH_Init
+	SWITCH1_Read
+	Short_Sequence
+		LED_On
+		LED_Off
+	SWITCH2_Read
+	Long_Sequence
+		LED_On
+		LED_Off
+	LED_Off
