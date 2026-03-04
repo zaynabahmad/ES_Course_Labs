@@ -1,0 +1,12 @@
+#ifndef EXT_INT_CONFIG_H
+#define EXT_INT_CONFIG_H
+
+#define EXT_INT_FALLING_EDGE   0
+#define EXT_INT_RISING_EDGE    1
+
+#define EXT_INT0_EDGE    EXT_INT_FALLING_EDGE  
+
+#define EXT_INT0_DEBOUNCE_EN   1
+#define EXT_INT0_DEBOUNCE_MS   0
+
+#endif 

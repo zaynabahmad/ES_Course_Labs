@@ -2,7 +2,7 @@
 *.asm
 *.cp
 *.mcl
-*.hex
+
 *.lst
 *.log
 *.bmk
@@ -14,6 +14,8 @@
 *.user.dic
 *.callertable.txt
 *.ini
+
+.vscode
 
 # OS files
 .DS_Store
