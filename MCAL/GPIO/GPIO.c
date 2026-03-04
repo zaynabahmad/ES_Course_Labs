@@ -138,54 +138,17 @@ void GPIO_Init(void)
     PORTB = GPIO_PORTB_INIT_VAL;
 }
 
-
-void EXT_INT0_Init(void)
+void TIMER_INT(void)
 {
-    SET_BIT(TRISB, 0);
-    CLR_BIT(INTCON, 1); // INTF
-    CLR_BIT(INTCON, 4); // INTE
-    SET_BIT(INTCON, 7); // GIE
-    CLR_BIT(OPTION_REG, 6);   // INTEGD -> Falling
+     SET_BIT(INTCON, 5);
+     CLR_BIT(OPTION_REG, 5);
+     SET_BIT(INTCON, 7);
+     CLR_BIT(OPTION_REG, 3);
 
+     SET_BIT(OPTION_REG, 0);
+     SET_BIT(OPTION_REG, 1);
+     SET_BIT(OPTION_REG, 2);
 
-
-
-}
-
-void EXT_INT0_Enable(void)
-{
-    CLR_BIT(INTCON, 1); // INTF
-    SET_BIT(INTCON, 4); // INTE
-}
-
-void EXT_INT0_Disable(void)
-{
-    CLR_BIT(INTCON, 4);
-}
-
-void EXT_INT0_SetEdge(u8 edge_type)
-{
-    if(edge_type == RISING_EDGE) {
-        SET_BIT(OPTION_REG, 6);   // INTEGD -> Rising
-    } else {
-        CLR_BIT(OPTION_REG, 6);   // INTEGD -> Falling
-    }
-}
-
-static void (*EXT_INT0_Callback)(void) = 0;
-
-void EXT_INT0_SetCallback(void (*ptr)(void))
-{
-    EXT_INT0_Callback = ptr;
-}
-
-
-void interrupt()
-{
-    if(GET_BIT(INTCON, 1)) {
-        CLR_BIT(INTCON, 1);
-        if(EXT_INT0_Callback) {
-            EXT_INT0_Callback();
-        }
-    }
-}
+     CLR_BIT(TMR0, 0);
+ 
+ }

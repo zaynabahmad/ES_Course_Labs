@@ -6,6 +6,10 @@
 #include "../HAL/LED/LED_interface.h"
 #include "../MCAL/GPIO/GPIO_interface.h"
 #include "../HAL/SWITCH/SWITCH_interface.h"
+#include "../SERVICES/BIT_MATH.h"
+
+ #include "../HAL/BUTTON/BUTTON_interface.h"
+#include "../MCAL/EXTI/EXTI_interface.h"
 
 void delay(void)
 {
@@ -19,17 +23,77 @@ void ButtonPressedCallback(void)
     LED_Toggle(GPIO_PORTC, GPIO_PIN0);
 }
 
+
+void Short_Sequence()
+{
+   LED_On(GPIO_PORTB, GPIO_PIN0);
+   LED_On(GPIO_PORTB, GPIO_PIN1);
+   Delay_ms(200);
+   LED_Off(GPIO_PORTB, GPIO_PIN0);
+   LED_Off(GPIO_PORTB, GPIO_PIN1);
+   Delay_ms(200);
+}
+
+void Long_Sequence()
+{
+   LED_On(GPIO_PORTB, GPIO_PIN0);
+   LED_On(GPIO_PORTB, GPIO_PIN1);
+   Delay_ms(500);
+   LED_Off(GPIO_PORTB, GPIO_PIN0);
+   LED_Off(GPIO_PORTB, GPIO_PIN1);
+   Delay_ms(500);
+}
+
+
+
+
+
 void main()
 {
-    EXT_INT0_Init();
-    LED_Init(GPIO_PORTC, GPIO_PIN0);
+
+    // Interrupt task \\
+
+    /*LED_Init(GPIO_PORTC, GPIO_PIN0);
     SWITCH_Init(GPIO_PORTB, GPIO_PIN0);
-    EXT_INT0_Enable();
+
     EXT_INT0_SetCallback(ButtonPressedCallback);
+    EXT_INT0_Init();
+    EXT_INT0_Enable();*/
+
+
+
+    /* LED_Init(GPIO_PORTC, GPIO_PIN0);
+    TIMER_INT();
+    EXT_INT0_SetCallback(ButtonPressedCallback); */
+
+
+
+
+    // Push Button Task \\
+    
+    BUTTON_Init(GPIO_PORTB, GPIO_PIN2);
+    BUTTON_Init(GPIO_PORTB, GPIO_PIN3);
+    LED_Init(GPIO_PORTB, GPIO_PIN0);
+    LED_Init(GPIO_PORTB, GPIO_PIN1);
+
+
 
 
     while(1)
     {
-
+      if(Button_GetState(GPIO_PORTB, GPIO_PIN2) == 1)
+    {
+        Short_Sequence();
+    }
+    else if(Button_GetState(GPIO_PORTB, GPIO_PIN3) == 1)
+    {
+        Long_Sequence();
+    }
+    else
+    {
+        LED_Off(GPIO_PORTB, GPIO_PIN0);
+        LED_Off(GPIO_PORTB, GPIO_PIN1);
+    }
+    
     }
 }

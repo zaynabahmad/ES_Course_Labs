@@ -17,6 +17,7 @@
 *.brk
 *.cfg
 *.txt
+*.mcpigroup
 
 # OS files
 .DS_Store

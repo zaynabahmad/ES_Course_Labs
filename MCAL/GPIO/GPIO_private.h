@@ -15,11 +15,9 @@
 #define PORTD   (*((volatile u8*)0x08))
 #define PORTE   (*((volatile u8*)0x09))
 
-#define INTCON  (*((volatile u8*)0x8B))
-#define OPTION_REG  (*((volatile u8*)0x181))
 
-#define RISING_EDGE  1
-#define FALLING_EDGE 0
+#define TMR0 (*((volatile u8*)0x01))
+
 
 
 #endif
