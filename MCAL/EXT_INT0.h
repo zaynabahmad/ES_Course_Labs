@@ -1,8 +1,8 @@
 #ifndef EXT_INT0_H
 #define EXT_INT0_H
 
-#include "Std_Types.h"
-#include "EXT_INT0_Cfg.h" // Pulling in the configuration file
+#include "../SERVICES/Std_Types.h"
+#include "EXT_INT0_Cfg.h" 
 
 void EXT_INT0_Init(void);
 void EXT_INT0_Enable(void);
