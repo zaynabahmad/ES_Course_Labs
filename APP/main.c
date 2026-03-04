@@ -1,7 +1,7 @@
-#include "Std_Types.h"
-#include "EXT_INT0.h"
-#include "LED.h"
-#include "Switch.h"
+#include "../SERVICES/Std_Types.h"             
+#include "../MCAL/EXT_INT0.h"         
+#include "../HAL/LED/LED.h"           
+#include "../HAL/Switch/Switch.h"     
 
 void App_InterruptLogic(void) {
     Delay_ms(30);
