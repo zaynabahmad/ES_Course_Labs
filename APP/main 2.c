@@ -1,3 +1,7 @@
+#include "../HAL/LED/LED.h"
+#include "../HAL/Switch/SWITCH.h"
+#include "../MCAL/GPIO/GPIO_interface.h"
+
 void main() {
 
    TRISB.B1 = 0;   // LED1 output
