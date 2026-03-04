@@ -1,11 +1,23 @@
+#include "D:\embeddedsystems\Labs\LABTASK2\Project\MCAL\GPIO.h"
 #include "LED.h"
 
-void led_Init(void)
+void LED_Init()
 {
-    PORTC.F0 = 0;
-    TRISC.F0 = 0;
+     GPIO_SetPinDirection(&TRISB, 0, OUTPUT);
+     GPIO_SetPinDirection(&TRISB, 1, OUTPUT);
 }
-void led_Toggle(void)
+
+void LED_On(unsigned short pin)
 {
-    PORTC.F0 = ~PORTC.F0;
+     GPIO_WritePin(&PORTB, pin, HIGH);
+}
+
+void LED_Off(unsigned short pin)
+{
+     GPIO_WritePin(&PORTB, pin, LOW);
+}
+
+void LED_Toggle(unsigned short pin)
+{
+     PORTB ^= (1 << pin);
 }
