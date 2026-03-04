@@ -1,5 +1,7 @@
 #include "LED_interface.h"
 #include "../../MCAL/GPIO/GPIO_interface.h"
+#include "LED_interface.h"
+#include "../../MCAL/GPIO/GPIO_interface.h"
 
 void LED_Init(u8 Port, u8 Pin)
 {
