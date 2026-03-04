@@ -9,7 +9,7 @@ void app_toggle_led(void) {
 }
 
 
-void main() {
+int main() {
      LED_Init(GPIO_PORTB, GPIO_PIN1);
      Switch_Init(GPIO_PORTB, GPIO_PIN0);
      
@@ -20,4 +20,5 @@ void main() {
      
      while(1) {
      }
+     return 0;
 }

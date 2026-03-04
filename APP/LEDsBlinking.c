@@ -7,10 +7,15 @@
 #include "../HAL/LED/LED_interface.h"
 #include "../HAL/Switch/Switch_interface.h"
 #include "../MCAL/GPIO/GPIO_interface.h"
+#include "../MCAL/MCU_Registers.h"
 
-void main()
+
+void Delay_ms(u8 milliseconds);
+
+
+int main()
 {
-        ADCON1 = 0x06;
+        ADCON1_REG = 0x06;
         LED_Init(GPIO_PORTB, GPIO_PIN0);
         LED_Init(GPIO_PORTB, GPIO_PIN1);
         Switch_Init(GPIO_PORTA, GPIO_PIN0);
@@ -40,4 +45,5 @@ void main()
                         Delay_ms(500);
                 }
     }
+    return 0;
 }

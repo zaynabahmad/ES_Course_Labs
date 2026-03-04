@@ -19,4 +19,7 @@
 #define OPTION_REG (*((volatile u8*)0x81))
 
 
+
+#define ADCON1_REG  (*(volatile unsigned char *)0x9F)
+
 #endif
