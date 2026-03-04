@@ -1,12 +1,7 @@
 /*
  * APPLICATION LAYER - TASK 1
  * LED Sequences Controlled by Switches
- *
- * Hardware Configuration:
- * - LED1: PORTB, PIN0
- * - LED2: PORTB, PIN1
- * - Switch1 (Short sequence): PORTA, PIN0
- * - Switch2 (Long sequence): PORTA, PIN1
+
  */
 
 #include "../HAL/LED/LED_interface.h"
