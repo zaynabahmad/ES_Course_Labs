@@ -22,6 +22,6 @@ void main()
         delay();
 
         LED_Off(GPIO_PORTB, GPIO_PIN0);
-        delay();
+        delay(30);
     }
 }
