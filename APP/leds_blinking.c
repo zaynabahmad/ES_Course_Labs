@@ -1,6 +1,6 @@
 #include "../HAL/LED/LED_interface.h"
 #include "../MCAL/GPIO/GPIO_interface.h"
-#include <util/delay.h>
+
 
 /* LED Definitions */
 #define LED1_PORT     GPIO_PORTB
@@ -40,11 +40,11 @@ int main(void)
         {
             LED_On(LED1_PORT, LED1_PIN);
             LED_On(LED2_PORT, LED2_PIN);
-            _delay_ms(200);
+            Delay_ms(200);
 
             LED_Off(LED1_PORT, LED1_PIN);
             LED_Off(LED2_PORT, LED2_PIN);
-            _delay_ms(200);
+            Delay_ms(200);
         }
 
         /* Long Sequence (0.5s) */
@@ -52,11 +52,11 @@ int main(void)
         {
             LED_On(LED1_PORT, LED1_PIN);
             LED_On(LED2_PORT, LED2_PIN);
-            _delay_ms(500);
+            Delay_ms(500);
 
             LED_Off(LED1_PORT, LED1_PIN);
             LED_Off(LED2_PORT, LED2_PIN);
-            _delay_ms(500);
+            Delay_ms(500);
         }
     }
 }
