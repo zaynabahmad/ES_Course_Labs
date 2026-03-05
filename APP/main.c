@@ -6,7 +6,7 @@
 #include "../HAL/LED/LED_interface.h"
 #include "../HAL/SWITCH/SWITCH_interface.h"
 #include "../MCAL/GPIO/GPIO_interface.h"
-#include "../MCAL/EXT_INTO/EXT_INT0_interface.h"
+#include "../MCAL/EXIT_INTO/EXT_INT0_interface.h"
 
 void Toggle_LED_On_Interrupt(void)
 {
