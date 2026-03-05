@@ -2,10 +2,6 @@
 #define EXT_INT0_H
 #define RISING_EDGE  1
 #define FALLING_EDGE 0
-#define TRISB_REG   (*((volatile uint8*)0x86))
-#define INTCON_REG  (*((volatile uint8*)0x0B))
-#define OPTION_REG  (*((volatile uint8*)0x81))
-
 
 #include "../Services Layer/Std_Types.h"
 
@@ -17,5 +13,6 @@ void EXT_INT0_SetCallback(void (*ptr)(void));
 
 
 #endif
+
 
 
