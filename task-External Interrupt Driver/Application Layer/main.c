@@ -2,15 +2,18 @@
 #include "../Services Layer/Std_Types.h"
 #include "../HAL Layer/SWITCH.h"
 
+#define PORTD_REG (*((volatile uint8*)0x08))
+#define TRISD_REG (*((volatile uint8*)0x88))
+
 
 void App_ToggleLED(void) {
-    PORTD.F0 = ~PORTD.F0;
+  PORTD_REG ^= (1 << 0);
 }
 
 void main() {
 
-    TRISD.F0 = 0;
-    PORTD.F0 = 0;
+    TRISD_REG &= ~(1 << 0);
+    PORTD_REG &= ~(1 << 0);
 
 
     SWITCH_Init(0);
@@ -25,4 +28,5 @@ void main() {
     while(1) {
 
     }
+
 }
