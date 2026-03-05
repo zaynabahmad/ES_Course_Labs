@@ -12,5 +12,6 @@
  #define INTF_BIT    1u   
  
 #define INTEDG_BIT  6u  
+#define RBPU_BIT    7u 
  
  #endif
