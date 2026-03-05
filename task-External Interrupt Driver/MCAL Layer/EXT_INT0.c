@@ -1,5 +1,9 @@
 #include "EXT_INT0.h"
 
+#define TRISB_REG   (*((volatile uint8*)0x86))
+#define INTCON_REG  (*((volatile uint8*)0x0B))
+#define OPTION_REG  (*((volatile uint8*)0x81))
+
 static void (*INT0_Callback)(void) = 0;
 
 void EXT_INT0_Init(void) {
@@ -38,3 +42,4 @@ void interrupt() {
     }
 
 }
+
