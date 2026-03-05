@@ -1,40 +1,40 @@
 #include "EXT_INT0.h"
-#include "../Services Layer/Std_Types.h"
 
-static PtrToFunc INT0_CallBack = 0;
+static void (*INT0_Callback)(void) = 0;
 
 void EXT_INT0_Init(void) {
-    TRISB0_bit = 1;
-    INTF_bit = 0;
+   TRISB_REG  |=  (1 << 0);
+   INTCON_REG &= ~(1 << 1);
 }
 
 void EXT_INT0_Enable(void) {
-    GIE_bit = 1;
-    INTE_bit = 1;
+   INTCON_REG |=  (1 << 4);
+    INTCON_REG |=  (1 << 7);
 }
 
 void EXT_INT0_Disable(void) {
-    INTE_bit = 0;
+   INTCON_REG &= ~(1 << 4);
 }
 
 void EXT_INT0_SetEdge(uint8 edge_type) {
-    if (edge_type == RISING_EDGE) {
-        INTEDG_bit = 1;
-    } else {
-        INTEDG_bit = 0;
-    }
+   if(edge_type == RISING_EDGE)
+        OPTION_REG |=  (1 << 6);   
+    else if(edge_type == FALLING_EDGE)
+        OPTION_REG &= ~(1 << 6);   
+    
 }
 
-void EXT_INT0_SetCallback(PtrToFunc ptr) {
-    INT0_CallBack = ptr;
+void EXT_INT0_SetCallback(void (*ptr)(void)) {
+  INT0_Callback = ptr;
 }
 
 
 void interrupt() {
-    if (INTF_bit == 1) {
-        if (INT0_CallBack != 0) {
-            INT0_CallBack();
+    if((INTCON_REG & (1 << 1)) != 0) {
+        if(INT0_Callback != 0) {
+            INT0_Callback();
         }
-        INTF_bit = 0;
+       INTCON_REG &= ~(1 << 1);
     }
+
 }
