@@ -9,8 +9,9 @@ void Toggle_LED() {
 
 void main() {
     LED_Init(LED_PIN);   // Set RB1 as output 
-    PORTB.F1 = 0;        // Initial state OFF
-
+     LED_Off(LED_PIN);  
+     PORTB.F1 = 0;     
+     
     EXT_INT0_Init();
     EXT_INT0_SetEdge(EXT_INT0_RISING_EDGE); // [cite: 19]
     EXT_INT0_SetCallback(Toggle_LED);

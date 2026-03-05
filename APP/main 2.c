@@ -1,48 +1,51 @@
 #include "../HAL/LED/LED.h"
 #include "../HAL/Switch/SWITCH.h"
-#include "../MCAL/GPIO/GPIO_interface.h"
 
-void main() {
+#define LED1     1
+#define LED2     2
+#define SWITCH1  3
+#define SWITCH2  4
 
-   TRISB.B1 = 0;   // LED1 output
-   TRISB.B2 = 0;   // LED2 output
+void main()
+{
+    LED_Init(LED1);
+    LED_Init(LED2);
 
-   TRISB.B3 = 1;   // Switch1 input
-   TRISB.B4 = 1;   // Switch2 input
+    SWITCH_Init(SWITCH1);
+    SWITCH_Init(SWITCH2);
 
-   PORTB.B1 = 0;
-   PORTB.B2 = 0;
+    LED_Off(LED1);
+    LED_Off(LED2);
 
-   while(1) {
+    while(1)
+    {
+        // Short sequence (0.2s)
+        if(SWITCH_Read(SWITCH1))
+        {
+            LED_On(LED1);
+            LED_On(LED2);
+            Delay_ms(200);
 
-      // Short sequence (0.2s)
-      if(PORTB.B3 == 1) {
+            LED_Off(LED1);
+            LED_Off(LED2);
+            Delay_ms(200);
+        }
 
-         PORTB.B1 = 1;
-         PORTB.B2 = 1;
-         Delay_ms(200);
+        // Long sequence (0.5s)
+        else if(SWITCH_Read(SWITCH2))
+        {
+            LED_On(LED1);
+            LED_On(LED2);
+            Delay_ms(500);
 
-         PORTB.B1 = 0;
-         PORTB.B2 = 0;
-         Delay_ms(200);
-      }
-
-      // Long sequence (0.5s)
-      else if(PORTB.B4 == 1) {
-
-         PORTB.B1 = 1;
-         PORTB.B2 = 1;
-         Delay_ms(500);
-
-         PORTB.B1 = 0;
-         PORTB.B2 = 0;
-         Delay_ms(500);
-      }
-
-      // No switch pressed
-      else {
-         PORTB.B1 = 0;
-         PORTB.B2 = 0;
-      }
-   }
+            LED_Off(LED1);
+            LED_Off(LED2);
+            Delay_ms(500);
+        }
+        else
+        {
+            LED_Off(LED1);
+            LED_Off(LED2);
+        }
+    }
 }
