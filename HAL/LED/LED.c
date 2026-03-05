@@ -1,24 +1,36 @@
 #include "LED.h"
+#include "../../MCAL/GPIO/GPIO_interface.h"
 
 void LED_Init(uint8 pin) {
-    if (pin == 0) { TRISD0_bit = 0; RD0_bit = 0; } // Sequence LED 1
-    if (pin == 1) { TRISD1_bit = 0; RD1_bit = 0; } // Sequence LED 2
-    if (pin == 2) { TRISD2_bit = 0; RD2_bit = 0; } // Interrupt LED
+    if (pin == 0) GPIO_SetPinDirection(GPIO_PORTD, GPIO_PIN0, GPIO_OUTPUT);
+    if (pin == 1) GPIO_SetPinDirection(GPIO_PORTD, GPIO_PIN1, GPIO_OUTPUT);
+    if (pin == 2) GPIO_SetPinDirection(GPIO_PORTD, GPIO_PIN2, GPIO_OUTPUT);
 }
 
 void LED_On(uint8 pin) {
-    if (pin == 0) { RD0_bit = 1; }
-    if (pin == 1) { RD1_bit = 1; }
-    if (pin == 2) { RD2_bit = 1; }
+    if (pin == 0) GPIO_SetPinValue(GPIO_PORTD, GPIO_PIN0, GPIO_HIGH);
+    if (pin == 1) GPIO_SetPinValue(GPIO_PORTD, GPIO_PIN1, GPIO_HIGH);
+    if (pin == 2) GPIO_SetPinValue(GPIO_PORTD, GPIO_PIN2, GPIO_HIGH);
 }
+
 void LED_Off(uint8 pin) {
-    if (pin == 0) { RD0_bit = 0; }
-    if (pin == 1) { RD1_bit = 0; }
-    if (pin == 2) { RD2_bit = 0; }
+    if (pin == 0) GPIO_SetPinValue(GPIO_PORTD, GPIO_PIN0, GPIO_LOW);
+    if (pin == 1) GPIO_SetPinValue(GPIO_PORTD, GPIO_PIN1, GPIO_LOW);
+    if (pin == 2) GPIO_SetPinValue(GPIO_PORTD, GPIO_PIN2, GPIO_LOW);
 }
 
 void LED_Toggle(uint8 pin) {
-    if (pin == 0) { RD0_bit = ~RD0_bit; }
-    if (pin == 1) { RD1_bit = ~RD1_bit; }
-    if (pin == 2) { RD2_bit = ~RD2_bit; }
+    u8 current_val = 0;
+    if (pin == 0) { 
+        current_val = GPIO_GetPinValue(GPIO_PORTD, GPIO_PIN0); 
+        GPIO_SetPinValue(GPIO_PORTD, GPIO_PIN0, !current_val); 
+    }
+    if (pin == 1) { 
+        current_val = GPIO_GetPinValue(GPIO_PORTD, GPIO_PIN1); 
+        GPIO_SetPinValue(GPIO_PORTD, GPIO_PIN1, !current_val); 
+    }
+    if (pin == 2) { 
+        current_val = GPIO_GetPinValue(GPIO_PORTD, GPIO_PIN2); 
+        GPIO_SetPinValue(GPIO_PORTD, GPIO_PIN2, !current_val); 
+    }
 }

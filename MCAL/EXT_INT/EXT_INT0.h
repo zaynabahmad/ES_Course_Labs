@@ -1,7 +1,7 @@
 #ifndef EXT_INT0_H
 #define EXT_INT0_H
 
-#include "../SERVICES/Std_Types.h"
+#include "../SERVICES/STD_TYPES.h"
 #include "EXT_INT0_Cfg.h" 
 
 void EXT_INT0_Init(void);
