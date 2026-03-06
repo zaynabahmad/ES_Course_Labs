@@ -2,7 +2,7 @@
 #include "GPIO_private.h"
 #include "GPIO_config.h"
 
-#include "BIT_MATH.h"
+#include "../../SERVICES/BIT_MATH.h"
 
 
 void GPIO_SetPinDirection(u8 Port, u8 Pin, u8 Direction)
