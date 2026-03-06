@@ -1,7 +1,7 @@
 #ifndef GPIO_INTERFACE_H
 #define GPIO_INTERFACE_H
 
-#include "STD_TYPES.h"
+#include "../../SERVICES/STD_TYPES.h"
 
 /* Port IDs */
 #define GPIO_PORTA   0
