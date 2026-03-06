@@ -1,6 +1,6 @@
-#include "LED_interface.h"
-#include "GPIO_interface.h"
-#include "EXT_INT0_interface.h"
+#include "../../HAL/LED/LED_interface.h"
+#include "../../MCAL/GPIO/GPIO_interface.h"
+#include "../../MCAL/EXT_INT0/EXT_INT0_interface.h"
 
 
 // =================>LED Sequences Control<=======================================
