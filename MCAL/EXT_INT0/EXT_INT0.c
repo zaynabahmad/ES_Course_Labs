@@ -39,9 +39,9 @@ void EXT_INT0_Disable(void)
 void EXT_INT0_SetEdge(u8 Copy_u8Edge)
 {
     if(Copy_u8Edge == EXT_INT0_RISING_EDGE)
-        OPTION_REG.B6 = 1;
-    else
         OPTION_REG.B6 = 0;
+    else
+        OPTION_REG.B6 = 1;
 }
 
 /* Set callback function */
@@ -62,4 +62,5 @@ void interrupt()
 
         INTCON.B1 = 0;   // Clear INTF
     }
+
 }
