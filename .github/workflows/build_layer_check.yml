@@ -6,7 +6,7 @@ on:
       - '**'       # Runs on any branch (e.g., week branches)
   pull_request:
     branches:
-      - main      # Checks PRs to main
+      - '**'      # Checks PRs to main
   workflow_dispatch:
 
 jobs:
