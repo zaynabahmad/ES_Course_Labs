@@ -10,6 +10,7 @@ static void (*EXT_INT0_Callback)(void) = 0;
 
 void EXT_INT0_Init(void)
 {
+    CLR_BIT(INTCON, INTCON_INTE); /* Disable external interrupt 0 during configuration */
     /* Configure RB0/INT pin as an input (Bit 0 of TRISB) */
     SET_BIT(TRISB_REG, 0);
 
@@ -32,11 +33,13 @@ void EXT_INT0_SetEdge(uint8 edge_type)
 {
     if (edge_type == EXT_INT0_RISING_EDGE)
     {
-        SET_BIT(OPTION_REG, OPTION_REG_INTEDG); /* Interrupt on rising edge */
+        /* Per your hardware: 0 for Rising */
+        CLR_BIT(OPTION_REG, OPTION_REG_INTEDG);
     }
     else if (edge_type == EXT_INT0_FALLING_EDGE)
     {
-        CLR_BIT(OPTION_REG, OPTION_REG_INTEDG); /* Interrupt on falling edge */
+        /* Per your hardware: 1 for Falling */
+        SET_BIT(OPTION_REG, OPTION_REG_INTEDG);
     }
 }
 
