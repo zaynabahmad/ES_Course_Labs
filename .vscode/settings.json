@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "timer_interface.h": "c",
+        "bit_math.h": "c",
+        "led_interface.h": "c"
+    }
+}

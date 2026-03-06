@@ -1,36 +1,37 @@
 #include "../HAL/LED/LED_interface.h"
 #include "../MCAL/GPIO/GPIO_interface.h"
-#include "../HAL/LED/LED_interface.h"
 #include "../MCAL/INT/INT_interface.h"
 #include "../HAL/SWITCH/SWITCH_interface.h"
+#include "../MCAL/TIMER/TIMER_interface.h"
 #include "STD_TYPES.h"
 #include "UTIL.h"
 
 
+//Week 2 Timer_based blinking LED 
 
-
-// INTERUPT TASK
-//Pass this function to my callback function so it can be called during ISR 
-
-void toggle_LED(void)
+void toggle_LED_1(void)
 {
-    LED_Toggle(GPIO_PORTC,GPIO_PIN0);
+    LED_Toggle(GPIO_PORTB,GPIO_PIN0);
+    time_delay(1);
+    LED_Toggle(GPIO_PORTB,GPIO_PIN0);
+    time_delay(1);
+}
+void toggle_LED_2(void)
+{
+    LED_Toggle(GPIO_PORTB,GPIO_PIN0);
+    time_delay(2);
+    LED_Toggle(GPIO_PORTB,GPIO_PIN0);
+    time_delay(2);
 }
 
 void setup()
 {
     //Intializes used port pins intial states
     GPIO_Init();
-    //Sets up pin direction interrupt
-    EXT_INTO_Init();
-    //Passes PTR to function into a static variable that can be accessed during ISR
-    EXT_INTO_SetCallback(toggle_LED);
     //Enables interrupts 
-    EXT_INTO_Enable(); 
-    //Sets pin direction of required output PIN
-    SWITCH_init();
-
-
+    TIMR_INTR_ENABLE();
+    //Initalize timer
+    timer_intialize(); 
 }
 
 void main()
@@ -38,6 +39,8 @@ void main()
     setup();
     while(1)
     {
+        toggle_LED_1();
+        toggle_LED_2();
 
     }
 }

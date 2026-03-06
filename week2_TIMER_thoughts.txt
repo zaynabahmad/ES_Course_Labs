@@ -19,14 +19,30 @@ One pin for LED
 
 *HAL
 TIMER
-- TIME_ELAPSED()
-meant to tell you how much time has elapsed 
+//Returns how much time has elapsed in seconds
+- u8 time_elapsed(void);
 
-- CHECK_TIME_ELAPSED(time)
-This returns a true bool when the time passed to it passes
+//increments count_ticks
+- void increment_timerTicks(void);
 
-- STARTCOUNT()
-meant to reset the counting of the timer driver such that 
+//Returns count_ticks
+- u32 get_timerTicks(void);
 
-- INCREMENT()
-meant to increment timer everytime a flag has been raised 
+//You pass this function a delay time in seconds
+- void time_delay(u8 time);
+
+//Checks to see if delay time is greater than elapsed time if yes returns true, if not returns false
+- bool check_delay(void);
+
+//Restarts count of time
+- void reset_timerTicks(void);
+
+//intializes timer, parameters set in config file
+void timer_intialize(void);
+
+//Set intial value in timer regsiter
+void set_timerReg(void);
+
+//Tackles second being counted correctly issue, this is the only function that should be used to increment 
+//the count_ticks
+void adjusted_second_count(void);

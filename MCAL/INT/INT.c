@@ -1,12 +1,14 @@
 #include "INT_private.h"
 #include "INT_interface.h"
 #include "INT_config.h"
-#include "GPIO_interface.h"
+#include "../MCAL/GPIO/GPIO_interface.h"
+#include "../MCAL/TIMER/TIMER_interface.h"
 #include "BIT_MATH.h"
 
 //PTR to a function which takes no inputs & returns void
 //Its global, static & intialized to zeros so stored in  .bss 
 static void (*PTR_EXT_INTO_CALLBACK)(void) = 0;
+volatile static int interruptCount  = 0;
 
 void EXT_INTO_Init(void)
 {
@@ -19,6 +21,12 @@ void EXT_INTO_Enable(void)
     SET_BIT(INTCON,INTE);
     SET_BIT(INTCON,GIE);
 
+}
+
+void TIMR_INTR_ENABLE(void)
+{
+    SET_BIT(INTCON,GIE);
+    SET_BIT(INTCON,TOIE);
 }
 
 void EXT_INTO_Disable(void)
@@ -46,16 +54,14 @@ void EXT_INTO_SetCallback(void (*ptr)(void))
 }
 
 
+
 void __interrupt() ISR_ExtCall(void)
 {
 
-    //Checks to see if this interrupt is external
-    if(GET_BIT(INTCON,INTF) == 1)
+    if(GET_BIT(INTCON,TOIF))
     {
-        //Acknowledge that i am servicing interrupt by clearing INTF 
-        CLR_BIT(INTCON,INTF);
-        PTR_EXT_INTO_CALLBACK();
-
+        adjusted_second_count();
+        CLR_BIT(INTCON,TOIF);
     }
 
 

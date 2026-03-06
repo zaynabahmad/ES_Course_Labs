@@ -15,4 +15,9 @@
 //1 for rising edge 0 for falling edge
 #define INTEDG 6
 
+//Timer overflow flag
+#define TOIF 2
+#define TOIE 5
+
+
 #endif

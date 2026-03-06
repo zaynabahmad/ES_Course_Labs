@@ -5,7 +5,7 @@ DFP_PATH = "C:/Users/Ziad/Desktop/Academic/College zewail city/Courses/CIE/Year 
 CFLAGS = -mcpu=$(MCU) -Os -mdfp=$(DFP_PATH)
 
 # --- Include Directories (Where your .h files live) ---
-INCLUDES = -IAPP -IHAL/LED -IMCAL/GPIO -ISERVICES
+INCLUDES = -IAPP -IMCAL -IHAL -ISERVICES  
 
 # --- Source Files (Where your .c files live) ---
 SRCS = APP/main.c \
@@ -13,9 +13,10 @@ SRCS = APP/main.c \
        MCAL/GPIO/GPIO.c \
        MCAL/INT/INT.c \
        HAL/SWITCH/SWITCH.c \
+       MCAL/TIMER/TIMER.c \
 
 # --- Output Name ---
-TARGET = firmware.hex
+TARGET = Lab_2.hex
 
 # --- Build Rules ---
 all: $(TARGET)

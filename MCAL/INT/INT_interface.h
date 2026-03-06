@@ -13,6 +13,9 @@ void EXT_INTO_Init(void);
 //and set each one to 1
 void EXT_INTO_Enable(void);
 
+//Intializes INTCON for timer interrupts
+void TIMR_INTR_ENABLE(void);
+
 //This functional disables external interrupts (INTE = 0)
 void EXT_INTO_Disable(void);
 
