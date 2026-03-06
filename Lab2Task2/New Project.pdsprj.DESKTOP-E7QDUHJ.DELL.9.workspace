@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<WORKSPACE>
+ <FRAME activeWindow="0">
+  <PLACEMENT>01d9d0cb00030000fffffffffffffff70000078000000406000000ca0000002b000006b5000003f900000000020000000780000000000000001d0000077f00000405</PLACEMENT>
+  <WINDOW module="ISIS" index="0" mode="00050a10" type="default"/>
+ </FRAME>
+ <MODULE name="ISIS">
+  <editor zoom="-1" gridminor="254000" snapidx="2" gridmode="2" orgmode="0" snap="254000" flipped="0" snaprange="127000" scale="123" metric="0" xcursor="0" gridmajor="2540000">
+   <centre y="-10242" x="0"/>
+   <origin y="0" x="0"/>
+   <world x2="12700000" y1="-8890000" x1="-12700000" y2="8890000"/>
+  </editor>
+ </MODULE>
+ <MODULE name="VSMDEBUG">
+  <PWI>
+   <POPUP w="800" iid="-1" pid="0" y="25" h="200" flags="00000082" x="10">
+    <PROPERTIES/>
+   </POPUP>
+   <POPUP w="350" iid="-1" pid="1" y="45" h="200" flags="000000b2" x="30">
+    <PROPERTIES/>
+   </POPUP>
+   <POPUP w="800" iid="-1" pid="2" y="65" h="200" flags="000000a2" x="50">
+    <PROPERTIES/>
+   </POPUP>
+   <POPUP w="52" iid="1" pid="3" y="85" h="13" flags="00000008" x="70">
+    <PROPERTIES/>
+   </POPUP>
+   <POPUP w="8" iid="1" pid="4" y="105" h="32" flags="0000000a" x="90">
+    <PROPERTIES/>
+   </POPUP>
+   <POPUP w="8" iid="1" pid="5" y="125" h="32" flags="0000000a" x="110">
+    <PROPERTIES/>
+   </POPUP>
+   <POPUP w="16" iid="1" pid="6" y="145" h="32" flags="0000000a" x="130">
+    <PROPERTIES/>
+   </POPUP>
+   <POPUP w="14" iid="1" pid="7" y="165" h="8" flags="00000008" x="150">
+    <PROPERTIES/>
+   </POPUP>
+   <POPUP w="8" iid="1" pid="8" y="185" h="8" flags="80000002" x="170">
+    <PROPERTIES/>
+   </POPUP>
+  </PWI>
+ </MODULE>
+ <MODULE name="ARES">
+  <editor zoom="0" gridminor="500000" snapidx="3" gridmode="2" orgmode="0" snap="250000" flipped="0" snaprange="156790" scale="81" metric="1" xcursor="0" gridmajor="10000000">
+   <centre y="0" x="0"/>
+   <origin y="0" x="0"/>
+   <world x2="15240000" y1="-12700000" x1="-15240000" y2="12700000"/>
+  </editor>
+ </MODULE>
+</WORKSPACE>
