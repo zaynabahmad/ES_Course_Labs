@@ -3,11 +3,11 @@
 
 #define INTCON     *((volatile u8*)0x0B)
 #define OPTION_REG *((volatile u8*)0x81)
-#define TRISB      *((volatile u8*)0x86)
 
 #define GIE   7
 #define INTE  4
 #define INTF  1
 #define INTEDG 6
+
 
 #endif
