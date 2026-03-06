@@ -11,7 +11,7 @@
 
 // INTERUPT TASK
 //Pass this function to my callback function so it can be called during ISR 
-/*
+
 void toggle_LED(void)
 {
     LED_Toggle(GPIO_PORTC,GPIO_PIN0);
@@ -41,7 +41,7 @@ void main()
 
     }
 }
-*/
+
 
 
 //LED TASK 

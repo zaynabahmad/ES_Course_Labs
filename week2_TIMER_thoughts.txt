@@ -1,0 +1,32 @@
+Creating a seperate MCAL driver for timer manipulation seemed like a good idea
+
+
+For this task ill only need RB0 pin as an output
+
+All the work that needs to be done is just making the delay based on the internal clock and the LED triggering to be interrupt based
+
+**Pins required**
+1 pin
+
+**Pins Used**
+Input Pins 
+NONE
+
+Output Pins
+One pin for LED
+- RB0
+
+
+*HAL
+TIMER
+- TIME_ELAPSED()
+meant to tell you how much time has elapsed 
+
+- CHECK_TIME_ELAPSED(time)
+This returns a true bool when the time passed to it passes
+
+- STARTCOUNT()
+meant to reset the counting of the timer driver such that 
+
+- INCREMENT()
+meant to increment timer everytime a flag has been raised 

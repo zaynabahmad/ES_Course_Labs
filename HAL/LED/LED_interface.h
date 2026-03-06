@@ -14,9 +14,6 @@ void LED_Off(u8 Port, u8 Pin);
 void LED_Toggle(u8 Port, u8 Pin);
 void CHECKdelay(void);
 
-//Interupt task Week 1
-void SWITCH_Init(u8 pin);
-
 //LED task week 1
 void BLINKFAST(void);
 void BLINKSLOW(void);
