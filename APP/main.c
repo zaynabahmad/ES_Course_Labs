@@ -1,58 +1,37 @@
 #include "../HAL/LED/LED_interface.h"
-#include "../HAL/Switch/Switch.h"
-#include "../MCAL/Exit.INT/EXT_INT_Interface.h"
 #include "../MCAL/GPIO/GPIO_interface.h"
+#include "../MCAL/Timer/Timer_interface.h"
 
 
 
-
-void App_OnInterrupt(void)
-{
-    LED_Toggle(INT_LED_PORT, INT_LED_PIN);
+void App_ToggleBlue(void) {
+    LED_Toggle(LED0_PORT, LED0_PIN);
 }
 
-void main()
-{
+void App_ToggleGreen(void) {
+    LED_Toggle(LED1_PORT, LED1_PIN);
+}
 
-    LED_Init(LED_PORT, LED_1);
-    LED_Init(LED_PORT, LED_2);
-    LED_Init(INT_LED_PORT, INT_LED_PIN);
-
-    SWITCH_Init(SW1_PORT, SW1_PIN);
-    SWITCH_Init(SW2_PORT, SW2_PIN);
+void App_ToggleRed(void) {
+    LED_Toggle(LED2_PORT, LED2_PIN);
+}
 
 
-    EXT_INT0_Init();
-    EXT_INT0_SetCallback(App_OnInterrupt);
-    EXT_INT0_Enable();
+void main() {
+
+    LED_Init(LED0_PORT, LED0_PIN);
+    LED_Init(LED1_PORT, LED1_PIN);
+    LED_Init(LED2_PORT, LED2_PIN);
 
 
-    while (1)
-    {
+    Timer_SetCallback(0, App_ToggleBlue);
+    Timer_SetCallback(1, App_ToggleGreen);
+    Timer_SetCallback(2, App_ToggleRed);
 
-        if (SWITCH_Read(SW1_PORT, SW1_PIN) == GPIO_HIGH)
-        {
-            LED_On(LED_PORT, LED_1);
-            LED_On(LED_PORT, LED_2);
-            Delay_ms(200);
-            LED_Off(LED_PORT, LED_1);
-            LED_Off(LED_PORT, LED_2);
-            Delay_ms(200);
-        }
 
-        else if (SWITCH_Read(SW2_PORT, SW2_PIN) == GPIO_HIGH)
-        {
-            LED_On(LED_PORT, LED_1);
-            LED_On(LED_PORT, LED_2);
-            Delay_ms(500);
-            LED_Off(LED_PORT, LED_1);
-            LED_Off(LED_PORT, LED_2);
-            Delay_ms(500);
-        }
-        else
-        {
-            LED_Off(LED_PORT, LED_1);
-            LED_Off(LED_PORT, LED_2);
-        }
+    Timer_Init();
+
+    while(1) {
+
     }
 }

@@ -1,0 +1,9 @@
+main
+	LED_Init
+		GPIO_SetPinDirection
+		GPIO_SetPinValue
+	Timer_Init
+	LED_Toggle
+		GPIO_TogglePin
+interrupt
+	____DoIFC

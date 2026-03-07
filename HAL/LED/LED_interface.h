@@ -7,9 +7,14 @@
 #define LED_OFF    0
 #define LED_ON     1
 
-#define LED_PORT         PORTC
-#define LED_1            0
-#define LED_2            1
+#define LED0_PORT    GPIO_PORTB
+#define LED0_PIN     0
+
+#define LED1_PORT    GPIO_PORTB
+#define LED1_PIN     2
+
+#define LED2_PORT    GPIO_PORTC
+#define LED2_PIN     0
 
 
 

@@ -1,0 +1,9 @@
+main
+	LED_Init
+		GPIO_SetPinDirection
+		GPIO_SetPinValue
+	Timer_SetCallback
+		Mul_8X8_U
+	Timer_Init
+interrupt
+	____DoIFC
