@@ -84,11 +84,10 @@ void main(){
     SWITCH_Init(GPIO_PIN0);
     EXT_INT0_Init();
     EXT_INT0_Enable();
-    EXT_INT0_SetEdge(1);
+    EXT_INT0_SetEdge(0);
     EXT_INT0_SetCallback(Interrupt_Task);
     while(1){
     
     }
 
 }
-
