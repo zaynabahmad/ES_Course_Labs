@@ -3,8 +3,8 @@
 
 #include "../../SERVICES/STD_TYPES.h"
 
-#define EXTI_RISING_EDGE   1
-#define EXTI_FALLING_EDGE  0
+#define EXTI_RISING_EDGE   0
+#define EXTI_FALLING_EDGE  1
 
 void EXT_INT0_Init(void);
 void EXT_INT0_Enable(void);
