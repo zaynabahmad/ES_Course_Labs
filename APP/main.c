@@ -10,7 +10,7 @@
 
 
 //Week 2 Timer_based blinking LED
-
+/*
 void setup()
 {
     //Intializes used port pins intial states
@@ -43,8 +43,8 @@ void main()
         }
     }
 }
+*/
 
-/*
 //Motor control task (week2)
 volatile u8 button_pressed_flag = 0;
 
@@ -89,5 +89,5 @@ void main()
         }
     }
 }
-*/
+
 

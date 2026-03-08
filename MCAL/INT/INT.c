@@ -59,18 +59,17 @@ void __interrupt() ISR_ExtCall(void)
 {
 
     //LED ON TIMER Task (WEEK2)
+    /*
     if(GET_BIT(INTCON,TOIF))
     {
         adjusted_timer_0_second_count();
         CLR_BIT(INTCON,TOIF);
     }
-    
+    */
     //Motor control task (WEEK2)
-    /*
     if(GET_BIT(INTCON,INTF))
     {
         CLR_BIT(INTCON,INTF);
         PTR_EXT_INTO_CALLBACK();
     }
-    */
 }
