@@ -19,6 +19,7 @@ void short_sequence() {
     LED_Toggle(GPIO_PORTC, GPIO_PIN1);
     delay_ms(200);
 }
+
 void long_sequence() {
     LED_Toggle(GPIO_PORTC, GPIO_PIN0);
     LED_Toggle(GPIO_PORTC, GPIO_PIN1);
@@ -27,6 +28,7 @@ void long_sequence() {
     LED_Toggle(GPIO_PORTC, GPIO_PIN1);
     delay_ms(500);
 }
+
 void main()
 {
 

@@ -1,8 +1,8 @@
 #ifndef EXT_INT_INTERFACE_H
 #define EXT_INT_INTERFACE_H
 
-#include "../../SERVICES/STD_TYPES.h"
-#include "../GPIO/GPIO_interface.h"
+#include "../../../SERVICES/STD_TYPES.h"
+#include "../../GPIO/GPIO_interface.h"
 
 
 // Configuration
