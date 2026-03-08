@@ -1,0 +1,5 @@
+INT.p1: MCAL/INT/INT.c MCAL/INT/INT_private.h MCAL/INT/INT_interface.h \
+  SERVICES/STD_TYPES.h MCAL/INT/INT_config.h \
+  APP/../MCAL/GPIO/GPIO_interface.h \
+  APP/../MCAL/GPIO/../../SERVICES/STD_TYPES.h \
+  APP/../MCAL/TIMER/TIMER_interface.h SERVICES/BIT_MATH.h

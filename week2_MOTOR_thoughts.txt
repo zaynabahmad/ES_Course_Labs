@@ -1,0 +1,20 @@
+Creating a seperate MCAL driver for timer manipulation seemed like a good idea
+
+
+For this task ill only need RB0 pin as an output
+
+All the work that needs to be done is just making the delay based on the internal clock and the LED triggering to be interrupt based
+
+**Pins required**
+1 pin
+
+**Pins Used**
+Input Pins 
+- RB0 for button input (interrupt)
+
+Output Pins
+- RC2 for PWM
+
+
+*HAL
+MOTOR

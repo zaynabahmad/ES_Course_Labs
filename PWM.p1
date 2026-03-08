@@ -1,0 +1,126 @@
+Version 4.0 HI-TECH Software Intermediate Code
+"37 APP/../MCAL/TIMER/TIMER2/TIMER2_interface.h
+[v _timer_2_intialize `(v ~T0 @X0 0 ef ]
+"49
+[v _get_PR2 `(uc ~T0 @X0 0 ef ]
+"47
+[v _get_preScaler `(uc ~T0 @X0 0 ef ]
+"39
+[v _set_period_timer_2_Reg `(v ~T0 @X0 0 ef1`uc ]
+"9 MCAL/PWM/PWM.c
+[v _PWM_inti `(v ~T0 @X0 1 ef ]
+"10
+{
+[e :U _PWM_inti ]
+[f ]
+"11
+[e =| *U -> -> 23 `i `*Vuc -> << -> 1 `ui -> 3 `i `uc ]
+"12
+[e =| *U -> -> 23 `i `*Vuc -> << -> 1 `ui -> 2 `i `uc ]
+"13
+[e =& *U -> -> 23 `i `*Vuc -> ~ << -> 1 `ui -> 1 `i `uc ]
+"14
+[e =& *U -> -> 23 `i `*Vuc -> ~ << -> 1 `ui -> 0 `i `uc ]
+"16
+[e ( _timer_2_intialize ..  ]
+"17
+[e :UE 1 ]
+}
+"20
+[v _PWM_setDutyCycle `(v ~T0 @X0 1 ef1`uc ]
+"21
+{
+[e :U _PWM_setDutyCycle ]
+"20
+[v _desired_dutyCycle `uc ~T0 @X0 1 r1 ]
+"21
+[f ]
+"23
+[e $ ! > -> _desired_dutyCycle `i -> 100 `i 3  ]
+"24
+{
+"25
+[e = _desired_dutyCycle -> -> 100 `i `uc ]
+"26
+}
+[e :U 3 ]
+"34
+[v _totalRegisterVal `ul ~T0 @X0 1 a ]
+[e = _totalRegisterVal / * * -> _desired_dutyCycle `ul -> -> -> 4 `i `l `ul -> -> + -> ( _get_PR2 ..  `i -> 1 `i `l `ul -> -> -> 100 `i `l `ul ]
+"36
+[e = *U -> -> 21 `i `*Vuc -> >> _totalRegisterVal -> 2 `i `uc ]
+"38
+[e $ ! != & >> _totalRegisterVal -> 0 `i -> -> 1 `ui `ul -> -> -> 0 `i `l `ul 4  ]
+"39
+{
+"40
+[e =| *U -> -> 23 `i `*Vuc -> << -> 1 `ui -> 4 `i `uc ]
+"41
+}
+[e $U 5  ]
+"42
+[e :U 4 ]
+"43
+{
+"44
+[e =& *U -> -> 23 `i `*Vuc -> ~ << -> 1 `ui -> 4 `i `uc ]
+"45
+}
+[e :U 5 ]
+"47
+[e $ ! != & >> _totalRegisterVal -> 1 `i -> -> 1 `ui `ul -> -> -> 0 `i `l `ul 6  ]
+"48
+{
+"49
+[e =| *U -> -> 23 `i `*Vuc -> << -> 1 `ui -> 5 `i `uc ]
+"50
+}
+[e $U 7  ]
+"51
+[e :U 6 ]
+"52
+{
+"53
+[e =& *U -> -> 23 `i `*Vuc -> ~ << -> 1 `ui -> 5 `i `uc ]
+"54
+}
+[e :U 7 ]
+"56
+[e :UE 2 ]
+}
+"59
+[v _PWM_setFrequency `(v ~T0 @X0 1 ef1`ul ]
+"60
+{
+[e :U _PWM_setFrequency ]
+"59
+[v _desired_frequency `ul ~T0 @X0 1 r1 ]
+"60
+[f ]
+"61
+[v _denominator `ul ~T0 @X0 1 a ]
+[e = _denominator * * -> -> -> 4 `i `l `ul _desired_frequency -> ( _get_preScaler ..  `ul ]
+"62
+[v _pr2_value `ul ~T0 @X0 1 a ]
+[e = _pr2_value - / -> 8000000 `ul _denominator -> -> -> 1 `i `l `ul ]
+"68
+[e $ ! <= _pr2_value -> -> -> 255 `i `l `ul 9  ]
+"69
+{
+"70
+[e ( _set_period_timer_2_Reg (1 -> _pr2_value `uc ]
+"71
+}
+[e $U 10  ]
+"72
+[e :U 9 ]
+"73
+{
+"74
+[e ( _set_period_timer_2_Reg (1 -> -> 255 `i `uc ]
+"75
+}
+[e :U 10 ]
+"76
+[e :UE 8 ]
+}

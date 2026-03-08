@@ -1,0 +1,10 @@
+#ifndef TIMER2_CONFIG_H
+#define TIMER2_CONFIG_H
+#include "TIMER2_interface.h"
+
+#define DEFAULT_PRESCALER PRESCALER_1_16
+#define DEFAULT_POSTSCALER POSTSCALER_1_16
+
+
+
+#endif

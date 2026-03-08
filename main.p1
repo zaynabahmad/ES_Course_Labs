@@ -1,0 +1,38 @@
+Version 4.0 HI-TECH Software Intermediate Code
+"11 APP/../HAL/MOTOR/MOTOR_interface.h
+[v _MOTOR_Init `(v ~T0 @X0 0 e? ]
+[p mainexit ]
+"15 APP/../MCAL/PWM/PWM_interface.h
+[v _PWM_setDutyCycle `(v ~T0 @X0 0 ef1`uc ]
+"75 APP/main.c
+[v _setup `(v ~T0 @X0 1 ef ]
+"76
+{
+[e :U _setup ]
+[f ]
+"77
+[e ( _MOTOR_Init ..  ]
+"80
+[e :UE 1 ]
+}
+[v $root$_main `(v ~T0 @X0 0 e ]
+"83
+[v _main `(v ~T0 @X0 1 ef ]
+"84
+{
+[e :U _main ]
+[f ]
+"85
+[e ( _setup ..  ]
+"86
+[e ( _PWM_setDutyCycle (1 -> -> 10 `i `uc ]
+"87
+[e :U 4 ]
+{
+}
+[e :U 3 ]
+[e $U 4  ]
+[e :U 5 ]
+"89
+[e :UE 2 ]
+}

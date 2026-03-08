@@ -10,10 +10,12 @@ INCLUDES = -IAPP -IMCAL -IHAL -ISERVICES
 # --- Source Files (Where your .c files live) ---
 SRCS = APP/main.c \
        HAL/LED/LED.c \
+       HAL/MOTOR/MOTOR.c \
        MCAL/GPIO/GPIO.c \
        MCAL/INT/INT.c \
-       HAL/SWITCH/SWITCH.c \
        MCAL/TIMER/TIMER.c \
+       MCAL/TIMER/TIMER2/TIMER2.c \
+       MCAL/PWM/PWM.c\
 
 # --- Output Name ---
 TARGET = Lab_2.hex

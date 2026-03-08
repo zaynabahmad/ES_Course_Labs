@@ -1,0 +1,28 @@
+Version 4.0 HI-TECH Software Intermediate Code
+"31 APP/../MCAL/GPIO/GPIO_interface.h
+[v _GPIO_SetPinDirection `(v ~T0 @X0 0 ef3`uc`uc`uc ]
+"13 APP/../MCAL/PWM/PWM_interface.h
+[v _PWM_inti `(v ~T0 @X0 0 e? ]
+"17
+[v _PWM_setFrequency `(v ~T0 @X0 0 ef1`ul ]
+"15
+[v _PWM_setDutyCycle `(v ~T0 @X0 0 ef1`uc ]
+"12 HAL/MOTOR/MOTOR.c
+[v _MOTOR_Init `(v ~T0 @X0 1 ef ]
+"13
+{
+[e :U _MOTOR_Init ]
+[f ]
+"15
+[e ( _GPIO_SetPinDirection (3 , , -> -> 2 `i `uc -> -> 2 `i `uc -> -> 1 `i `uc ]
+"17
+[e ( _PWM_inti ..  ]
+"18
+[e ( _PWM_setFrequency (1 -> -> -> 5000 `i `l `ul ]
+"19
+[e ( _PWM_setDutyCycle (1 -> -> 0 `i `uc ]
+"21
+[e ( _GPIO_SetPinDirection (3 , , -> -> 2 `i `uc -> -> 2 `i `uc -> -> 0 `i `uc ]
+"22
+[e :UE 1 ]
+}

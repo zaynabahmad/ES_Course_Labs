@@ -3,12 +3,13 @@
 #include "../MCAL/INT/INT_interface.h"
 #include "../HAL/SWITCH/SWITCH_interface.h"
 #include "../MCAL/TIMER/TIMER_interface.h"
+#include "../HAL/MOTOR/MOTOR_interface.h"
 #include "STD_TYPES.h"
 #include "UTIL.h"
 
 
 //Week 2 Timer_based blinking LED 
-
+/*
 void toggle_LED_1(void)
 {
     LED_Toggle(GPIO_PORTB,GPIO_PIN0);
@@ -44,7 +45,7 @@ void main()
 
     }
 }
-
+*/
 
 
 //LED TASK 
@@ -70,3 +71,22 @@ void main()
     }
 }
 */
+
+void setup()
+{
+    MOTOR_Init();
+    
+
+}
+
+
+void main()
+{   
+    setup();
+    PWM_setDutyCycle(10);
+    while(1){}
+
+}
+
+
+//Motor task

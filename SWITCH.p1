@@ -1,0 +1,59 @@
+Version 4.0 HI-TECH Software Intermediate Code
+"31 APP/../MCAL/GPIO/GPIO_interface.h
+[v _GPIO_SetPinDirection `(v ~T0 @X0 0 ef3`uc`uc`uc ]
+"33
+[v _GPIO_GetPinValue `(uc ~T0 @X0 0 ef2`uc`uc ]
+"6 HAL/SWITCH/SWITCH.c
+[v _SWITCH_init `(v ~T0 @X0 1 ef ]
+"7
+{
+[e :U _SWITCH_init ]
+[f ]
+"8
+[e ( _GPIO_SetPinDirection (3 , , -> -> 1 `i `uc -> -> 0 `i `uc -> -> 1 `i `uc ]
+"9
+[e ( _GPIO_SetPinDirection (3 , , -> -> 1 `i `uc -> -> 1 `i `uc -> -> 1 `i `uc ]
+"10
+[e :UE 1 ]
+}
+"14
+[v _SWITCH_CHECK `(a ~T0 @X0 1 ef1`uc ]
+"15
+{
+[e :U _SWITCH_CHECK ]
+"14
+[v _switch_ `uc ~T0 @X0 1 r1 ]
+"15
+[f ]
+"16
+[e $U 4  ]
+"17
+{
+"18
+[e :U 5 ]
+"19
+[e ) -> ( _GPIO_GetPinValue (2 , -> -> 1 `i `uc -> -> 0 `i `uc `a ]
+[e $UE 2  ]
+"21
+[e :U 6 ]
+"22
+[e ) -> ( _GPIO_GetPinValue (2 , -> -> 1 `i `uc -> -> 1 `i `uc `a ]
+[e $UE 2  ]
+"24
+[e :U 7 ]
+"25
+[e ) -> -> 0 `i `a ]
+[e $UE 2  ]
+"26
+[e $U 3  ]
+"27
+}
+[e $U 3  ]
+[e :U 4 ]
+[e [\ _switch_ , $ -> 0 `i 5
+ , $ -> 1 `i 6
+ 7 ]
+[e :U 3 ]
+"28
+[e :UE 2 ]
+}

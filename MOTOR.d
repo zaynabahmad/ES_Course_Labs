@@ -1,0 +1,5 @@
+MOTOR.p1: HAL/MOTOR/MOTOR.c APP/../MCAL/GPIO/GPIO_interface.h \
+  APP/../MCAL/GPIO/../../SERVICES/STD_TYPES.h \
+  APP/../MCAL/TIMER/TIMER_interface.h SERVICES/STD_TYPES.h \
+  APP/../MCAL/PWM/PWM_interface.h HAL/MOTOR/MOTOR_config.h \
+  HAL/MOTOR/MOTOR_private.h HAL/MOTOR/MOTOR_interface.h
