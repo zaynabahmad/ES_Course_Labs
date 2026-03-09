@@ -8,6 +8,10 @@ main
 	EXTI_Int0SetEdge
 	EXTI_Int0SetCallBack
 	EXTI_Int0Init
+	TIMER0_SetCallBack
+	TIMER0_Init
+	TIMER1_SetCallBack
+	TIMER1_Init
 	LED_Toggle
 		GPIO_GetPinValue
 		GPIO_SetPinValue
@@ -17,4 +21,9 @@ main
 	LED_Off
 		GPIO_SetPinValue
 interrupt
-	____DoIFC
+	EXTI_ISR_Handler
+		____DoIFC
+	TIMER0_ISR_Handler
+		____DoIFC
+	TIMER1_ISR_Handler
+		____DoIFC

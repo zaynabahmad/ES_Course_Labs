@@ -10,5 +10,6 @@
 void EXTI_Int0Init(void);
 void EXTI_Int0SetEdge(u8 Edge);
 void EXTI_Int0SetCallBack(void (*LocalPtr)(void));
+void EXTI_ISR_Handler(void);
 
 #endif
