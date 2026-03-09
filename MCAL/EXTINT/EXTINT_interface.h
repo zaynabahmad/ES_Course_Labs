@@ -3,13 +3,6 @@
 
 #include "../../SERVICES/STD_TYPES.h"
 
-#define RISING_EDGE 1
-#define FALLING_EDGE 0
-#define GIE 7
-#define INTE 4
-#define INTF 1
-#define INTEDG 6
-
 void EXT_INT_Init(void);
 void EXT_INT_Enable(void);
 void EXT_INT_Disable(void);

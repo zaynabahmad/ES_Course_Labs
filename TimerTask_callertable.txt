@@ -1,0 +1,15 @@
+main
+	__CC2DW
+		____DoICP
+	LED_Init
+		SetPinDirection
+	TMR0_Init
+	TMR0_SetInterval_s
+		Mul_16X16_U
+	TMR0_SetCallback
+	TMR0_Enable
+interrupt
+	EXT_INT_ISR_Handler
+		____DoIFC
+	TMR0_ISR_Handler
+		____DoIFC
