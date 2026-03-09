@@ -29,7 +29,7 @@ void EXT_INT0_SetCallback(void (*ptr)(void)) {
     INT0_Callback = ptr; 
 }
 
-void interrupt(void) {
+void EXT_INT0_ISR_Handler(void) {
     if (GET_BIT(INTCON_REG, INTF_BIT) == 1) { 
         CLR_BIT(INTCON_REG, INTF_BIT); // Clear flag immediately
         if (INT0_Callback != 0) {

@@ -1,60 +1,52 @@
-#include "../SERVICES/Std_Types.h"             
-#include "../MCAL/EXT_INT/EXT_INT0.h"         
-#include "../HAL/LED/LED.h"           
-#include "../HAL/Switch/Switch.h"     
+#include "../SERVICES/Std_Types.h"
+#include "../MCAL/GPIO/GPIO_interface.h"
+#include "../MCAL/TIMER0/TIMER0_interface.h"
+#include "../MCAL/EXT_INT/EXT_INT0.h"
 
-void App_InterruptLogic(void) {
-    Delay_ms(30);
-    if (SWITCH_Read(0) == LOW) { 
-        LED_Toggle(2); 
+volatile u16 tick_count = 0;
+
+// Software states to prevent the "Physical Voltage Read" bug
+u8 led1_state = GPIO_LOW;
+u8 led2_state = GPIO_LOW;
+
+void App_Timer0_Tasks(void) {
+    tick_count++;
+
+    // Every 40 ticks = 1 Second (Toggle LED 2 on RB2)
+    if (tick_count % 40 == 0) {
+        led2_state = !led2_state; // Flip the software memory
+        GPIO_SetPinValue(GPIO_PORTB, GPIO_PIN2, led2_state); // Apply to hardware
+    }
+
+    // Every 80 ticks = 2 Seconds (Toggle LED 1 on RB1)
+    if (tick_count % 80 == 0) {
+        led1_state = !led1_state; // Flip the software memory
+        GPIO_SetPinValue(GPIO_PORTB, GPIO_PIN1, led1_state); // Apply to hardware
+
+        tick_count = 0; // Reset counter to prevent overflow
     }
 }
 
+void interrupt(void) {
+    TIMER0_ISR_Handler();
+}
+
 void main() {
-    LED_Init(0); 
-    LED_Init(1); 
-    LED_Init(2);
-    
-    SWITCH_Init(0); // Added to init the RB0 pin properly
-    SWITCH_Init(1); 
-    SWITCH_Init(2); 
-    
-    EXT_INT0_Init();
-    EXT_INT0_SetEdge(INT0_FALLING_EDGE); 
-    EXT_INT0_SetCallback(App_InterruptLogic);
-    
-    // EXT_INT0_Enable(); 
+    // 1. Initialize the Pins (Using PORTB Pins 1 and 2)
+    GPIO_SetPinDirection(GPIO_PORTB, GPIO_PIN1, GPIO_OUTPUT);
+    GPIO_SetPinDirection(GPIO_PORTB, GPIO_PIN2, GPIO_OUTPUT);
 
+    // 2. Initialize Timer0
+    TIMER0_Init();
+
+    // SAFETY OVERRIDE: mikroC occasionally fails to switch memory banks for custom pointers.
+
+    // 3. Start Interrupts
+    TIMER0_SetCallback(App_Timer0_Tasks);
+    TIMER0_EnableInterrupt();
+
+    // 4. Main Loop
     while(1) {
-        if (SWITCH_Read(1) == LOW) {
-            LED_On(0);
-            Delay_ms(1); 
-            LED_On(1);
-
-            Delay_ms(200); 
-
-            LED_Off(0);
-            Delay_ms(1); 
-            LED_Off(1);
-
-            Delay_ms(200); 
-        }
-        else if (SWITCH_Read(2) == LOW) {
-            LED_On(0);
-            Delay_ms(1); 
-            LED_On(1);
-
-            Delay_ms(500); 
-
-            LED_Off(0);
-            Delay_ms(1); 
-            LED_Off(1);
-
-            Delay_ms(500); 
-        }
-        else {
-            LED_Off(0);
-            LED_Off(1);
-        }
+        // CPU is free! Timer0 is running the show.
     }
 }
