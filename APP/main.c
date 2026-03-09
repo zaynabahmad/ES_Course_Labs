@@ -1,67 +1,41 @@
-/*
-* APPLICATION LAYER
-
-
-*/
 #include "../HAL/LED/LED_interface.h"
-#include "../MCAL/GPIO/GPIO_interface.h"
-#include "../MCAL/EXT_INT/EXT_INT_interface.h"
-#include "../HAL/Switch/Switch_interface.h"
+#include "../HAL/Timer/Timer_Interface.h"
+#include "../MCAL/Interrupt Manager/Interrupt_manager.h"
 
-// Inside main.c
-void MyLogic() { LED_Toggle(GPIO_PORTC, GPIO_PIN0); }
-void short_sequence() {
-    LED_Toggle(GPIO_PORTC, GPIO_PIN0);
-    LED_Toggle(GPIO_PORTC, GPIO_PIN1);
-    delay_ms(200);
-    LED_Toggle(GPIO_PORTC, GPIO_PIN0);
-    LED_Toggle(GPIO_PORTC, GPIO_PIN1);
-    delay_ms(200);
-}
-void long_sequence() {
-    LED_Toggle(GPIO_PORTC, GPIO_PIN0);
-    LED_Toggle(GPIO_PORTC, GPIO_PIN1);
-    delay_ms(500);
-    LED_Toggle(GPIO_PORTC, GPIO_PIN0);
-    LED_Toggle(GPIO_PORTC, GPIO_PIN1);
-    delay_ms(500);
-}
-void main()
-{
+// Global variable to alternate LED toggling
+volatile int even = 0;
 
-    // Lab Task 1
-    LED_Init(GPIO_PORTC, GPIO_PIN0);
-    LED_Init(GPIO_PORTC, GPIO_PIN1);
-    GPIO_SetPinDirection(GPIO_PORTC, GPIO_PIN0, GPIO_OUTPUT);
-    GPIO_SetPinDirection(GPIO_PORTC, GPIO_PIN1, GPIO_OUTPUT);
-    GPIO_SetPinValue(GPIO_PORTC, GPIO_PIN0, GPIO_LOW);
-    GPIO_SetPinValue(GPIO_PORTC, GPIO_PIN1, GPIO_LOW);
-    SWITCH_Init(GPIO_PORTB, GPIO_PIN0);
-    SWITCH_Init(GPIO_PORTB, GPIO_PIN1);
-
-    while (1)
-    {
-        if (SWITCH_Read(GPIO_PORTB, GPIO_PIN0) == GPIO_HIGH) {
-            short_sequence();
-        }
-        else if (SWITCH_Read(GPIO_PORTB, GPIO_PIN1) == GPIO_HIGH) {
-            long_sequence();
-        }
-        else {
-            GPIO_SetPinValue(GPIO_PORTC, GPIO_PIN0, GPIO_LOW);
-            GPIO_SetPinValue(GPIO_PORTC, GPIO_PIN1, GPIO_LOW);
-        }
+// Callback function for Timer0 interrupt
+void tmr_int_logic() {
+    if (even == 0) {
+        LED_Toggle(GPIO_PORTB, GPIO_PIN1);
+        even = 1;
+    } else {
+        LED_Toggle(GPIO_PORTB, GPIO_PIN1);
+        LED_Toggle(GPIO_PORTB, GPIO_PIN2);
+        even = 0;
     }
-    
-    // Lab Task 2
-    LED_Init(GPIO_PORTC, GPIO_PIN0);
-    SWITCH_Init(GPIO_PORTB, GPIO_PIN0);
-    EXT_INT_Init();
-    EXT_INT_SetCallback(MyLogic);
-    EXT_INT_Enable();
-    while (1)
-    {
+}
 
+int main(void) {
+    // Initialize LEDs
+
+    LED_Init(GPIO_PORTB, GPIO_PIN1);
+    LED_Init(GPIO_PORTB, GPIO_PIN2);
+    LED_Init(GPIO_PORTC,GPIO_PIN1);
+
+    // Initialize Timer0 with prescaler 128
+    Timer0_Init(128);
+
+    // Set Timer0 delay to 1000ms and register callback
+    Timer0_SetDelay(1000, tmr_int_logic);
+
+    // Enable global interrupts after Timer0 is configured
+    SET_BIT(INTCON, GIE_BIT);
+
+    while (1) {
+        
     }
-    
+
+    return 0;
 }

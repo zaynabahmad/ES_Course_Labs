@@ -52,3 +52,14 @@ void EXT_INT_SetEdge(u8 Edgetype)
     }
 }
 
+void (*EXT_INT_Callback)(void) = 0;
+
+void* Get_EXT_INT_Callback(void) {
+    return EXT_INT_Callback;
+}
+void EXT_INT_SetCallback(void (*ptr)(void)) {
+    if (ptr != 0) {
+        EXT_INT_Callback = ptr;
+    }
+}
+

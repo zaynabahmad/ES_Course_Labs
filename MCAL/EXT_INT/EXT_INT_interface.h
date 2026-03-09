@@ -19,8 +19,4 @@ void EXT_INT_Init(void);
 void EXT_INT_Enable(void);
 void EXT_INT_Disable(void);
 void EXT_INT_SetEdge(u8 Edgetype);
-void EXT_INT_SetCallback(void (*Callback)(void));    
-
-
-
 #endif
