@@ -40,7 +40,7 @@ void EXT_INT0_Init(void)
     EXT_INT0_Enable();
 }
 
-void interrupt(void)
+void EXT_INT0_HandleInterrupt(void)
 {
     if(GET_BIT(INTCON, INTF_BIT))
     {
