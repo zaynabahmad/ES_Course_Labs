@@ -11,7 +11,7 @@
 *.dbt
 *.dlt
 *.user.dic
-*.callertable.txt
+*_callertable.txt
 *.ini
 *.ccl
 *.pma
