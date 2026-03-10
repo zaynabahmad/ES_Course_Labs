@@ -1,0 +1,8 @@
+main
+	lab3_init
+		LED_Init
+			GPIO_SetPinDirection
+		TIMER0_SetCallback
+		TIMER0_Init
+interrupt
+	____DoIFC

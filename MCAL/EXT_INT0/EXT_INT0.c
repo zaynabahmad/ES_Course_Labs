@@ -2,6 +2,7 @@
 #include "EXT_INT0_private.h"
 #include "EXT_INT0_config.h"
 #include "../../MCAL/GPIO/GPIO_interface.h"
+#include "../../MCAL/TIMER0/TIMER0_private.h"
 #include "../../SERVICES/BIT_MATH.h"
 
 /* Global Callback Pointer */
@@ -59,10 +60,20 @@ void EXT_INT0_SetCallback(void (*ptr)(void))
 
 void interrupt (void)
 {
+    /* EXT_INT0 handler */
     if(GET_BIT(INTCON, INTF))
     {
         if(EXT_INT0_Callback != NULL_PTR)
             EXT_INT0_Callback();
         CLR_BIT(INTCON, INTF);
+    }
+
+    /* Timer0 overflow handler */
+    if(GET_BIT(INTCON, T0IF))
+    {
+
+        CLR_BIT(INTCON, T0IF);
+        if(TIMER0_Callback != NULL_PTR)
+            TIMER0_Callback();
     }
 }
