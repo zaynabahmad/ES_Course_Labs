@@ -1,27 +1,38 @@
-/*
-* APPLICATION LAYER
+#include "STD_TYPES.h"
+#include "GPIO_interface.h"
+#include "EXT_INT0_interface.h"
+#include "SWITCH_interface.h"
+#include "LED_interface.h"
 
 
-*/
-#include "../HAL/LED/LED_interface.h"
-#include "../MCAL/GPIO/GPIO_interface.h"
+#define APP_LED_PORT  GPIO_PORTD
+#define APP_LED_PIN   GPIO_PIN0
 
-void delay(void)
-{
-    unsigned int i;
-    for(i = 0; i < 50000; i++);
+void App_ToggleLED_ISR(void) {
+    
+    Delay_ms(30);
+
+ 
+    LED_Toggle(APP_LED_PORT, APP_LED_PIN);
 }
 
-void main()
-{
-    LED_Init(GPIO_PORTB, GPIO_PIN0);
+void main() {
+ 
+    LED_Init(APP_LED_PORT, APP_LED_PIN);
 
-    while(1)
-    {
-        LED_On(GPIO_PORTB, GPIO_PIN0);
-        delay();
+   
+    SWITCH_Init(GPIO_PIN0);
 
-        LED_Off(GPIO_PORTB, GPIO_PIN0);
-        delay();
+    EXT_INT0_Init();
+
+   
+    EXT_INT0_SetCallback(App_ToggleLED_ISR);
+
+   
+    EXT_INT0_Enable();
+
+
+    while (1) {
+
     }
 }
