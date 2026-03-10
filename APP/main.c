@@ -14,7 +14,7 @@ void delay(void)
 
 void main()
 {
-    LED_Init(GPIO_PORTB, GPIO_PIN0);
+    LED_Init(GPIO_PORTB, GPIO_PIN2);
 
     while(1)
     {

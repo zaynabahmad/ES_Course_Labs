@@ -14,6 +14,7 @@
 *.user.dic
 *.callertable.txt
 *.ini
+*.vs
 
 # OS files
 .DS_Store
