@@ -1,4 +1,5 @@
 #include "../../SERVICES/STD_TYPES.h"
+#include "../../SERVICES/BIT_MATH.h"
 #include "../TMR0/TMR0_private.h"  //
 //#include "EXTI_private.h"
 
@@ -8,9 +9,9 @@ extern void (*TMR0_CallBackFuncP)(void);
 
 void interrupt() {
     /* 1. Timer0 Dispatcher */
-    if (TMR0IF_bit == 1) {
+    if (GET_BIT(INTCON, TMR0IF) == 1) {
          TMR0=100;
-        TMR0IF_bit = 0; // Clear Flag
+        CLR_BIT(INTCON,TMR0IF); // Clear Flag
 
         if (TMR0_CallBackFuncP != NULL_PTR) {
             TMR0_CallBackFuncP();

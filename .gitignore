@@ -24,3 +24,7 @@
 .DS_Store
 Thumbs.db
 *.tmp
+
+
+
+*.bat

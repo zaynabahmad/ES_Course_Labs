@@ -4,6 +4,7 @@
 #define OPTION_REG  *((volatile u8*)0x81)
 #define TMR0 *((volatile u8*)0x01)
 #define INTCON  *((volatile u8*)0x0b)
+#define GIE     7
 
 
 

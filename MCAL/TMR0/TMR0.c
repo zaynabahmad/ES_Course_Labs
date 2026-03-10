@@ -11,6 +11,7 @@
 void (*TMR0_CallBackFuncP)(void) = NULL_PTR;
 
 void TMR0_Init(void){
+    SET_BIT(INTCON, GIE);
     /* 1. Select Internal Clock Source (Fosc/4) */
     CLR_BIT(OPTION_REG, T0CS);
 
@@ -45,4 +46,3 @@ void TMR0_SetCallBack(void(*CallBackFunc)(void)){
        TMR0_CallBackFuncP =CallBackFunc;
      }
 }
-

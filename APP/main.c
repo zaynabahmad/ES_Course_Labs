@@ -45,7 +45,7 @@ void main()
     TMR0_SetPreloadValue(100);
     
     TMR0_Start();
-    GIE_bit = 1;
+
     
     while(1){
     }

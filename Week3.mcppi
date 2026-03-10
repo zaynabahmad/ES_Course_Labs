@@ -83,9 +83,10 @@ Count=0
 20=MCAL
 21=GPIO
 25=TMR0
-Count=12
+29=SERVICES
+Count=13
 [LIB_EXPANDED_NODES]
-Count=0
+Count=1
 [PROGRAMMER_TYPE]
 Value=mikroE mikroProg
 [CODEGRIP_OPTIONS]
