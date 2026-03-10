@@ -45,14 +45,15 @@ void EXT_INT0_SetCallback(void (*ptr)(void))
     EXT_INT0_Callback = ptr;
 }
 
-/* ISR — must live in MCAL; calls callback only, no app logic */
-void interrupt()
+/* IRQ handler — called from the unified interrupt() dispatcher in APP/main.c.
+   Checks its own flag internally so the dispatcher can call it unconditionally. */
+void EXT_INT0_IRQHandler(void)
 {
-    if (GET_BIT(INTCON, INTCON_INTF))
-    {
-        if (EXT_INT0_Callback != NULL_PTR)
-            EXT_INT0_Callback();
+    if (!GET_BIT(INTCON, INTCON_INTF))
+        return;                         /* not an EXT_INT0 interrupt */
 
-        CLR_BIT(INTCON, INTCON_INTF);   /* clear flag before returning */
-    }
+    if (EXT_INT0_Callback != NULL_PTR)
+        EXT_INT0_Callback();
+
+    CLR_BIT(INTCON, INTCON_INTF);
 }

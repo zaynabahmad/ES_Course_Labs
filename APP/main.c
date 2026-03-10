@@ -1,26 +1,41 @@
 #include "../HAL/LED/LED_interface.h"
 #include "../HAL/LED/LED_config.h"
-#include "../HAL/SWITCH/SWITCH_interface.h"
-#include "../HAL/SWITCH/SWITCH_config.h"
+#include "../MCAL/TIMER0/TIMER0_interface.h"
 #include "../MCAL/EXT_INT/EXT_INT_interface.h"
 
-void ToggleLED_Callback(void)
+static u8 seconds = 0;
+
+void OneSecondCallback(void)
 {
-    LED_Toggle(LED1_PORT, LED1_PIN);
+    seconds++;
+    LED_Toggle(LED2_PORT, LED2_PIN);        /* RB2 toggles every 1 second  */
+
+    if (seconds >= 2)
+    {
+        seconds = 0;
+        LED_Toggle(LED1_PORT, LED1_PIN);    /* RB1 toggles every 2 seconds */
+    }
+}
+
+/* Unified ISR dispatcher — the single interrupt() for this project.
+   Each IRQHandler checks its own flag internally before acting,
+   so both can be called on every interrupt safely.               */
+void interrupt()
+{
+    TIMER0_IRQHandler();
+    EXT_INT0_IRQHandler();
 }
 
 void main()
 {
-    LED_Init(LED1_PORT, LED1_PIN);          /* RD0 as output */
-    SWITCH_Init(SW1_PORT, SW1_PIN);         /* RB0 as input (HAL)*/
+    LED_Init(LED1_PORT, LED1_PIN);          /* RB1 as output */
+    LED_Init(LED2_PORT, LED2_PIN);          /* RB2 as output */
 
-   
-    EXT_INT0_Init();                       
-    EXT_INT0_SetCallback(ToggleLED_Callback);
+    TIMER0_Init();
+    TIMER0_SetCallback(OneSecondCallback);
 
     while(1)
     {
-        /* CPU idles here; every button press fires INT0
-           which calls ToggleLED_Callback via MCAL ISR  */
+        /* CPU idles here; all LED toggling is driven by Timer0 ISR */
     }
 }

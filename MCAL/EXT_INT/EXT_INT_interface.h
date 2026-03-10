@@ -12,5 +12,6 @@ void EXT_INT0_Enable(void);
 void EXT_INT0_Disable(void);
 void EXT_INT0_SetEdge(u8 edge_type);
 void EXT_INT0_SetCallback(void (*ptr)(void));
+void EXT_INT0_IRQHandler(void);  /* call from interrupt() dispatcher in main.c */
 
 #endif
