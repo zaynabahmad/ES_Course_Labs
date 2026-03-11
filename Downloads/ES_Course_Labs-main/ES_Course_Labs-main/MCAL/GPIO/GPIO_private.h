@@ -15,6 +15,7 @@
 #define PORTD   (*((volatile u8*)0x08))
 #define PORTE   (*((volatile u8*)0x09))
 #define INTCON  (*((volatile u8*)0x8B))
+#define TMR0 (*(volatile u8*)0x01)
 #define OPTION_REG  (*((volatile u8*)0x181))
 
 #endif

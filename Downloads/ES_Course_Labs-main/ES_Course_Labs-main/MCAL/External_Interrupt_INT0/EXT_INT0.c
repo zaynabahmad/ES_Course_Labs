@@ -1,7 +1,7 @@
 
 
 #include "../../MCAL/External_Interrupt_INT0/EXT_INT0.h"
-
+#include "../../SERVICES/STD_TYPES.h"
 
 void EXT_INT0_Init(void){
 
@@ -32,14 +32,23 @@ else if (edge_type==1){
 
 }
 static void (*EXT_INT0_Callback)(void) = 0;
-
 void EXT_INT0_SetCallback(void (*ptr)(void))
 {
     EXT_INT0_Callback = ptr;
     }
 
+u8 Int_get_flag(){
+return GET_BIT(INTCON,1);
+}
+void Int_set_flag(){
 
-void interrupt()
+SET_BIT(INTCON,1);
+}
+void Int_clr_flag(){
+CLR_BIT(INTCON,1);
+
+}
+/*void interrupt()
 {
     if(GET_BIT(INTCON, 1)) {
         CLR_BIT(INTCON, 1);
@@ -47,4 +56,4 @@ void interrupt()
             EXT_INT0_Callback();
         }
     }
-}
+}   */

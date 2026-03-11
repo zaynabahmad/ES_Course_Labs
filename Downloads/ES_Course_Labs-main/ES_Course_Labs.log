@@ -1,7 +1,7 @@
-0	1	mikroCPIC1618.exe -MSF -DBG -pP16F877A -DL -O11101114 -fo8 -N"C:\Users\Dr.Vista™\Downloads\ES_Course_Labs-main\ES_Course_Labs.mcppi" -SP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\Defs\" -SP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\Uses\P16\" -SP"C:\Users\Dr.Vista™\Downloads\ES_Course_Labs-main\" -SP"C:\Users\Dr.Vista™\Downloads\ES_Course_Labs-main\ES_Course_Labs-main\APP\" -SP"C:\Users\Dr.Vista™\Downloads\ES_Course_Labs-main\ES_Course_Labs-main\HAL\LED\" -SP"C:\Users\Dr.Vista™\Downloads\ES_Course_Labs-main\ES_Course_Labs-main\MCAL\GPIO\" -SP"C:\Users\Dr.Vista™\Downloads\ES_Course_Labs-main\ES_Course_Labs-main\HAL\Switch\" -IP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\Uses\P16\" "main.c" "LED.c" "GPIO.c" "SWITCH.c" "__Lib_Math.mcl" "__Lib_MathDouble.mcl" "__Lib_System.mcl" "__Lib_Delays.mcl"	 
+0	1	mikroCPIC1618.exe -MSF -DBG -pP16F877A -DL -O11101114 -fo8 -N"C:\Users\Dr.Vista™\Downloads\ES_Course_Labs-main\ES_Course_Labs.mcppi" -SP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\Defs\" -SP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\Uses\P16\" -SP"C:\Users\Dr.Vista™\Downloads\ES_Course_Labs-main\" -SP"C:\Users\Dr.Vista™\Downloads\ES_Course_Labs-main\ES_Course_Labs-main\APP\" -SP"C:\Users\Dr.Vista™\Downloads\ES_Course_Labs-main\ES_Course_Labs-main\HAL\LED\" -SP"C:\Users\Dr.Vista™\Downloads\ES_Course_Labs-main\ES_Course_Labs-main\MCAL\GPIO\" -SP"C:\Users\Dr.Vista™\Downloads\ES_Course_Labs-main\ES_Course_Labs-main\HAL\Switch\" -SP"C:\Users\Dr.Vista™\Downloads\ES_Course_Labs-main\ES_Course_Labs-main\MCAL\External_Interrupt_INT0\" -SP"C:\Users\Dr.Vista™\Downloads\ES_Course_Labs-main\ES_Course_Labs-main\MCAL\Timer\" -IP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\Uses\P16\" "main.c" "LED.c" "GPIO.c" "SWITCH.c" "EXT_INT0.c" "TIMER.c" "__Lib_Math.mcl" "__Lib_MathDouble.mcl" "__Lib_System.mcl" "__Lib_Delays.mcl"	 
 hint: 0	1139	Available RAM: 352 [bytes], Available ROM: 8192 [bytes]	 
 diagnostics: 0	122	Compilation Started	std_types.h
-diagnostics: 53	123	Compiled Successfully	main.c
+diagnostics: 60	123	Compiled Successfully	main.c
 diagnostics: 0	122	Compilation Started	std_types.h
 diagnostics: 27	123	Compiled Successfully	LED.c
 hint: 21	1164	Variable 'current' has been eliminated by optimizer	LED.c
@@ -10,10 +10,14 @@ diagnostics: 138	123	Compiled Successfully	GPIO.c
 diagnostics: 0	122	Compilation Started	std_types.h
 diagnostics: 13	123	Compiled Successfully	SWITCH.c
 hint: 11	1164	Variable 'state' has been eliminated by optimizer	SWITCH.c
-diagnostics: 0	127	All files Compiled in 360 ms	 
-hint: 0	1144	Used RAM (bytes): 9 (3%)  Free RAM (bytes): 343 (97%)	Used RAM (bytes): 9 (3%)  Free RAM (bytes): 343 (97%)
-hint: 0	1144	Used ROM (program words): 700 (9%)  Free ROM (program words): 7492 (91%)	Used ROM (program words): 700 (9%)  Free ROM (program words): 7492 (91%)
+diagnostics: 0	122	Compilation Started	std_types.h
+diagnostics: 50	123	Compiled Successfully	EXT_INT0.c
+diagnostics: 0	122	Compilation Started	std_types.h
+diagnostics: 79	123	Compiled Successfully	TIMER.c
+diagnostics: 0	127	All files Compiled in 1437 ms	 
+hint: 0	1144	Used RAM (bytes): 20 (6%)  Free RAM (bytes): 332 (94%)	Used RAM (bytes): 20 (6%)  Free RAM (bytes): 332 (94%)
+hint: 0	1144	Used ROM (program words): 743 (9%)  Free ROM (program words): 7449 (91%)	Used ROM (program words): 743 (9%)  Free ROM (program words): 7449 (91%)
 diagnostics: 0	125	Project Linked Successfully	ES_Course_Labs.mcppi
-diagnostics: 0	128	Linked in 15 ms	 
-diagnostics: 0	129	Project 'ES_Course_Labs.mcppi' completed: 531 ms	 
-diagnostics: 0	103	Finished successfully: 23 Feb 2026, 00:09:12	ES_Course_Labs.mcppi
+diagnostics: 0	128	Linked in 31 ms	 
+diagnostics: 0	129	Project 'ES_Course_Labs.mcppi' completed: 1625 ms	 
+diagnostics: 0	103	Finished successfully: 11 Mar 2026, 12:12:56	ES_Course_Labs.mcppi

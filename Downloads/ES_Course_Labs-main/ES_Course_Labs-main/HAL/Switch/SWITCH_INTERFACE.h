@@ -5,7 +5,7 @@
 
 
 void SWITCH_Init(u8 Pin);
-u8 SWITCH_STATE(u8 Port, u8 Pin);
+u8 SWITCH_STATE(u8 Pin);
 
 
 #endif
