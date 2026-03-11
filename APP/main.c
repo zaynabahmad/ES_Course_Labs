@@ -1,33 +1,40 @@
 /*
 * APPLICATION LAYER
 */
+
+#include "../MCAL/TIMER0/timer0_interface.h"
 #include "../HAL/LED/LED_interface.h"
 #include "../MCAL/GPIO/GPIO_interface.h"
-#include "../MCAL/EXT_INT/ext_int0_interface.h"
 
-void App_Toggle_LED(void)
+volatile u8 count1 = 0;
+volatile u8 count2 = 0;
+
+void App_Timer_Callback(void)
 {
-    LED_Toggle(GPIO_PORTA, GPIO_PIN0);
+    count1++;
+    count2++;
+    // Toggle LED1 every 1 second (since Timer0 overflows every ~32ms, we check for 31 overflows)
+    if(count1 >= 31)
+    {
+        count1 = 0;
+        LED_Toggle(GPIO_PORTA, GPIO_PIN0);  // LED1 every 1 second
+    }
+    // Toggle LED2 every 2 seconds (since Timer0 overflows every ~32ms, we check for 61 overflows)
+    if(count2 >= 61)
+    {
+        count2 = 0;
+        LED_Toggle(GPIO_PORTA, GPIO_PIN1);  // LED2 every 2 seconds
+    }
 }
 
 void main(void)
 {
-    LED_Init(GPIO_PORTA, GPIO_PIN0);
+    LED_Init(GPIO_PORTA, GPIO_PIN0); // Initialize LED1
+    LED_Init(GPIO_PORTA, GPIO_PIN1); // Initialize LED2
 
-    EXT_INT0_Init();
+    TIMER0_Init(); // Initialize Timer0
+    TIMER0_SetCallback(App_Timer_Callback); // Set the callback function for Timer0 interrupts
+    TIMER0_EnableInterrupt(); // Enable Timer0 interrupts
 
-    // Configure INT0 to trigger on the falling edge (button press)
-    EXT_INT0_SetEdge(EXT_INT0_FALLING_EDGE);
-
-    // Tells the PIC which function to call when INT0 interrupt occurs
-    EXT_INT0_SetCallback(App_Toggle_LED);
-
-    // this enables INTE and GIE bits in INTCON register
-    EXT_INT0_Enable();
-    
-    // Empty while loop to keep the main function running and allow interrupts to be handled
-    while(1)
-    {
-        // Main loop can perform other tasks
-    }
+    while(1) { }
 }
