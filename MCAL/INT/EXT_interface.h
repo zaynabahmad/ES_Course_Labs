@@ -1,7 +1,7 @@
-#ifndef EXT_interface_H
-#define EXT_interface_H
+#ifndef EXT_INTERFACE_H
+#define EXT_INTERFACE_H
 
-#include "STD_TYPES.h"
+#include "../../SERVICES/STD_TYPES.h"
 
 #define EXT_INT0_RISING_EDGE   1
 #define EXT_INT0_FALLING_EDGE  0

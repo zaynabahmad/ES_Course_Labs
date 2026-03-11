@@ -1,10 +1,11 @@
 #include "../HAL/LED/LED.h"
 #include "../HAL/Switch/SWITCH.h"
+#include "../MCAL/GPIO/GPIO_interface.h" 
 
-#define LED1     1
-#define LED2     2
-#define SWITCH1  3
-#define SWITCH2  4
+#define LED1     GPIO_PIN1
+#define LED2     GPIO_PIN2
+#define SWITCH1  GPIO_PIN3
+#define SWITCH2  GPIO_PIN4
 
 void main()
 {

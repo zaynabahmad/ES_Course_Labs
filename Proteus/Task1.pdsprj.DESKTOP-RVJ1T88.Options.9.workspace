@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<WORKSPACE>
+ <FRAME activeWindow="0">
+  <PLACEMENT>01d9d0cb00030000fffffffffffffff70000078000000406000000000000001d0000077f0000040500000000020000000780000000000000001d0000077f00000405</PLACEMENT>
+  <WINDOW mode="00050a01" index="0" type="default" module="ISIS"/>
+ </FRAME>
+ <MODULE name="VSMDEBUG">
+  <PWI>
+   <POPUP w="800" x="10" flags="00000082" iid="-1" y="25" h="200" pid="0">
+    <PROPERTIES/>
+   </POPUP>
+   <POPUP w="350" x="30" flags="000000b2" iid="-1" y="45" h="200" pid="1">
+    <PROPERTIES/>
+   </POPUP>
+   <POPUP w="800" x="50" flags="000000a2" iid="-1" y="65" h="200" pid="2">
+    <PROPERTIES/>
+   </POPUP>
+   <POPUP w="52" x="70" flags="00000008" iid="1" y="85" h="13" pid="3">
+    <PROPERTIES/>
+   </POPUP>
+   <POPUP w="8" x="90" flags="0000000a" iid="1" y="105" h="32" pid="4">
+    <PROPERTIES/>
+   </POPUP>
+   <POPUP w="8" x="110" flags="0000000a" iid="1" y="125" h="32" pid="5">
+    <PROPERTIES/>
+   </POPUP>
+   <POPUP w="16" x="130" flags="0000000a" iid="1" y="145" h="32" pid="6">
+    <PROPERTIES/>
+   </POPUP>
+   <POPUP w="14" x="150" flags="00000008" iid="1" y="165" h="8" pid="7">
+    <PROPERTIES/>
+   </POPUP>
+   <POPUP w="8" x="170" flags="80000002" iid="1" y="185" h="8" pid="8">
+    <PROPERTIES/>
+   </POPUP>
+  </PWI>
+ </MODULE>
+ <MODULE name="ARES">
+  <editor snapidx="3" gridmode="2" orgmode="0" zoom="10" snaprange="0" metric="0" gridmajor="0" xcursor="0" snap="0" flipped="0" scale="10" gridminor="0">
+   <centre x="0" y="0"/>
+   <origin x="0" y="0"/>
+   <world x2="15240000" x1="-15240000" y1="-12700000" y2="12700000"/>
+  </editor>
+ </MODULE>
+ <MODULE name="ISIS">
+  <editor snapidx="2" gridmode="2" orgmode="0" zoom="-1" snaprange="127000" metric="0" gridmajor="2540000" xcursor="0" snap="254000" flipped="0" scale="123" gridminor="254000">
+   <centre x="0" y="10242"/>
+   <origin x="0" y="0"/>
+   <world x2="12700000" x1="-12700000" y1="-8890000" y2="8890000"/>
+  </editor>
+ </MODULE>
+</WORKSPACE>
