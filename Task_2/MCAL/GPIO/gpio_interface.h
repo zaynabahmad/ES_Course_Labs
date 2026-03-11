@@ -17,12 +17,13 @@
 #define _PORTD 3
 #define _PORTE 4
 
-
+/* PIC Microcontroller Register Definitions (SFR) - mikroC built-in */
+// SFRs are predefined in mikroC, no need for extern declarations
 
 
 void set_pin_direction(u8 port, u8 pin, u8 direction); /* [cite: 12] */
 void set_pin_value(u8 port, u8 pin, u8 value);         /* [cite: 14] */
 u8 get_pin_value(u8 port, u8 pin);            /* [cite: 16] */
-
+void toggle_pin(u8 port, u8 pin);
 
 #endif

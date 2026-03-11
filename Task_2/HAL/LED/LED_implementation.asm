@@ -44,3 +44,17 @@ _LED_OFF:
 L_end_LED_OFF:
 	RETURN
 ; end of _LED_OFF
+
+_LED_Toggle:
+
+;LED_implementation.c,15 :: 		void LED_Toggle(u8 port, u8 pin) {
+;LED_implementation.c,16 :: 		toggle_pin(port, pin);
+	MOVF       FARG_LED_Toggle_port+0, 0
+	MOVWF      FARG_toggle_pin_port+0
+	MOVF       FARG_LED_Toggle_pin+0, 0
+	MOVWF      FARG_toggle_pin_pin+0
+	CALL       _toggle_pin+0
+;LED_implementation.c,17 :: 		}
+L_end_LED_Toggle:
+	RETURN
+; end of _LED_Toggle

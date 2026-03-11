@@ -12,3 +12,6 @@ void LED_ON(u8 port, u8 pin) {
 void LED_OFF(u8 port, u8 pin) {
     set_pin_value(port, pin, LOW);
 }
+void LED_Toggle(u8 port, u8 pin) {
+    toggle_pin(port, pin);
+}

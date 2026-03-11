@@ -1,5 +1,7 @@
 #include "../SERVICES/std_types.h"
 #include "ext_int_interface.h"
+#include "/TIMER/timer_interface.h"
+
 #include <stddef.h>
 
 static void (*ext_int_callback)(void) = 0;
@@ -32,5 +34,11 @@ void interrupt(void) {
             ext_int_callback();
         }
         INTCON &= ~0x02;
+    }
+     if(INTCON & 0x04){
+        
+        TIMER0_ISR_Handler();
+        
+        INTCON &= ~0x04;
     }
 }

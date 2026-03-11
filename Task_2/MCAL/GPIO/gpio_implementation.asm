@@ -17,14 +17,14 @@ L_set_pin_direction2:
 	MOVLW      1
 	MOVWF      R0+0
 	MOVF       R1+0, 0
-L__set_pin_direction48:
+L__set_pin_direction55:
 	BTFSC      STATUS+0, 2
-	GOTO       L__set_pin_direction49
+	GOTO       L__set_pin_direction56
 	RLF        R0+0, 1
 	BCF        R0+0, 0
 	ADDLW      255
-	GOTO       L__set_pin_direction48
-L__set_pin_direction49:
+	GOTO       L__set_pin_direction55
+L__set_pin_direction56:
 	COMF       R0+0, 1
 	MOVF       R0+0, 0
 	ANDWF      TRISA+0, 1
@@ -41,14 +41,14 @@ L_set_pin_direction3:
 	MOVLW      1
 	MOVWF      R0+0
 	MOVF       R1+0, 0
-L__set_pin_direction50:
+L__set_pin_direction57:
 	BTFSC      STATUS+0, 2
-	GOTO       L__set_pin_direction51
+	GOTO       L__set_pin_direction58
 	RLF        R0+0, 1
 	BCF        R0+0, 0
 	ADDLW      255
-	GOTO       L__set_pin_direction50
-L__set_pin_direction51:
+	GOTO       L__set_pin_direction57
+L__set_pin_direction58:
 	MOVF       R0+0, 0
 	IORWF      TRISA+0, 1
 ;gpio_implementation.c,14 :: 		}
@@ -69,14 +69,14 @@ L_set_pin_direction6:
 	MOVLW      1
 	MOVWF      R0+0
 	MOVF       R1+0, 0
-L__set_pin_direction52:
+L__set_pin_direction59:
 	BTFSC      STATUS+0, 2
-	GOTO       L__set_pin_direction53
+	GOTO       L__set_pin_direction60
 	RLF        R0+0, 1
 	BCF        R0+0, 0
 	ADDLW      255
-	GOTO       L__set_pin_direction52
-L__set_pin_direction53:
+	GOTO       L__set_pin_direction59
+L__set_pin_direction60:
 	COMF       R0+0, 1
 	MOVF       R0+0, 0
 	ANDWF      TRISB+0, 1
@@ -93,14 +93,14 @@ L_set_pin_direction7:
 	MOVLW      1
 	MOVWF      R0+0
 	MOVF       R1+0, 0
-L__set_pin_direction54:
+L__set_pin_direction61:
 	BTFSC      STATUS+0, 2
-	GOTO       L__set_pin_direction55
+	GOTO       L__set_pin_direction62
 	RLF        R0+0, 1
 	BCF        R0+0, 0
 	ADDLW      255
-	GOTO       L__set_pin_direction54
-L__set_pin_direction55:
+	GOTO       L__set_pin_direction61
+L__set_pin_direction62:
 	MOVF       R0+0, 0
 	IORWF      TRISB+0, 1
 ;gpio_implementation.c,21 :: 		}
@@ -121,14 +121,14 @@ L_set_pin_direction10:
 	MOVLW      1
 	MOVWF      R0+0
 	MOVF       R1+0, 0
-L__set_pin_direction56:
+L__set_pin_direction63:
 	BTFSC      STATUS+0, 2
-	GOTO       L__set_pin_direction57
+	GOTO       L__set_pin_direction64
 	RLF        R0+0, 1
 	BCF        R0+0, 0
 	ADDLW      255
-	GOTO       L__set_pin_direction56
-L__set_pin_direction57:
+	GOTO       L__set_pin_direction63
+L__set_pin_direction64:
 	COMF       R0+0, 1
 	MOVF       R0+0, 0
 	ANDWF      TRISC+0, 1
@@ -145,14 +145,14 @@ L_set_pin_direction11:
 	MOVLW      1
 	MOVWF      R0+0
 	MOVF       R1+0, 0
-L__set_pin_direction58:
+L__set_pin_direction65:
 	BTFSC      STATUS+0, 2
-	GOTO       L__set_pin_direction59
+	GOTO       L__set_pin_direction66
 	RLF        R0+0, 1
 	BCF        R0+0, 0
 	ADDLW      255
-	GOTO       L__set_pin_direction58
-L__set_pin_direction59:
+	GOTO       L__set_pin_direction65
+L__set_pin_direction66:
 	MOVF       R0+0, 0
 	IORWF      TRISC+0, 1
 ;gpio_implementation.c,28 :: 		}
@@ -173,14 +173,14 @@ L_set_pin_direction14:
 	MOVLW      1
 	MOVWF      R0+0
 	MOVF       R1+0, 0
-L__set_pin_direction60:
+L__set_pin_direction67:
 	BTFSC      STATUS+0, 2
-	GOTO       L__set_pin_direction61
+	GOTO       L__set_pin_direction68
 	RLF        R0+0, 1
 	BCF        R0+0, 0
 	ADDLW      255
-	GOTO       L__set_pin_direction60
-L__set_pin_direction61:
+	GOTO       L__set_pin_direction67
+L__set_pin_direction68:
 	COMF       R0+0, 1
 	MOVF       R0+0, 0
 	ANDWF      TRISD+0, 1
@@ -197,14 +197,14 @@ L_set_pin_direction15:
 	MOVLW      1
 	MOVWF      R0+0
 	MOVF       R1+0, 0
-L__set_pin_direction62:
+L__set_pin_direction69:
 	BTFSC      STATUS+0, 2
-	GOTO       L__set_pin_direction63
+	GOTO       L__set_pin_direction70
 	RLF        R0+0, 1
 	BCF        R0+0, 0
 	ADDLW      255
-	GOTO       L__set_pin_direction62
-L__set_pin_direction63:
+	GOTO       L__set_pin_direction69
+L__set_pin_direction70:
 	MOVF       R0+0, 0
 	IORWF      TRISD+0, 1
 ;gpio_implementation.c,35 :: 		}
@@ -225,14 +225,14 @@ L_set_pin_direction18:
 	MOVLW      1
 	MOVWF      R0+0
 	MOVF       R1+0, 0
-L__set_pin_direction64:
+L__set_pin_direction71:
 	BTFSC      STATUS+0, 2
-	GOTO       L__set_pin_direction65
+	GOTO       L__set_pin_direction72
 	RLF        R0+0, 1
 	BCF        R0+0, 0
 	ADDLW      255
-	GOTO       L__set_pin_direction64
-L__set_pin_direction65:
+	GOTO       L__set_pin_direction71
+L__set_pin_direction72:
 	COMF       R0+0, 1
 	MOVF       R0+0, 0
 	ANDWF      TRISE+0, 1
@@ -249,14 +249,14 @@ L_set_pin_direction19:
 	MOVLW      1
 	MOVWF      R0+0
 	MOVF       R1+0, 0
-L__set_pin_direction66:
+L__set_pin_direction73:
 	BTFSC      STATUS+0, 2
-	GOTO       L__set_pin_direction67
+	GOTO       L__set_pin_direction74
 	RLF        R0+0, 1
 	BCF        R0+0, 0
 	ADDLW      255
-	GOTO       L__set_pin_direction66
-L__set_pin_direction67:
+	GOTO       L__set_pin_direction73
+L__set_pin_direction74:
 	MOVF       R0+0, 0
 	IORWF      TRISE+0, 1
 ;gpio_implementation.c,42 :: 		}
@@ -310,14 +310,14 @@ L_set_pin_value24:
 	MOVLW      1
 	MOVWF      R0+0
 	MOVF       R1+0, 0
-L__set_pin_value69:
+L__set_pin_value76:
 	BTFSC      STATUS+0, 2
-	GOTO       L__set_pin_value70
+	GOTO       L__set_pin_value77
 	RLF        R0+0, 1
 	BCF        R0+0, 0
 	ADDLW      255
-	GOTO       L__set_pin_value69
-L__set_pin_value70:
+	GOTO       L__set_pin_value76
+L__set_pin_value77:
 	MOVF       R0+0, 0
 	IORWF      PORTA+0, 1
 ;gpio_implementation.c,52 :: 		} else {
@@ -329,14 +329,14 @@ L_set_pin_value25:
 	MOVLW      1
 	MOVWF      R0+0
 	MOVF       R1+0, 0
-L__set_pin_value71:
+L__set_pin_value78:
 	BTFSC      STATUS+0, 2
-	GOTO       L__set_pin_value72
+	GOTO       L__set_pin_value79
 	RLF        R0+0, 1
 	BCF        R0+0, 0
 	ADDLW      255
-	GOTO       L__set_pin_value71
-L__set_pin_value72:
+	GOTO       L__set_pin_value78
+L__set_pin_value79:
 	COMF       R0+0, 1
 	MOVF       R0+0, 0
 	ANDWF      PORTA+0, 1
@@ -357,14 +357,14 @@ L_set_pin_value27:
 	MOVLW      1
 	MOVWF      R0+0
 	MOVF       R1+0, 0
-L__set_pin_value73:
+L__set_pin_value80:
 	BTFSC      STATUS+0, 2
-	GOTO       L__set_pin_value74
+	GOTO       L__set_pin_value81
 	RLF        R0+0, 1
 	BCF        R0+0, 0
 	ADDLW      255
-	GOTO       L__set_pin_value73
-L__set_pin_value74:
+	GOTO       L__set_pin_value80
+L__set_pin_value81:
 	MOVF       R0+0, 0
 	IORWF      PORTB+0, 1
 ;gpio_implementation.c,59 :: 		} else {
@@ -376,14 +376,14 @@ L_set_pin_value28:
 	MOVLW      1
 	MOVWF      R0+0
 	MOVF       R1+0, 0
-L__set_pin_value75:
+L__set_pin_value82:
 	BTFSC      STATUS+0, 2
-	GOTO       L__set_pin_value76
+	GOTO       L__set_pin_value83
 	RLF        R0+0, 1
 	BCF        R0+0, 0
 	ADDLW      255
-	GOTO       L__set_pin_value75
-L__set_pin_value76:
+	GOTO       L__set_pin_value82
+L__set_pin_value83:
 	COMF       R0+0, 1
 	MOVF       R0+0, 0
 	ANDWF      PORTB+0, 1
@@ -404,14 +404,14 @@ L_set_pin_value30:
 	MOVLW      1
 	MOVWF      R0+0
 	MOVF       R1+0, 0
-L__set_pin_value77:
+L__set_pin_value84:
 	BTFSC      STATUS+0, 2
-	GOTO       L__set_pin_value78
+	GOTO       L__set_pin_value85
 	RLF        R0+0, 1
 	BCF        R0+0, 0
 	ADDLW      255
-	GOTO       L__set_pin_value77
-L__set_pin_value78:
+	GOTO       L__set_pin_value84
+L__set_pin_value85:
 	MOVF       R0+0, 0
 	IORWF      PORTC+0, 1
 ;gpio_implementation.c,66 :: 		} else {
@@ -423,14 +423,14 @@ L_set_pin_value31:
 	MOVLW      1
 	MOVWF      R0+0
 	MOVF       R1+0, 0
-L__set_pin_value79:
+L__set_pin_value86:
 	BTFSC      STATUS+0, 2
-	GOTO       L__set_pin_value80
+	GOTO       L__set_pin_value87
 	RLF        R0+0, 1
 	BCF        R0+0, 0
 	ADDLW      255
-	GOTO       L__set_pin_value79
-L__set_pin_value80:
+	GOTO       L__set_pin_value86
+L__set_pin_value87:
 	COMF       R0+0, 1
 	MOVF       R0+0, 0
 	ANDWF      PORTC+0, 1
@@ -451,14 +451,14 @@ L_set_pin_value33:
 	MOVLW      1
 	MOVWF      R0+0
 	MOVF       R1+0, 0
-L__set_pin_value81:
+L__set_pin_value88:
 	BTFSC      STATUS+0, 2
-	GOTO       L__set_pin_value82
+	GOTO       L__set_pin_value89
 	RLF        R0+0, 1
 	BCF        R0+0, 0
 	ADDLW      255
-	GOTO       L__set_pin_value81
-L__set_pin_value82:
+	GOTO       L__set_pin_value88
+L__set_pin_value89:
 	MOVF       R0+0, 0
 	IORWF      PORTD+0, 1
 ;gpio_implementation.c,73 :: 		} else {
@@ -470,14 +470,14 @@ L_set_pin_value34:
 	MOVLW      1
 	MOVWF      R0+0
 	MOVF       R1+0, 0
-L__set_pin_value83:
+L__set_pin_value90:
 	BTFSC      STATUS+0, 2
-	GOTO       L__set_pin_value84
+	GOTO       L__set_pin_value91
 	RLF        R0+0, 1
 	BCF        R0+0, 0
 	ADDLW      255
-	GOTO       L__set_pin_value83
-L__set_pin_value84:
+	GOTO       L__set_pin_value90
+L__set_pin_value91:
 	COMF       R0+0, 1
 	MOVF       R0+0, 0
 	ANDWF      PORTD+0, 1
@@ -498,14 +498,14 @@ L_set_pin_value36:
 	MOVLW      1
 	MOVWF      R0+0
 	MOVF       R1+0, 0
-L__set_pin_value85:
+L__set_pin_value92:
 	BTFSC      STATUS+0, 2
-	GOTO       L__set_pin_value86
+	GOTO       L__set_pin_value93
 	RLF        R0+0, 1
 	BCF        R0+0, 0
 	ADDLW      255
-	GOTO       L__set_pin_value85
-L__set_pin_value86:
+	GOTO       L__set_pin_value92
+L__set_pin_value93:
 	MOVF       R0+0, 0
 	IORWF      PORTE+0, 1
 ;gpio_implementation.c,80 :: 		} else {
@@ -517,14 +517,14 @@ L_set_pin_value37:
 	MOVLW      1
 	MOVWF      R0+0
 	MOVF       R1+0, 0
-L__set_pin_value87:
+L__set_pin_value94:
 	BTFSC      STATUS+0, 2
-	GOTO       L__set_pin_value88
+	GOTO       L__set_pin_value95
 	RLF        R0+0, 1
 	BCF        R0+0, 0
 	ADDLW      255
-	GOTO       L__set_pin_value87
-L__set_pin_value88:
+	GOTO       L__set_pin_value94
+L__set_pin_value95:
 	COMF       R0+0, 1
 	MOVF       R0+0, 0
 	ANDWF      PORTE+0, 1
@@ -572,14 +572,14 @@ L_get_pin_value41:
 	MOVF       PORTA+0, 0
 	MOVWF      R0+0
 	MOVF       R1+0, 0
-L__get_pin_value90:
+L__get_pin_value97:
 	BTFSC      STATUS+0, 2
-	GOTO       L__get_pin_value91
+	GOTO       L__get_pin_value98
 	RRF        R0+0, 1
 	BCF        R0+0, 7
 	ADDLW      255
-	GOTO       L__get_pin_value90
-L__get_pin_value91:
+	GOTO       L__get_pin_value97
+L__get_pin_value98:
 	MOVLW      1
 	ANDWF      R0+0, 1
 	GOTO       L_end_get_pin_value
@@ -590,14 +590,14 @@ L_get_pin_value42:
 	MOVF       PORTB+0, 0
 	MOVWF      R0+0
 	MOVF       R1+0, 0
-L__get_pin_value92:
+L__get_pin_value99:
 	BTFSC      STATUS+0, 2
-	GOTO       L__get_pin_value93
+	GOTO       L__get_pin_value100
 	RRF        R0+0, 1
 	BCF        R0+0, 7
 	ADDLW      255
-	GOTO       L__get_pin_value92
-L__get_pin_value93:
+	GOTO       L__get_pin_value99
+L__get_pin_value100:
 	MOVLW      1
 	ANDWF      R0+0, 1
 	GOTO       L_end_get_pin_value
@@ -608,14 +608,14 @@ L_get_pin_value43:
 	MOVF       PORTC+0, 0
 	MOVWF      R0+0
 	MOVF       R1+0, 0
-L__get_pin_value94:
+L__get_pin_value101:
 	BTFSC      STATUS+0, 2
-	GOTO       L__get_pin_value95
+	GOTO       L__get_pin_value102
 	RRF        R0+0, 1
 	BCF        R0+0, 7
 	ADDLW      255
-	GOTO       L__get_pin_value94
-L__get_pin_value95:
+	GOTO       L__get_pin_value101
+L__get_pin_value102:
 	MOVLW      1
 	ANDWF      R0+0, 1
 	GOTO       L_end_get_pin_value
@@ -626,14 +626,14 @@ L_get_pin_value44:
 	MOVF       PORTD+0, 0
 	MOVWF      R0+0
 	MOVF       R1+0, 0
-L__get_pin_value96:
+L__get_pin_value103:
 	BTFSC      STATUS+0, 2
-	GOTO       L__get_pin_value97
+	GOTO       L__get_pin_value104
 	RRF        R0+0, 1
 	BCF        R0+0, 7
 	ADDLW      255
-	GOTO       L__get_pin_value96
-L__get_pin_value97:
+	GOTO       L__get_pin_value103
+L__get_pin_value104:
 	MOVLW      1
 	ANDWF      R0+0, 1
 	GOTO       L_end_get_pin_value
@@ -644,14 +644,14 @@ L_get_pin_value45:
 	MOVF       PORTE+0, 0
 	MOVWF      R0+0
 	MOVF       R1+0, 0
-L__get_pin_value98:
+L__get_pin_value105:
 	BTFSC      STATUS+0, 2
-	GOTO       L__get_pin_value99
+	GOTO       L__get_pin_value106
 	RRF        R0+0, 1
 	BCF        R0+0, 7
 	ADDLW      255
-	GOTO       L__get_pin_value98
-L__get_pin_value99:
+	GOTO       L__get_pin_value105
+L__get_pin_value106:
 	MOVLW      1
 	ANDWF      R0+0, 1
 	GOTO       L_end_get_pin_value
@@ -686,3 +686,136 @@ L_get_pin_value39:
 L_end_get_pin_value:
 	RETURN
 ; end of _get_pin_value
+
+_toggle_pin:
+
+;gpio_implementation.c,97 :: 		void toggle_pin(u8 port, u8 pin) {
+;gpio_implementation.c,98 :: 		switch(port) {
+	GOTO       L_toggle_pin47
+;gpio_implementation.c,99 :: 		case _PORTA:
+L_toggle_pin49:
+;gpio_implementation.c,100 :: 		PORTA ^= (1 << pin);
+	MOVF       FARG_toggle_pin_pin+0, 0
+	MOVWF      R1+0
+	MOVLW      1
+	MOVWF      R0+0
+	MOVF       R1+0, 0
+L__toggle_pin108:
+	BTFSC      STATUS+0, 2
+	GOTO       L__toggle_pin109
+	RLF        R0+0, 1
+	BCF        R0+0, 0
+	ADDLW      255
+	GOTO       L__toggle_pin108
+L__toggle_pin109:
+	MOVF       R0+0, 0
+	XORWF      PORTA+0, 1
+;gpio_implementation.c,101 :: 		break;
+	GOTO       L_toggle_pin48
+;gpio_implementation.c,103 :: 		case _PORTB:
+L_toggle_pin50:
+;gpio_implementation.c,104 :: 		PORTB ^= (1 << pin);
+	MOVF       FARG_toggle_pin_pin+0, 0
+	MOVWF      R1+0
+	MOVLW      1
+	MOVWF      R0+0
+	MOVF       R1+0, 0
+L__toggle_pin110:
+	BTFSC      STATUS+0, 2
+	GOTO       L__toggle_pin111
+	RLF        R0+0, 1
+	BCF        R0+0, 0
+	ADDLW      255
+	GOTO       L__toggle_pin110
+L__toggle_pin111:
+	MOVF       R0+0, 0
+	XORWF      PORTB+0, 1
+;gpio_implementation.c,105 :: 		break;
+	GOTO       L_toggle_pin48
+;gpio_implementation.c,107 :: 		case _PORTC:
+L_toggle_pin51:
+;gpio_implementation.c,108 :: 		PORTC ^= (1 << pin);
+	MOVF       FARG_toggle_pin_pin+0, 0
+	MOVWF      R1+0
+	MOVLW      1
+	MOVWF      R0+0
+	MOVF       R1+0, 0
+L__toggle_pin112:
+	BTFSC      STATUS+0, 2
+	GOTO       L__toggle_pin113
+	RLF        R0+0, 1
+	BCF        R0+0, 0
+	ADDLW      255
+	GOTO       L__toggle_pin112
+L__toggle_pin113:
+	MOVF       R0+0, 0
+	XORWF      PORTC+0, 1
+;gpio_implementation.c,109 :: 		break;
+	GOTO       L_toggle_pin48
+;gpio_implementation.c,111 :: 		case _PORTD:
+L_toggle_pin52:
+;gpio_implementation.c,112 :: 		PORTD ^= (1 << pin);
+	MOVF       FARG_toggle_pin_pin+0, 0
+	MOVWF      R1+0
+	MOVLW      1
+	MOVWF      R0+0
+	MOVF       R1+0, 0
+L__toggle_pin114:
+	BTFSC      STATUS+0, 2
+	GOTO       L__toggle_pin115
+	RLF        R0+0, 1
+	BCF        R0+0, 0
+	ADDLW      255
+	GOTO       L__toggle_pin114
+L__toggle_pin115:
+	MOVF       R0+0, 0
+	XORWF      PORTD+0, 1
+;gpio_implementation.c,113 :: 		break;
+	GOTO       L_toggle_pin48
+;gpio_implementation.c,115 :: 		case _PORTE:
+L_toggle_pin53:
+;gpio_implementation.c,116 :: 		PORTE ^= (1 << pin);
+	MOVF       FARG_toggle_pin_pin+0, 0
+	MOVWF      R1+0
+	MOVLW      1
+	MOVWF      R0+0
+	MOVF       R1+0, 0
+L__toggle_pin116:
+	BTFSC      STATUS+0, 2
+	GOTO       L__toggle_pin117
+	RLF        R0+0, 1
+	BCF        R0+0, 0
+	ADDLW      255
+	GOTO       L__toggle_pin116
+L__toggle_pin117:
+	MOVF       R0+0, 0
+	XORWF      PORTE+0, 1
+;gpio_implementation.c,117 :: 		break;
+	GOTO       L_toggle_pin48
+;gpio_implementation.c,118 :: 		}
+L_toggle_pin47:
+	MOVF       FARG_toggle_pin_port+0, 0
+	XORLW      0
+	BTFSC      STATUS+0, 2
+	GOTO       L_toggle_pin49
+	MOVF       FARG_toggle_pin_port+0, 0
+	XORLW      1
+	BTFSC      STATUS+0, 2
+	GOTO       L_toggle_pin50
+	MOVF       FARG_toggle_pin_port+0, 0
+	XORLW      2
+	BTFSC      STATUS+0, 2
+	GOTO       L_toggle_pin51
+	MOVF       FARG_toggle_pin_port+0, 0
+	XORLW      3
+	BTFSC      STATUS+0, 2
+	GOTO       L_toggle_pin52
+	MOVF       FARG_toggle_pin_port+0, 0
+	XORLW      4
+	BTFSC      STATUS+0, 2
+	GOTO       L_toggle_pin53
+L_toggle_pin48:
+;gpio_implementation.c,119 :: 		}
+L_end_toggle_pin:
+	RETURN
+; end of _toggle_pin

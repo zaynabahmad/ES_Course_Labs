@@ -94,3 +94,26 @@ u8 get_pin_value(u8 port, u8 pin) {
         default:     return 0;
     }
 }
+void toggle_pin(u8 port, u8 pin) {
+    switch(port) {
+        case _PORTA:
+            PORTA ^= (1 << pin);
+            break;
+
+        case _PORTB:
+            PORTB ^= (1 << pin);
+            break;
+
+        case _PORTC:
+            PORTC ^= (1 << pin);
+            break;
+
+        case _PORTD:
+            PORTD ^= (1 << pin);
+            break;
+
+        case _PORTE:
+            PORTE ^= (1 << pin);
+            break;
+    }
+}

@@ -3,10 +3,9 @@ main
 		____DoICP
 	LED_Init
 		set_pin_direction
-	EXT_INTO_Init
-		set_pin_direction
-	EXT_INTO_SetEdge
-	EXT_INTO_SetCallback
-	EXT_INTO_Enable
+	TIMER0_SetCallback
+	TIMER0_Init
 interrupt
 	____DoIFC
+	TIMER0_ISR_Handler
+		____DoIFC

@@ -1,5 +1,5 @@
-#line 1 "D:/University/Spring_26/Embedded/Labs/MCAL/GPIO/gpio_implementation.c"
-#line 1 "d:/university/spring_26/embedded/labs/mcal/gpio/../../services/std_types.h"
+#line 1 "D:/University/Spring_26/Embedded/Task_2/MCAL/GPIO/gpio_implementation.c"
+#line 1 "d:/university/spring_26/embedded/task_2/mcal/gpio/../../services/std_types.h"
 
 
 
@@ -13,14 +13,15 @@ typedef unsigned long int u32;
 
 
 typedef unsigned char bool_t;
-#line 1 "d:/university/spring_26/embedded/labs/mcal/gpio/../../services/bit_math.h"
-#line 1 "d:/university/spring_26/embedded/labs/mcal/gpio/gpio_interface.h"
-#line 1 "d:/university/spring_26/embedded/labs/mcal/gpio/../../services/std_types.h"
-#line 24 "d:/university/spring_26/embedded/labs/mcal/gpio/gpio_interface.h"
+#line 1 "d:/university/spring_26/embedded/task_2/mcal/gpio/../../services/bit_math.h"
+#line 1 "d:/university/spring_26/embedded/task_2/mcal/gpio/gpio_interface.h"
+#line 1 "d:/university/spring_26/embedded/task_2/mcal/gpio/../../services/std_types.h"
+#line 24 "d:/university/spring_26/embedded/task_2/mcal/gpio/gpio_interface.h"
 void set_pin_direction(u8 port, u8 pin, u8 direction);
 void set_pin_value(u8 port, u8 pin, u8 value);
 u8 get_pin_value(u8 port, u8 pin);
-#line 7 "D:/University/Spring_26/Embedded/Labs/MCAL/GPIO/gpio_implementation.c"
+void toggle_pin(u8 port, u8 pin);
+#line 7 "D:/University/Spring_26/Embedded/Task_2/MCAL/GPIO/gpio_implementation.c"
 void set_pin_direction(u8 port, u8 pin, u8 direction) {
  switch(port) {
  case  0 :
@@ -109,5 +110,28 @@ u8 get_pin_value(u8 port, u8 pin) {
  case  3 : return  ((PORTD >> pin) & 1) ;
  case  4 : return  ((PORTE >> pin) & 1) ;
  default: return 0;
+ }
+}
+void toggle_pin(u8 port, u8 pin) {
+ switch(port) {
+ case  0 :
+ PORTA ^= (1 << pin);
+ break;
+
+ case  1 :
+ PORTB ^= (1 << pin);
+ break;
+
+ case  2 :
+ PORTC ^= (1 << pin);
+ break;
+
+ case  3 :
+ PORTD ^= (1 << pin);
+ break;
+
+ case  4 :
+ PORTE ^= (1 << pin);
+ break;
  }
 }
