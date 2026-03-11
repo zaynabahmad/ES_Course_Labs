@@ -1,0 +1,9 @@
+main
+	__CC2DW
+		____DoICP
+	LED_Init
+	TIMER0_Init
+	TIMER0_SetCallback
+	TIMER0_EnableInterrupt
+interrupt
+	____DoIFC

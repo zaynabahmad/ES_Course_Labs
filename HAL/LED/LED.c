@@ -1,27 +1,49 @@
-#include "LED_interface.h"
-#include "../../MCAL/GPIO/GPIO_interface.h"
+//#include "LED.h"
 
-void LED_Init(u8 Port, u8 Pin)
+//void LED_Init(void)
+//{
+//    TRISD.B0 = 0;   // RD0 output
+//    PORTD.B0 = 0;   // LED OFF
+//}
+
+//void LED_Toggle(void)
+//{
+//    PORTD.B0 = ~PORTD.B0;
+//}
+
+// lab task#1 (week 3)
+//#include "LED.h"
+
+//void LED_Init(void)
+//{
+//    TRISB.B0 = 0;   // RB0 as output
+//    PORTB.B0 = 0;   // LED OFF initially
+//}
+
+//void LED_Toggle(void)
+//{
+//    PORTB.B0 = !PORTB.B0;  // Logical NOT for clean bit toggle
+//}
+
+// LAB ASSIGNMENT (WEEK3)
+#include "C:\Test\Embedded\INT0_Layered\MCAL\TIMER0\TIMER0.h"
+#include "C:\Test\Embedded\INT0_Layered\MCAL\TIMER0\TIMER0_cfg.h"
+
+#include "LED.h"
+void LED_Init(void)
 {
-    GPIO_SetPinDirection(Port, Pin, GPIO_OUTPUT);
+    TRISB.B1 = 0;
+    TRISB.B0 = 0;   // RB0 not RB2
+    PORTB.B1 = 0;
+    PORTB.B0 = 0;
 }
 
-void LED_On(u8 Port, u8 Pin)
+void LED1_Toggle(void)
 {
-    GPIO_SetPinValue(Port, Pin, GPIO_HIGH);
+    PORTB.B0 = !PORTB.B0;
 }
 
-void LED_Off(u8 Port, u8 Pin)
+void LED2_Toggle(void)
 {
-    GPIO_SetPinValue(Port, Pin, GPIO_LOW);
-}
-
-void LED_Toggle(u8 Port, u8 Pin)
-{
-    u8 current = GPIO_GetPinValue(Port, Pin);
-
-    if(current == GPIO_HIGH)
-        GPIO_SetPinValue(Port, Pin, GPIO_LOW);
-    else
-        GPIO_SetPinValue(Port, Pin, GPIO_HIGH);
+    PORTB.B1 = !PORTB.B1;
 }
