@@ -1,0 +1,7 @@
+#ifndef EXT_INT0_CFG_H
+#define EXT_INT0_CFG_H
+
+/* Options: EXT_INT0_RISING_EDGE, EXT_INT0_FALLING_EDGE */
+#define EXT_INT0_EDGE_TYPE    EXT_INT0_RISING_EDGE
+
+#endif
