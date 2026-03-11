@@ -3,6 +3,7 @@
 #include "GPIO_config.h"
 
 #include "../../SERVICES/BIT_MATH.h"
+#include"../EXTI/EXTI_private.h"
 
 
 void GPIO_SetPinDirection(u8 Port, u8 Pin, u8 Direction)
@@ -48,6 +49,7 @@ void GPIO_SetPinDirection(u8 Port, u8 Pin, u8 Direction)
         break;
     }
 }
+
 
 
 void GPIO_SetPinValue(u8 Port, u8 Pin, u8 Value)
