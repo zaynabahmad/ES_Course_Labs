@@ -1,0 +1,59 @@
+#include "../../SERVICES/STD_TYPES.h"
+#include "../../SERVICES/BIT_MATH.h"
+#include "EXT_INT0_interface.h"
+#include "EXT_INT0_config.h"
+
+
+static void (*EXT_INT0_Callback)(void) = 0; 
+
+void EXT_INT0_Init(void) {
+    // 1. Configure TRISB0 as input (Pin B0 is INT0 on most PICs)
+    TRISB0_bit = 1;
+
+    // 2. Configure Edge based on config file (Bonus)
+    #if EXT_INT0_SENSE_CONTROL == EXT_INT0_RISING_EDGE
+        INTEDG_bit = 1;
+    #elif EXT_INT0_SENSE_CONTROL == EXT_INT0_FALLING_EDGE
+        INTEDG_bit = 0;
+    #endif
+
+    // 3. Clear Interrupt Flag
+    INTF_bit = 0;
+}
+
+void EXT_INT0_Enable(void) {
+    INTE_bit = 1; // Enable External Interrupt
+    GIE_bit  = 1; // Enable Global Interrupts
+}
+
+void EXT_INT0_Disable(void) {
+    INTE_bit = 0; // Disable External Interrupt
+}
+
+void EXT_INT0_SetEdge(uint8 edge_type) {
+    if (edge_type == EXT_INT0_RISING_EDGE) {
+        INTEDG_bit = 1;
+    } else if (edge_type == EXT_INT0_FALLING_EDGE) {
+        INTEDG_bit = 0;
+    }
+}
+
+void EXT_INT0_SetCallback(void (*ptr)(void)) {
+    if (ptr != 0) {
+        EXT_INT0_Callback = ptr;
+    }
+}
+
+/* ISR Implementation (Specific to mikroC PRO) */
+/* ISR must be inside MCAL, and only calls the callback */
+void interrupt(void) {
+    // Check if the interrupt flag is set for INT0
+    if (INTF_bit == 1) {
+        INTF_bit = 0; // Clear INTF
+        
+        // Execute the callback function if it was registered
+        if (EXT_INT0_Callback != 0) {
+            EXT_INT0_Callback();
+        }
+    }
+}
