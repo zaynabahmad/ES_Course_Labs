@@ -3,6 +3,7 @@
 #include "GPIO_config.h"
 
 #include "../../SERVICES/BIT_MATH.h"
+#include"../EXTI/EXTI_private.h"
 
 
 void GPIO_SetPinDirection(u8 Port, u8 Pin, u8 Direction)
@@ -138,17 +139,23 @@ void GPIO_Init(void)
     PORTB = GPIO_PORTB_INIT_VAL;
 }
 
-void TIMER_INT(void)
-{
-     SET_BIT(INTCON, 5);
-     CLR_BIT(OPTION_REG, 5);
-     SET_BIT(INTCON, 7);
-     CLR_BIT(OPTION_REG, 3);
 
-     SET_BIT(OPTION_REG, 0);
-     SET_BIT(OPTION_REG, 1);
-     SET_BIT(OPTION_REG, 2);
 
-     CLR_BIT(TMR0, 0);
- 
- }
+
+//  void interrupt() {
+//     if(T0IF ==1)
+//     {
+//         T0IF=0;
+//         if(overflowcount<30){
+//             TMR0 = 0;
+    //             overflowcount ++;
+
+//         }
+//         else{
+//             TMR0 =125;
+//             overflowcount = 0;
+//             PORTB.F0=!PROTB.F0;
+//         }
+
+//     }
+//  }

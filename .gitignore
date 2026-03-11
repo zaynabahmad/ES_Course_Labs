@@ -12,7 +12,7 @@
 *.dlt
 *.mcppi
 *.user.dic
-*.callertable.txt
+*._callertable.txt
 *.ini
 *.brk
 *.cfg

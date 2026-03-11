@@ -34,6 +34,6 @@ u8   GPIO_GetPinValue(u8 Port, u8 Pin);
 void GPIO_Init(void);
 
 
-void TIMER_INT(void);
+
 
 #endif

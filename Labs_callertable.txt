@@ -1,21 +1,8 @@
 main
-	BUTTON_Init
-		GPIO_SetPinDirection
 	LED_Init
 		GPIO_SetPinDirection
-	BUTTON_GetState
-		GPIO_GetPinValue
-	Short_Sequence
-		LED_On
-			GPIO_SetPinValue
-		LED_Off
-			GPIO_SetPinValue
-	Long_Sequence
-		LED_On
-			GPIO_SetPinValue
-		LED_Off
-			GPIO_SetPinValue
-	LED_Off
-		GPIO_SetPinValue
+	TIMER_INT
+	TIMER_SetCallback
+	TIMER_SetCallback2
 interrupt
 	____DoIFC
