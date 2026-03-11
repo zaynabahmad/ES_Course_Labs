@@ -13,7 +13,7 @@ void delay(void) {
   for (i = 0; i < 50000; i++)
     ;
 }
-void ext_interrupt() { LED_Toggle(GPIO_PORTC, GPIO_PIN0); }
+void ext_interrupt() { EXT_INT0_ToggleLED(); }
 
 void main() {
   /*
@@ -56,8 +56,9 @@ void main() {
    *  Lab task 2
    */
 
-  LED_Init(GPIO_PORTC, GPIO_PIN0);
-  LED_Off(GPIO_PORTC, GPIO_PIN0);
+  LED_Init(GPIO_PORTC, GPIO_PIN2);
+  LED_Off(GPIO_PORTC, GPIO_PIN2);
+  SWITCH_Init(GPIO_PORTB, GPIO_PIN0);
   EXT_INT0_Init();
   EXT_INT0_SetCallback(ext_interrupt);
   EXT_INT0_Enable();

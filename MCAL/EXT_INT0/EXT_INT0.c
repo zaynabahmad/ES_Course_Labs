@@ -6,7 +6,7 @@
 #include "../../SERVICES/BIT_MATH.h"
 
 void EXT_INT0_Init(void) {
-  GPIO_SetPinValue(GPIO_PORTB, GPIO_PIN0, GPIO_INPUT);
+  GPIO_SetPinDirection(GPIO_PORTB, GPIO_PIN0, GPIO_INPUT);
   EXT_INT0_SetEdge(INTEDG_RISING);
   CLR_BIT(INTCON, INTE);
   CLR_BIT(INTCON, GIE);
@@ -36,9 +36,12 @@ void EXT_INT0_SetEdge(u8 edge_type) {
 static void (*EXT_INT0_Callback)(void) = 0;
 void EXT_INT0_SetCallback(void (*ptr)(void)) { EXT_INT0_Callback = ptr; }
 
+void EXT_INT0_ToggleLED(void) { SET_BIT(PORTC, GPIO_PIN2); }
+
 void interrupt() {
+  SET_BIT(PORTC, GPIO_PIN2);
   if (GET_BIT(INTCON, INTF)) {
-    EXT_INT0_Callback();
     CLR_BIT(INTCON, INTF);
+    EXT_INT0_Callback();
   }
 }
