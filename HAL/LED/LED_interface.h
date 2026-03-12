@@ -2,7 +2,7 @@
 #define LED_INTERFACE_H
 
 #include "../../SERVICES/STD_TYPES.h"
-
+#include "../../MCAL/GPIO/GPIO_interface.h"
 /* LED States */
 #define LED_OFF    0
 #define LED_ON     1
