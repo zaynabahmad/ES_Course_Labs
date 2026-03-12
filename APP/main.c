@@ -1,52 +1,59 @@
-//task2
+/*
+ * APPLICATION LAYER
+ */
 
-#include <stdint.h>
+#define SET_BIT(REG,BIT)      ( (REG) |=  (1U << (BIT)) )
+#define CLR_BIT(REG,BIT)      ( (REG) &= ~(1U << (BIT)) )
+#define TOG_BIT(REG,BIT)      ( (REG) ^=  (1U << (BIT)) )
+#define GET_BIT(REG,BIT)      ( ((REG) >> (BIT)) & 1U )
 
-#define LED_TRIS    TRISC0_bit
-#define LED_PIN     PORTC0_bit
+#include "../HAL/LED/LED_interface.h"
+#include "../HAL/Switch/SWITCH_INTERFACE.h"
+#include "../MCAL/GPIO/GPIO_interface.h"
+#include "../MCAL/Timer/TIMER_INTERFACE.h"
 
-#define INT0_TRIS   TRISB0_bit
+volatile unsigned char tickCounter = 0;
+volatile unsigned char led2Counter = 0;
 
-volatile uint8_t g_int0_event = 0;
-
-void interrupt(void)
+void Timer0_TaskHandler(void)
 {
-    if (INTCON.INTF)
+    if (tickCounter < 30)
     {
-        INTCON.INTF = 0;
-        LED_PIN = !LED_PIN;
-        g_int0_event = 1;
+        T0_Reset();
+        tickCounter++;
     }
-}
+    else if (tickCounter == 30)
+    {
+        T0_SetValue(125);
+        tickCounter++;
+    }
+    else
+    {
+        tickCounter = 0;
+        LED_Toggle(GPIO_PORTB, GPIO_PIN1);
 
-static void INT0_Init(void)
-{
-    INT0_TRIS = 1;
-
-    OPTION_REG &= 0x7F;
-    PORTB0_bit = 1;
-
-    OPTION_REG.INTEDG = 0;
-
-    INTCON.INTF = 0;
-    INTCON.INTE = 1;
-    INTCON.GIE  = 1;
+        if (led2Counter < 2)
+        {
+            led2Counter++;
+        }
+        else
+        {
+            led2Counter = 0;
+            LED_Toggle(GPIO_PORTB, GPIO_PIN2);
+        }
+    }
 }
 
 void main(void)
 {
-    LED_TRIS = 0;
-    LED_PIN  = 0;
+    LED_Init(GPIO_PORTB, GPIO_PIN1);
+    LED_Init(GPIO_PORTB, GPIO_PIN2);
 
-    INT0_Init();
+    T0_Init();
+    T0_Enable();
+    T0_SetCallback(Timer0_TaskHandler);
 
-    while(1)
+    while (1)
     {
-        if (g_int0_event)
-        {
-            Delay_ms(150);
-            g_int0_event = 0;
-            INTCON.INTF = 0;
-        }
     }
 }
