@@ -1,4 +1,4 @@
-#include "switch.h"
+#include "SWITCH.h"
 #include "../../SERVICES/BIT_MATH.h"
 
 /* Manual Register Definition for PORTB Direction */
