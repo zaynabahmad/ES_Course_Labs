@@ -1,6 +1,6 @@
 /* Include HAL layer */
 #include "../HAL/LED/LED_interface.h"
-#include "../HAL/SWITCH/SWITCH.h"
+#include "../HAL/Switch/SWITCH.h"
 
 /* Include MCAL layer */
 #include "../MCAL/TIMER0/TIMER0.h"
