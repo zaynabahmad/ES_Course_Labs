@@ -7,8 +7,8 @@
 #include "../MCAL/GPIO/GPIO_interface.h"
 #include  "../MCAL/Timer/TImer_interface.h "
 
-#define TICKS_1_SEC  125
-#define TICKS_2_SEC  250
+#define TICKS_1_SEC  1
+#define TICKS_2_SEC  2
 
 volatile unsigned int led1_counter = 0;
 volatile unsigned int led2_counter = 0;

@@ -29,7 +29,7 @@ void Interrupt() {
 
         if (Overflow_Counter >= INTERRUPTS_PER_SEC) {
             if (Timer0_GP_Callback != 0) {
-                Timer0_GP_Callback(); // This fires every 1 second
+                Timer0_GP_Callback(); // This fires every 8 milli second
             }
             Overflow_Counter = 0; // Reset counter
         }
