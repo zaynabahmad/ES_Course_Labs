@@ -10,6 +10,7 @@ void GPIO_SetPinDirection(u8 Port, u8 Pin, u8 Direction)
     switch(Port)
     {
         case GPIO_PORTA:
+            ADCON1 |= 0x06; 
             if(Direction == GPIO_OUTPUT)
                 CLR_BIT(TRISA, Pin);
             else

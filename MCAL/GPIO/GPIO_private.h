@@ -15,4 +15,5 @@
 #define PORTD   (*((volatile u8*)0x08))
 #define PORTE   (*((volatile u8*)0x09))
 
+#define ADCON1    (*((volatile u8*)0x009F)) // Analog/Digital Control
 #endif

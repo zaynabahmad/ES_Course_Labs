@@ -45,3 +45,6 @@ void Timer0_SetDelay(u32 delay_ms, void (*callback)(void)) {
     TMR_INT_Enable();
 }
 
+void Timer0_reset() {
+    TMR0_Counter = 0;
+}

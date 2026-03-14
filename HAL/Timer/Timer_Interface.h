@@ -6,5 +6,5 @@
 /* HAL functions */
 void Timer0_Init(u16 prescaler);
 void Timer0_SetDelay(u32 delay_ms, void (*callback)(void));
-
+void Timer0_reset();
 #endif
