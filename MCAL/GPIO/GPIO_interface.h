@@ -2,7 +2,7 @@
 #define GPIO_INTERFACE_H
 
 #include "../../SERVICES/STD_TYPES.h"
-
+#include "../../SERVICES/BIT_MATH.h"
 /* Port IDs */
 #define GPIO_PORTA   0
 #define GPIO_PORTB   1
