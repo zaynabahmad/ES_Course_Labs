@@ -12,7 +12,7 @@ void delay(void)
     for(i = 0; i < 50000; i++);
 }
 
-void main()
+int main()
 {
     LED_Init(GPIO_PORTB, GPIO_PIN0);
 
@@ -24,4 +24,5 @@ void main()
         LED_Off(GPIO_PORTB, GPIO_PIN0);
         delay();
     }
+    return 0;
 }

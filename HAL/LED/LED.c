@@ -15,13 +15,16 @@ void LED_Off(u8 Port, u8 Pin)
 {
     GPIO_SetPinValue(Port, Pin, GPIO_LOW);
 }
-
+static u8 LED_State = GPIO_LOW;
 void LED_Toggle(u8 Port, u8 Pin)
 {
-    u8 current = GPIO_GetPinValue(Port, Pin);
-
-    if(current == GPIO_HIGH)
-        GPIO_SetPinValue(Port, Pin, GPIO_LOW);
+    if(LED_State == GPIO_LOW)
+    {
+        LED_State = GPIO_HIGH;
+    }
     else
-        GPIO_SetPinValue(Port, Pin, GPIO_HIGH);
+    {
+        LED_State = GPIO_LOW;
+    }
+    GPIO_SetPinValue(Port, Pin, LED_State);
 }
