@@ -1,6 +1,6 @@
 #include "MCAL/GPIO/GPIO_interface.h"
-#include "MCAL/EXT_INT/EXT_INT_interface.h"
-#include "MCAL/EXT_INT/EXT_INT_private.h"
+#include "MCAL/EXT_int/EXT_INT_interface.h"
+#include "MCAL/EXT_int/EXT_INT_private.h"
 #include "MCAL/PWM/PWM_interface.h"
 
 #define HBRIDGE_DIR_PORT     GPIO_PORTC
