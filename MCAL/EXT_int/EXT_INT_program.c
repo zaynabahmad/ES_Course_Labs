@@ -5,8 +5,7 @@
 #include "../../SERVICES/BIT_MATH.h"
 #include "../../SERVICES/STD_TYPES.h"
 
-
-static void (*EXT_INT0_Callback)(void) = NULL_PTR;
+void (*EXT_INT0_Callback)(void) = NULL_PTR;
 
 
 #if EXT_INT0_DEBOUNCE_EN == 1
@@ -68,7 +67,7 @@ void EXT_INT0_SetCallback(void (*ptr)(void))
 }
 
 
-void interrupt()
+/*void interrupt()
 {
     if (GET_BIT(INTCON, INTCON_INTF) == 1)
     {
@@ -83,4 +82,4 @@ void interrupt()
             EXT_INT0_Callback();
         }
     }
-}
+}*/

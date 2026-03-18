@@ -11,13 +11,9 @@
 
 /* Tick counters (incremented every 1ms by Timer0 ISR) */
 
-
-/* LED state tracking (avoids PORT latch read-back issue) */
 static volatile u8 led1_state = LED_OFF;
 static volatile u8 led2_state = LED_OFF;
 
-/* LED1: 2000ms / 10ms = 200 ticks */
-/* LED2: 1000ms / 10ms = 100 ticks */
 
 
 static volatile u16 tick_led1 = 0;
@@ -54,7 +50,6 @@ void main(void)
 
     while(1)
     {
-        /* Main loop is completely free � no blocking */
-        /* Add other tasks here if needed             */
+
     }
 }
