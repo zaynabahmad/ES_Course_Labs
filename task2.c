@@ -39,7 +39,7 @@ static void App_TimerTick(void)
     }
 }
 
-void main(void)
+int main(void)
 {
     LED_Init(LED1_PORT, LED1_PIN);
     LED_Init(LED2_PORT, LED2_PIN);
@@ -52,4 +52,5 @@ void main(void)
     {
 
     }
+    return 0;
 }

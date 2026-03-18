@@ -1,4 +1,3 @@
-
 #include "EXT_INT_interface.h"
 #include "EXT_INT_private.h"
 #include "EXT_INT_config.h"
@@ -11,7 +10,7 @@ void (*EXT_INT0_Callback)(void) = NULL_PTR;
 #if EXT_INT0_DEBOUNCE_EN == 1
 static void Debounce_Delay(void)
 {
-    u16 i, j;
+    u32 i, j;
     /* ~1 ms per outer iteration at 8 MHz */
     for (i = 0; i < EXT_INT0_DEBOUNCE_MS; i++)
     {
