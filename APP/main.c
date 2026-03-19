@@ -9,7 +9,7 @@
 void delay(void)
 {
     unsigned int i;
-    for(i = 0; i < 50000; i++);
+    for(i = 0; i < 20000; i++);
 }
 
 void main()
