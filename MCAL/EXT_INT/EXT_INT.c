@@ -31,7 +31,7 @@ void EXT_INT0_SetCallback(void (*ptr)(void)) {
 }
 
 // ISR implementation inside MCAL
-void interrupt() {
+void EXT_INT0_ISR_Logic(void) {
     if(GET_BIT(INTCON, INTF)) {
         if(INT0_Callback != 0) {
             INT0_Callback(); // Call the Application function
