@@ -129,7 +129,8 @@ u8 GPIO_GetPinValue(u8 Port, u8 Pin)
 }
 
 void GPIO_Init(void)
-{
+{  
+    ADCON1 = 0x06;
     TRISA = GPIO_PORTA_DIR;
     TRISB = GPIO_PORTB_DIR;
 
