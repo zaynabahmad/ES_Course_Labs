@@ -1,0 +1,17 @@
+main
+	__CC2DW
+		____DoICP
+	PUSH_BUTTON_Init
+		GPIO_SetPinDirection
+	Motor_Init
+		PWM_Init
+		GPIO_SetPinDirection
+	Div_16X16_U
+	ForwardMotor
+		GPIO_SetPinValue
+		PWM_SetDutyCycle
+			Div_8X8_U
+			Mul_8X8_U
+	BUTTON_Read
+Interrupt
+	____DoIFC
