@@ -1,112 +1,71 @@
-/**
- * @file    gpio.c
- * @brief   PIC16F877 GPIO Driver Implementation
- */
+#include "../../SERVICES/Bit_Math.h"
+#include "GPIO.h"
 
-#include "gpio.h"
+/* Register Definitions based on Datasheet Memory Map */
+#define PORTA    *((volatile u8*)0x05)
+#define TRISA    *((volatile u8*)0x85)
 
-/*============================================================
- * Internal helpers — map port enum to SFR addresses
- *============================================================*/
-static volatile unsigned char * const PORT_REG[] = {
-    &PORTA, &PORTB, &PORTC, &PORTD, &PORTE
-};
+#define PORTB    *((volatile u8*)0x06)
+#define TRISB    *((volatile u8*)0x86)
 
-static volatile unsigned char * const TRIS_REG[] = {
-    &TRISA, &TRISB, &TRISC, &TRISD, &TRISE
-};
+#define PORTC    *((volatile u8*)0x07)
+#define TRISC    *((volatile u8*)0x87)
 
-/*------------------------------------------------------------
- * GPIO_Init
- *------------------------------------------------------------*/
-void GPIO_Init(const GPIO_Config_t *cfg)
-{
-    GPIO_SetDirection(cfg->port, cfg->pin, cfg->direction);
+#define PORTD    *((volatile u8*)0x08)
+#define TRISD    *((volatile u8*)0x88)
 
-    if (cfg->direction == GPIO_OUTPUT) {
-        GPIO_WritePin(cfg->port, cfg->pin, cfg->initState);
-    }
-}
+#define PORTE    *((volatile u8*)0x09)
+#define TRISE    *((volatile u8*)0x89)
 
-/*------------------------------------------------------------
- * GPIO_SetDirection
- *------------------------------------------------------------*/
-void GPIO_SetDirection(GPIO_Port_t port, GPIO_Pin_t pin, GPIO_Direction_t dir)
-{
-    uint8_t mask = (uint8_t)(1u << pin);
-
-    if (dir == GPIO_INPUT) {
-        *TRIS_REG[port] |= mask;           /* Set bit → input  */
+void GPIO_voidSetPinDirection(u8 copy_u8PortID, u8 copy_u8PinID, u8 copy_u8Direction) {
+    if (copy_u8Direction == OUTPUT) {
+        switch(copy_u8PortID) {
+            case PORTA_ID: CLR_BIT(TRISA, copy_u8PinID); break;
+            case PORTB_ID: CLR_BIT(TRISB, copy_u8PinID); break;
+            case PORTC_ID: CLR_BIT(TRISC, copy_u8PinID); break;
+            case PORTD_ID: CLR_BIT(TRISD, copy_u8PinID); break;
+            case PORTE_ID: CLR_BIT(TRISE, copy_u8PinID); break;
+        }
     } else {
-        *TRIS_REG[port] &= (uint8_t)(~mask); /* Clear bit → output */
+        switch(copy_u8PortID) {
+            case PORTA_ID: SET_BIT(TRISA, copy_u8PinID); break;
+            case PORTB_ID: SET_BIT(TRISB, copy_u8PinID); break;
+            case PORTC_ID: SET_BIT(TRISC, copy_u8PinID); break;
+            case PORTD_ID: SET_BIT(TRISD, copy_u8PinID); break;
+            case PORTE_ID: SET_BIT(TRISE, copy_u8PinID); break;
+        }
     }
 }
 
-/*------------------------------------------------------------
- * GPIO_SetPortDirection
- *------------------------------------------------------------*/
-void GPIO_SetPortDirection(GPIO_Port_t port, uint8_t mask)
-{
-    *TRIS_REG[port] = mask;
-}
-
-/*------------------------------------------------------------
- * GPIO_WritePin
- *------------------------------------------------------------*/
-void GPIO_WritePin(GPIO_Port_t port, GPIO_Pin_t pin, GPIO_State_t state)
-{
-    uint8_t mask = (uint8_t)(1u << pin);
-
-    if (state == GPIO_HIGH) {
-        *PORT_REG[port] |= mask;
+void GPIO_voidSetPinValue(u8 copy_u8PortID, u8 copy_u8PinID, u8 copy_u8Value) {
+    if (copy_u8Value == HIGH) {
+        switch(copy_u8PortID) {
+            case PORTA_ID: SET_BIT(PORTA, copy_u8PinID); break;
+            case PORTB_ID: SET_BIT(PORTB, copy_u8PinID); break;
+            case PORTC_ID: SET_BIT(PORTC, copy_u8PinID); break;
+            case PORTD_ID: SET_BIT(PORTD, copy_u8PinID); break;
+            case PORTE_ID: SET_BIT(PORTE, copy_u8PinID); break;
+        }
     } else {
-        *PORT_REG[port] &= (uint8_t)(~mask);
+        switch(copy_u8PortID) {
+            case PORTA_ID: CLR_BIT(PORTA, copy_u8PinID); break;
+            case PORTB_ID: CLR_BIT(PORTB, copy_u8PinID); break;
+            case PORTC_ID: CLR_BIT(PORTC, copy_u8PinID); break;
+            case PORTD_ID: CLR_BIT(PORTD, copy_u8PinID); break;
+            case PORTE_ID: CLR_BIT(PORTE, copy_u8PinID); break;
+        }
     }
 }
 
-/*------------------------------------------------------------
- * GPIO_WritePort
- *------------------------------------------------------------*/
-void GPIO_WritePort(GPIO_Port_t port, uint8_t value)
-{
-    *PORT_REG[port] = value;
-}
-
-/*------------------------------------------------------------
- * GPIO_ReadPin
- *------------------------------------------------------------*/
-GPIO_State_t GPIO_ReadPin(GPIO_Port_t port, GPIO_Pin_t pin)
-{
-    uint8_t mask = (uint8_t)(1u << pin);
-    return ((*PORT_REG[port] & mask) != 0u) ? GPIO_HIGH : GPIO_LOW;
-}
-
-/*------------------------------------------------------------
- * GPIO_ReadPort
- *------------------------------------------------------------*/
-uint8_t GPIO_ReadPort(GPIO_Port_t port)
-{
-    return *PORT_REG[port];
-}
-
-/*------------------------------------------------------------
- * GPIO_TogglePin
- *------------------------------------------------------------*/
-void GPIO_TogglePin(GPIO_Port_t port, GPIO_Pin_t pin)
-{
-    uint8_t mask = (uint8_t)(1u << pin);
-    *PORT_REG[port] ^= mask;
-}
-
-/*------------------------------------------------------------
- * GPIO_SetPortBPullUp
- * OPTION_REG<7> = RBPU  (0 = pull-ups enabled)
- *------------------------------------------------------------*/
-void GPIO_SetPortBPullUp(GPIO_PullUp_t state)
-{
-    if (state == GPIO_PULLUP_ENABLE) {
-        OPTION_REGbits.nRBPU = 0;   /* Active-low — clear to enable */
-    } else {
-        OPTION_REGbits.nRBPU = 1;
+/* THIS WAS THE MISSING FUNCTION CAUSING THE LINKER ERROR */
+u8 GPIO_u8GetPinValue(u8 copy_u8PortID, u8 copy_u8PinID) {
+    u8 local_u8Result = 0;
+    switch(copy_u8PortID) {
+        case PORTA_ID: local_u8Result = GET_BIT(PORTA, copy_u8PinID); break;
+        case PORTB_ID: local_u8Result = GET_BIT(PORTB, copy_u8PinID); break;
+        case PORTC_ID: local_u8Result = GET_BIT(PORTC, copy_u8PinID); break;
+        case PORTD_ID: local_u8Result = GET_BIT(PORTD, copy_u8PinID); break;
+        case PORTE_ID: local_u8Result = GET_BIT(PORTE, copy_u8PinID); break;
     }
+    return local_u8Result;
 }

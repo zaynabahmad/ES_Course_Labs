@@ -1,161 +1,51 @@
-/**
- * @file    uart.c
- * @brief   PIC16F877 UART Driver Implementation
- */
+#include "../../SERVICES/Bit_Math.h"
+#include "../../SERVICES/Std_Types.h"
+#include "UART.h"
 
-#include "uart.h"
+/* Register Definitions (Private to UART.c) */
+#define TXSTA    *((volatile u8*)0x98)
+#define RCSTA    *((volatile u8*)0x18)
+#define SPBRG    *((volatile u8*)0x99)
+#define TXREG    *((volatile u8*)0x19)
+#define RCREG    *((volatile u8*)0x1A)
+#define PIR1     *((volatile u8*)0x0C)
+#define TRISC    *((volatile u8*)0x87)
 
-/*------------------------------------------------------------
- * UART_Init
- *------------------------------------------------------------*/
-void UART_Init(const UART_Config_t *cfg)
-{
-    uint16_t spbrg;
+void UART_voidInit(void) {
+    /* 1. Configure Pins: RC6 (TX) Output, RC7 (RX) Input */
+    CLR_BIT(TRISC, 6); 
+    SET_BIT(TRISC, 7);
 
-    /* Step 1: Set RC6 (TX) as output, RC7 (RX) as input */
-    TRISCbits.TRISC6 = 0;  /* TX → output */
-    TRISCbits.TRISC7 = 1;  /* RX → input  */
+    /* 2. Baud Rate: 9600 @ 8MHz High Speed 
+       Formula: (8,000,000 / (16 * 9600)) - 1 = 51 */
+    SPBRG = 51; 
 
-    /* Step 2: Compute baud rate register */
-    if (cfg->brgh == UART_BRGH_HIGH) {
-        spbrg = (uint16_t)((cfg->foscHz / (16u * cfg->baudRate)) - 1u);
-    } else {
-        spbrg = (uint16_t)((cfg->foscHz / (64u * cfg->baudRate)) - 1u);
-    }
-    SPBRG = (uint8_t)spbrg;
+    /* 3. TXSTA: 
+       Bit 5 (TXEN) = 1, Bit 2 (BRGH) = 1 -> 0x24 */
+    TXSTA = 0x24;
 
-    /* Step 3: Configure TXSTA
-     *  SYNC=0 (async), BRGH=user, TXEN=1, TX9=user
-     */
-    TXSTA = 0x00u;
-    TXSTAbits.SYNC  = 0;
-    TXSTAbits.BRGH  = (uint8_t)cfg->brgh;
-    TXSTAbits.TX9   = (uint8_t)cfg->dataBits;
-    TXSTAbits.TXEN  = 1;
-
-    /* Step 4: Configure RCSTA — enable serial port and continuous receive */
-    RCSTA = 0x00u;
-    RCSTAbits.SPEN  = 1;
-    RCSTAbits.CREN  = 1;
-    RCSTAbits.RX9   = (uint8_t)cfg->dataBits;
-
-    /* Step 5: Interrupt configuration (needs PEIE + GIE set externally) */
-    PIR1bits.TXIF = 0;
-    PIR1bits.RCIF = 0;
-
-    PIE1bits.TXIE = (uint8_t)cfg->txIntEn;
-    PIE1bits.RCIE = (uint8_t)cfg->rxIntEn;
+    /* 4. RCSTA: 
+       Bit 7 (SPEN) = 1, Bit 4 (CREN) = 1 -> 0x90 */
+    RCSTA = 0x90;
 }
 
-/*------------------------------------------------------------
- * UART_SendByte  — blocks until shift register is empty
- *------------------------------------------------------------*/
-void UART_SendByte(uint8_t data)
-{
-    while (!TXSTAbits.TRMT) {
-        /* Wait for TSR to be empty */
-    }
-    TXREG = data;
+void UART_voidSendData(u8 copy_u8Data) {
+    /* Wait for TXIF (Bit 4 of PIR1) to be empty */
+    while(GET_BIT(PIR1, 4) == 0); 
+    TXREG = copy_u8Data;
 }
 
-/*------------------------------------------------------------
- * UART_SendString
- *------------------------------------------------------------*/
-void UART_SendString(const char *str)
-{
-    while (*str != '\0') {
-        UART_SendByte((uint8_t)*str);
-        str++;
+/* Updated to 'const char' for better compatibility with "strings" */
+void UART_voidSendString(char *copy_pu8String) {
+    u32 i = 0;
+    while(copy_pu8String[i] != '\0') {
+        UART_voidSendData(copy_pu8String[i]);
+        i++;
     }
 }
 
-/*------------------------------------------------------------
- * UART_SendBuffer
- *------------------------------------------------------------*/
-void UART_SendBuffer(const uint8_t *buf, uint8_t len)
-{
-    uint8_t i;
-    for (i = 0u; i < len; i++) {
-        UART_SendByte(buf[i]);
-    }
-}
-
-/*------------------------------------------------------------
- * UART_ReceiveByte — blocks until data arrives
- *------------------------------------------------------------*/
-uint8_t UART_ReceiveByte(void)
-{
-    while (!PIR1bits.RCIF) {
-        /* Wait for data */
-    }
+u8 UART_u8ReceiveData(void) {
+    /* Wait for RCIF (Bit 5 of PIR1) to be set */
+    while(GET_BIT(PIR1, 5) == 0); 
     return RCREG;
 }
-
-/*------------------------------------------------------------
- * UART_DataAvailable
- *------------------------------------------------------------*/
-uint8_t UART_DataAvailable(void)
-{
-    return (uint8_t)PIR1bits.RCIF;
-}
-
-/*------------------------------------------------------------
- * UART_GetError
- *------------------------------------------------------------*/
-uint8_t UART_GetError(void)
-{
-    uint8_t err = UART_ERROR_NONE;
-    if (RCSTAbits.OERR) err |= (uint8_t)UART_ERROR_OVERRUN;
-    if (RCSTAbits.FERR) err |= (uint8_t)UART_ERROR_FRAMING;
-    return err;
-}
-
-/*------------------------------------------------------------
- * UART_ClearOverrun
- * Must toggle CREN to clear OERR flag
- *------------------------------------------------------------*/
-void UART_ClearOverrun(void)
-{
-    RCSTAbits.CREN = 0;
-    RCSTAbits.CREN = 1;
-}
-
-/*------------------------------------------------------------
- * UART_Enable / Disable
- *------------------------------------------------------------*/
-void UART_Enable(void)
-{
-    RCSTAbits.SPEN = 1;
-    TXSTAbits.TXEN = 1;
-    RCSTAbits.CREN = 1;
-}
-
-void UART_Disable(void)
-{
-    TXSTAbits.TXEN = 0;
-    RCSTAbits.CREN = 0;
-    RCSTAbits.SPEN = 0;
-}
-
-/*------------------------------------------------------------
- * Weak callbacks
- *------------------------------------------------------------*/
-void __attribute__((weak)) UART_TX_Callback(void) { }
-void __attribute__((weak)) UART_RX_Callback(void) { }
-
-/*============================================================
- * ISR dispatch (standalone; merge with project ISR)
- *============================================================*/
-#ifdef UART_USE_STANDALONE_ISR
-void __interrupt() UART_ISR(void)
-{
-    if (PIE1bits.TXIE && PIR1bits.TXIF) {
-        /* Flag clears automatically when TXREG is written */
-        UART_TX_Callback();
-    }
-    if (PIE1bits.RCIE && PIR1bits.RCIF) {
-        /* Flag clears when RCREG is read */
-        UART_RX_Callback();
-    }
-}
-#endif
