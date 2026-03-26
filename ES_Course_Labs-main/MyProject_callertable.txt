@@ -1,0 +1,19 @@
+main
+	GPIO_Init
+	LED_Init
+		GPIO_SetPinDirection
+	SWITCH_Init
+		GPIO_SetPinDirection
+	SWITCH_GetState
+		GPIO_GetPinValue
+	LED_On
+		GPIO_SetPinValue
+	LED_Off
+		GPIO_SetPinValue
+interrupt
+	UART_ISR
+		____DoIFC
+	EXT_INT_ISR
+		____DoIFC
+	TIMER0_ISR
+		____DoIFC
