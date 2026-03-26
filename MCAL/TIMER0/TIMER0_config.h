@@ -1,0 +1,10 @@
+#ifndef TIMER0_CONFIG_H
+#define TIMER0_CONFIG_H
+
+#include "TIMER0_interface.h"
+
+#define TIMER0_CLOCK_SOURCE    TIMER0_INTERNAL_CLOCK
+#define TIMER0_PRESCALER       TIMER0_PRESCALER_256
+#define TIMER0_PRELOAD_VALUE   124
+
+#endif

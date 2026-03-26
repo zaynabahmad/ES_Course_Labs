@@ -1,9 +1,11 @@
 #include "EXTI_interface.h"
 #include "EXTI_private.h"
+#include "EXTI_config.h"
+#include "../../SERVICES/STD_TYPES.h"
 #include "../../SERVICES/BIT_MATH.h"
 #include "../GPIO/GPIO_interface.h"
 
-static void (*EXTI0_Callback)(void) = 0;
+static void (*EXTI0_Callback)(void) = NULL_PTR;
 
 void EXT_INT0_SetCallback(void (*ptr)(void))
 {
@@ -33,7 +35,7 @@ void EXT_INT0_Init(void)
 {
     GPIO_SetPinDirection(GPIO_PORTB, GPIO_PIN0, GPIO_INPUT);
 
-    EXT_INT0_SetEdge(EXTI_FALLING_EDGE);
+    EXT_INT0_SetEdge(EXTI0_EDGE);
 
     CLR_BIT(INTCON, INTF_BIT);
 
@@ -42,11 +44,16 @@ void EXT_INT0_Init(void)
 
 void EXT_INT0_HandleInterrupt(void)
 {
-    if(GET_BIT(INTCON, INTF_BIT))
+    if(GET_BIT(INTCON, INTE_BIT) && GET_BIT(INTCON, INTF_BIT))
     {
         CLR_BIT(INTCON, INTF_BIT);
 
-        if(EXTI0_Callback != 0)
+        if(EXTI0_Callback != NULL_PTR)
             EXTI0_Callback();
     }
 }
+
+//void __interrupt() ISR(void)
+//{
+  //  EXT_INT0_HandleInterrupt();
+//}

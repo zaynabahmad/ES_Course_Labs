@@ -1,0 +1,98 @@
+#include "TIMER0_interface.h"
+#include "TIMER0_private.h"
+#include "TIMER0_config.h"
+#include "../../SERVICES/STD_TYPES.h"
+#include "../../SERVICES/BIT_MATH.h"
+
+static void (*TIMER0_Callback)(void) = NULL_PTR;
+
+void TIMER0_SetCallback(void (*ptr)(void))
+{
+    TIMER0_Callback = ptr;
+}
+
+void TIMER0_SetPreload(u8 Copy_u8Value)
+{
+    TMR0 = Copy_u8Value;
+}
+
+void TIMER0_EnableInterrupt(void)
+{
+    CLR_BIT(INTCON, T0IF_BIT);
+    SET_BIT(INTCON, T0IE_BIT);
+    SET_BIT(INTCON, GIE_BIT);
+}
+
+void TIMER0_DisableInterrupt(void)
+{
+    CLR_BIT(INTCON, T0IE_BIT);
+}
+void TIMER0_Init(void)
+{
+#if TIMER0_CLOCK_SOURCE == TIMER0_INTERNAL_CLOCK
+    CLR_BIT(OPTION_REG, T0CS_BIT);
+#else
+    SET_BIT(OPTION_REG, T0CS_BIT);
+#endif
+
+    /* Assign prescaler to Timer0 */
+    CLR_BIT(OPTION_REG, PSA_BIT);
+
+#if TIMER0_PRESCALER == TIMER0_PRESCALER_2
+    CLR_BIT(OPTION_REG, PS2_BIT);
+    CLR_BIT(OPTION_REG, PS1_BIT);
+    CLR_BIT(OPTION_REG, PS0_BIT);
+
+#elif TIMER0_PRESCALER == TIMER0_PRESCALER_4
+    CLR_BIT(OPTION_REG, PS2_BIT);
+    CLR_BIT(OPTION_REG, PS1_BIT);
+    SET_BIT(OPTION_REG, PS0_BIT);
+
+#elif TIMER0_PRESCALER == TIMER0_PRESCALER_8
+    CLR_BIT(OPTION_REG, PS2_BIT);
+    SET_BIT(OPTION_REG, PS1_BIT);
+    CLR_BIT(OPTION_REG, PS0_BIT);
+
+#elif TIMER0_PRESCALER == TIMER0_PRESCALER_16
+    CLR_BIT(OPTION_REG, PS2_BIT);
+    SET_BIT(OPTION_REG, PS1_BIT);
+    SET_BIT(OPTION_REG, PS0_BIT);
+
+#elif TIMER0_PRESCALER == TIMER0_PRESCALER_32
+    SET_BIT(OPTION_REG, PS2_BIT);
+    CLR_BIT(OPTION_REG, PS1_BIT);
+    CLR_BIT(OPTION_REG, PS0_BIT);
+
+#elif TIMER0_PRESCALER == TIMER0_PRESCALER_64
+    SET_BIT(OPTION_REG, PS2_BIT);
+    CLR_BIT(OPTION_REG, PS1_BIT);
+    SET_BIT(OPTION_REG, PS0_BIT);
+
+#elif TIMER0_PRESCALER == TIMER0_PRESCALER_128
+    SET_BIT(OPTION_REG, PS2_BIT);
+    SET_BIT(OPTION_REG, PS1_BIT);
+    CLR_BIT(OPTION_REG, PS0_BIT);
+
+#else   /* TIMER0_PRESCALER_256 */
+    SET_BIT(OPTION_REG, PS2_BIT);
+    SET_BIT(OPTION_REG, PS1_BIT);
+    SET_BIT(OPTION_REG, PS0_BIT);
+#endif
+
+    TMR0 = TIMER0_PRELOAD_VALUE;
+    CLR_BIT(INTCON, T0IF_BIT);
+}
+
+
+void TIMER0_HandleInterrupt(void)
+{
+    if(GET_BIT(INTCON, T0IE_BIT) && GET_BIT(INTCON, T0IF_BIT))
+    {
+        CLR_BIT(INTCON, T0IF_BIT);
+
+        if(TIMER0_Callback != NULL_PTR)
+        {
+            TIMER0_Callback();
+        }
+    }
+}

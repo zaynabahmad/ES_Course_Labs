@@ -1,8 +1,11 @@
 #include "PWM_interface.h"
-
+#include "../../SERVICES/STD_TYPES.h"
+#include "../../SERVICES/BIT_MATH.h"
+#include "../GPIO/GPIO_interface.h"
 void PWM_Init(unsigned long freq_hz)
 {
-    TRISC.F2 = 0;      
+    GPIO_SetPinDirection(GPIO_PORTC, GPIO_PIN2, GPIO_OUTPUT);
+
     PWM1_Init(freq_hz);
 }
 
@@ -20,7 +23,7 @@ void PWM_SetDutyPercent(u8 duty_percent)
 {
     u16 duty_raw;
 
-    if (duty_percent > 100)
+    if(duty_percent > 100)
         duty_percent = 100;
 
     duty_raw = ((u16)duty_percent * 255UL) / 100UL;
