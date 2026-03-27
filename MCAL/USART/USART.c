@@ -1,5 +1,5 @@
 #include "USART_Interface.h"
-
+#include "USART_Private.h"
 
 /* =================================
    Global Pointer To Callback
