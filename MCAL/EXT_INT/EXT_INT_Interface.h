@@ -7,8 +7,6 @@
 #include "EXT_INT_Config.h"
 #include "EXT_INT_Private.h"
 
-
-
 /* External Interrupt Configuration */
 
 #define GIE_BIT 7
@@ -25,7 +23,5 @@ void EXT_INT_Disable(void);
 void EXT_INT_SetEdge(u8 Edgetype);
 void EXT_INT_SetCallback(void (*Callback)(void));
 void EXT_INT_ISR(void);
-
-
 
 #endif
