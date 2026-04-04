@@ -1,16 +1,25 @@
 #ifndef UART_PRIVATE_H
 #define UART_PRIVATE_H
 
-/* ================= Registers Addresses ================= */
+/* ================= Register Addresses (PIC16F877A) ================= */
 
 #define TXSTA   (*(volatile unsigned char*)0x98)
 #define RCSTA   (*(volatile unsigned char*)0x18)
 #define SPBRG   (*(volatile unsigned char*)0x99)
 #define TXREG   (*(volatile unsigned char*)0x19)
 #define RCREG   (*(volatile unsigned char*)0x1A)
+
+#ifndef PIR1
 #define PIR1    (*(volatile unsigned char*)0x0C)
+#endif
+
+#ifndef PIE1
 #define PIE1    (*(volatile unsigned char*)0x8C)
-//#define INTCON  (*(volatile unsigned char*)0x0B)
+#endif
+
+#ifndef INTCON
+#define INTCON  (*(volatile unsigned char*)0x0B)
+#endif
 
 /* ================= TXSTA Bits ================= */
 
