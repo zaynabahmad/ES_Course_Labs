@@ -1,1 +1,0 @@
-void SWITCH_Init(u8 port,u8 pin);
