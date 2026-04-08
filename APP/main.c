@@ -4,6 +4,7 @@
 #include "../MCAL/GPIO/GPIO_interface.h"
 #include "../MCAL/USART/USART_Interface.h"
 #include "../MCAL/EXT_INT/EXT_INT_Interface.h"
+#include "../MCAL/SPI/SPI_Interface.h"
 
 
 #define MOTOR_PORT GPIO_PORTC
@@ -33,27 +34,44 @@ void Bluetooth_UART_Callback(u8 UART_data)
 
 }
 
-int main(void)
+// int main(void)
+// {
+//     // Initialize GPIOs
+//     GPIO_Init();
+//     GPIO_SetPinDirection(MOTOR_PORT, MOTOR_PIN1, GPIO_OUTPUT);
+//     GPIO_SetPinDirection(MOTOR_PORT, MOTOR_PIN2, GPIO_OUTPUT);
+//     GPIO_SetPinDirection(LED_PORT, LED_PIN, GPIO_OUTPUT);
+// 
+//     // Initialize UART
+//     UART_RX_Init();
+//     UART_TX_Init();
+//     //UART_Write('A');  // write  A  to the  Virtual Terminal
+// 
+// 
+//     // Set UART callback
+//     UART_SetCallback(Bluetooth_UART_Callback);
+// 
+//     while(1)
+//     {
+//         // main loop can be empty because interrupts handle everything
+//     }
+// 
+//     return 0;
+// }
+// 
+
+// Test SPI
+void main(void)
 {
-    // Initialize GPIOs
-    GPIO_Init();
-    GPIO_SetPinDirection(MOTOR_PORT, MOTOR_PIN1, GPIO_OUTPUT);
-    GPIO_SetPinDirection(MOTOR_PORT, MOTOR_PIN2, GPIO_OUTPUT);
-    GPIO_SetPinDirection(LED_PORT, LED_PIN, GPIO_OUTPUT);
-
-    // Initialize UART
-    UART_RX_Init();
-    UART_TX_Init();
-    //UART_Write('A');  // write  A  to the  Virtual Terminal
-
-
-    // Set UART callback
-    UART_SetCallback(Bluetooth_UART_Callback);
+    SPI_Master_Init();
 
     while(1)
     {
-        // main loop can be empty because interrupts handle everything
-    }
+        u8 received = SPI_Transfer(0xA5);   // Send 0xA5, expect 0xA5 back (loopback)
+        // Set a breakpoint here and inspect 'received' in the Watch window
+        Delay_ms(500);
 
-    return 0;
+        received = SPI_Transfer(0x3C);      // Send 0x3C
+        Delay_ms(500);
+    }
 }
