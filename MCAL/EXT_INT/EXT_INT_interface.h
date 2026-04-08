@@ -1,6 +1,6 @@
 #ifndef EXT_INT_INTERFACE_H
 #define EXT_INT_INTERFACE_H
-
+#include "../../SERVICES/STD_TYPES.h"
 #define RISING_EDGE    1
 #define FALLING_EDGE   0
 
