@@ -14,9 +14,9 @@ void (*UART_Callback)(u8) = 0;
 void UART_RX_Init(void)
 {
 
-    SET_BIT(TXSTA , BRGH);              /* High Speed Mode */
+    SET_BIT(TXSTA , BRGH);      // High Speed Mode
 
-    SPBRG = UART_SPBRG_VALUE;          /* Baud rate from config */
+    SPBRG = 25;                 // 9600 Baud
 
     CLR_BIT(TXSTA , SYNC);      // Asynchronous Mode
 
@@ -37,9 +37,9 @@ void UART_RX_Init(void)
 void UART_TX_Init(void)
 {
 
-    SET_BIT(TXSTA , BRGH);              /* High Speed */
+    SET_BIT(TXSTA , BRGH);      // High Speed
 
-    SPBRG = UART_SPBRG_VALUE;          /* Baud rate from config */
+    SPBRG = 25;                 // Baud Rate
 
     CLR_BIT(TXSTA , SYNC);      // Asynchronous Mode
 

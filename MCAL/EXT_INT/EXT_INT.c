@@ -1,4 +1,4 @@
-#include "EXT_INT_Interface.h"
+#include "EXT_INT_interface.h"
 
 
 void EXT_INT_Init(void)
