@@ -14,6 +14,7 @@ void TMR0_Start(void);
 void TMR0_Stop(void);
 
 void TMR0_SetPreloadValue(u8 Value);
+void TMR0_reset(void);
 
 void TMR0_SetCallBack(void (*CallBackFunc)(void));
 

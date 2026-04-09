@@ -11,7 +11,8 @@
 void (*TMR0_CallBackFuncP)(void) = NULL_PTR;
 
 void TMR0_Init(void){
-    SET_BIT(INTCON, GIE);
+    SET_BIT(INTCON, GIE);  // Enable Global interrupt
+    
     /* 1. Select Internal Clock Source (Fosc/4) */
     CLR_BIT(OPTION_REG, T0CS);
 
@@ -39,6 +40,11 @@ CLR_BIT(INTCON, TMR0IE);}
 
 void TMR0_SetPreloadValue(u8 Value){
      TMR0 = Value;
+}
+
+void TMR0_reset(void) {
+    TMR0 = 100;        // Reset hardware register to preload value
+
 }
 
 void TMR0_SetCallBack(void(*CallBackFunc)(void)){
