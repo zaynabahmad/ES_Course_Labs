@@ -15,7 +15,7 @@ void interrupt()
 {
     if(GET_BIT(PIR1_MGR, RCIF_BIT))
     {
-        UART_ISR();
+        USART_ISR();
     }
 
     if(GET_BIT(INTCON_MGR, INTF_BIT_M))

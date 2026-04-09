@@ -36,6 +36,13 @@ main
 		UART_WriteString
 			____DoICP
 			UART_Write
+	APP_Test_USART
+		UART_Init
+			UART_TX_Init
+			UART_RX_Init
+		UART_WriteString
+			____DoICP
+			UART_Write
 	APP_Test_SPI
 		SPI_MasterInit
 		SPI_Transceive
@@ -46,7 +53,9 @@ main
 		I2C_Write
 		I2C_Stop
 interrupt
-	UART_ISR
+	USART_ISR
+		UART_ISR
+			____DoIFC
 	EXT_INT_ISR
 		____DoIFC
 	TIMER0_ISR

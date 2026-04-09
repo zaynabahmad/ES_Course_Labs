@@ -8,6 +8,7 @@ int main(void)
     APP_Test_PWM();
     APP_Test_ADC();
     APP_Test_UART();
+    APP_Test_USART();
     APP_Test_SPI();
     APP_Test_I2C();
 

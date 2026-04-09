@@ -1,29 +1,23 @@
 #include "USART_Interface.h"
-#include "USART_Private.h"
-#include "USART_Config.h"
-
 #include "../../SERVICES/BIT_MATH.h"
 
 
-/* Global Pointer To Callback */
+/* =================================
+   Global Pointer To Callback
+================================= */
 
-static volatile u8 UART_LastRxData = 0U;
-static volatile u8 UART_RxPending = 0U;
+void (*UART_Callback)(u8) = 0;
 
-/* RX Initialization */
+/* =================================
+   RX Initialization
+================================= */
 
 void UART_RX_Init(void)
 {
-    if (UART_HIGH_SPEED == 1)
-    {
-        SET_BIT(TXSTA , BRGH);
-    }
-    else
-    {
-        CLR_BIT(TXSTA , BRGH);
-    }
 
-    SPBRG = 25U;
+    SET_BIT(TXSTA , BRGH);      // High Speed Mode
+
+    SPBRG = 25;                 // 9600 Baud
 
     CLR_BIT(TXSTA , SYNC);      // Asynchronous Mode
 
@@ -37,20 +31,16 @@ void UART_RX_Init(void)
     SET_BIT(INTCON , GIE);      // Global Interrupt Enable
 }
 
-/* TX Initialization */
+/* =================================
+   TX Initialization
+================================= */
 
 void UART_TX_Init(void)
 {
-    if (UART_HIGH_SPEED == 1)
-    {
-        SET_BIT(TXSTA , BRGH);
-    }
-    else
-    {
-        CLR_BIT(TXSTA , BRGH);
-    }
 
-    SPBRG = 25U;
+    SET_BIT(TXSTA , BRGH);      // High Speed
+
+    SPBRG = 25;                 // Baud Rate
 
     CLR_BIT(TXSTA , SYNC);      // Asynchronous Mode
 
@@ -65,7 +55,9 @@ void UART_Init(void)
     UART_RX_Init();
 }
 
-/* Send Byte */
+/* =================================
+   Send Byte
+================================= */
 
 void UART_Write(u8 Data)
 {
@@ -77,7 +69,7 @@ void UART_Write(u8 Data)
 
 void UART_WriteString(const u8* String)
 {
-    if (String == NULL_PTR)
+    if (String == 0)
     {
         return;
     }
@@ -89,7 +81,9 @@ void UART_WriteString(const u8* String)
     }
 }
 
-/* Receive Byte (Polling) */
+/* =================================
+   Receive Byte (Polling)
+================================= */
 
 u8 UART_Read(void)
 {
@@ -99,7 +93,9 @@ u8 UART_Read(void)
     return RCREG;
 }
 
-/* TX Buffer Status */
+/* =================================
+   TX Buffer Status
+================================= */
 
 u8 UART_TX_Empty(void)
 {
@@ -107,30 +103,49 @@ u8 UART_TX_Empty(void)
     return GET_BIT(TXSTA , TRMT);
 }
 
-/* Callback Setter */
+/* =================================
+   Callback Setter
+================================= */
 
 void UART_SetCallback(void (*Callback)(u8))
 {
-    (void)Callback;
+
+    if(Callback != 0)
+    {
+        UART_Callback = Callback;
+    }
 
 }
 
 void UART_ISR(void)
 {
-    UART_LastRxData = RCREG;
-    UART_RxPending = 1U;
+
+    u8 UART_data = RCREG;
+    if(UART_Callback != 0)
+    {
+        UART_Callback(UART_data);
+    }
 
 }
 
-u8 UART_HasPendingByte(void)
+void USART_ISR(void)
 {
-    return UART_RxPending;
+    UART_ISR();
 }
 
-u8 UART_GetPendingByte(void)
+/*
+void interrupt()
 {
-    UART_RxPending = 0U;
-    return UART_LastRxData;
+
+   if(GET_BIT(PIR1 , RCIF))
+    {
+
+        if(UART_Callback != 0)
+        {
+            UART_Callback();   // Call user function
+        }
+
+    }
+
 }
-
-
+  */
