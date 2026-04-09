@@ -1,0 +1,7 @@
+#ifndef EXT_INT0_CONFIG_H
+#define EXT_INT0_CONFIG_H
+
+#define EXT_INT_PORT GPIO_PORTB
+#define EXT_INT_PIN GPIO_PIN0
+
+#endif

@@ -1,0 +1,33 @@
+#ifndef EXT_INT0_INTERFACE_H
+#define EXT_INT0_INTERFACE_H
+
+#include "../../SERVICES/STD_TYPES.h"
+#include "../GPIO/GPIO_interface.h"
+#include "../../SERVICES/BIT_MATH.h"
+#include "EXT_INT0_Config.h"
+#include "EXT_INT0_Private.h"
+
+
+
+/* External Interrupt Configuration */
+
+#define GIE_BIT 7
+#define INTE_BIT 4
+#define INTF_BIT 1
+/* Edge types */
+#define INTEDGE_BIT 6
+#define rising_edge 1
+#define falling_edge 0
+
+// volatile u8 g_extint_flag = 0;
+
+void EXT_INT_Init(u8 Copy_u8EdgeType);  // pass edge at init time, not separately
+void EXT_INT_Enable(void);
+void EXT_INT_Disable(void);
+void EXT_INT_SetEdge(u8 Edgetype);
+void EXT_INT_SetCallback(void (*Callback)(void));
+void EXT_INT_ISR(void);
+
+
+
+#endif
