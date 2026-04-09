@@ -8,16 +8,15 @@ extern void (*UART_Callback)(void);
 void interrupt()
 {
 
-    //UART RX interrupt
-    if(GET_BIT(PIR1 , RCIF))
+    // UART RX interrupt
+    if (GET_BIT(PIR1, RCIF))
     {
         UART_ISR();
     }
 
     // external interrupt flag
-    if(GET_BIT(INTCON , INTF_BIT))
+    if (GET_BIT(INTCON, INTF_BIT))
     {
         EXT_INT_ISR();
     }
-
 }

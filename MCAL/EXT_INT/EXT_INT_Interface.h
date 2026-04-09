@@ -7,8 +7,6 @@
 #include "EXT_INT_Config.h"
 #include "EXT_INT_Private.h"
 
-
-
 /* External Interrupt Configuration */
 
 #define GIE_BIT 7
@@ -16,8 +14,10 @@
 #define INTF_BIT 1
 /* Edge types */
 #define INTEDGE_BIT 6
-#define rising_edge 1
-#define falling_edge 0
+#define EXT_INT_RISING_EDGE 1
+#define EXT_INT_FALLING_EDGE 0
+
+/* Function Prototypes */
 
 void EXT_INT_Init(void);
 void EXT_INT_Enable(void);
@@ -25,7 +25,5 @@ void EXT_INT_Disable(void);
 void EXT_INT_SetEdge(u8 Edgetype);
 void EXT_INT_SetCallback(void (*Callback)(void));
 void EXT_INT_ISR(void);
-
-
 
 #endif

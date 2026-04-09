@@ -1,7 +1,7 @@
 #ifndef TIMER0_INTERFACE_H
 #define TIMER0_INTERFACE_H
 
-#include "../../SERVICES/STD_TYPES1.h"
+#include "../../SERVICES/STD_TYPES.h"
 
 /* Function Prototypes */
 void TIMER0_Init(void);

@@ -1,7 +1,7 @@
 #ifndef TIMER0_PRIVATE_H
 #define TIMER0_PRIVATE_H
 
-#include "../../SERVICES/STD_TYPES1.h"
+#include "../../SERVICES/STD_TYPES.h"
 
 #define STATUS_REG (*((volatile uint8 *)0x03))
 #define TMR0 (*((volatile uint8 *)0x01))
