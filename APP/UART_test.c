@@ -4,7 +4,7 @@
 #include "../MCAL/GPIO/GPIO_interface.h"
 #include "../MCAL/USART/USART_Interface.h"
 #include "../MCAL/EXT_INT/EXT_INT_Interface.h"
-
+#include "../MCAL/Interrupt Manager/Interrupt_manager.h"
 
 #define MOTOR_PORT GPIO_PORTC
 #define MOTOR_PIN1  GPIO_PIN0
@@ -33,7 +33,7 @@ void Bluetooth_UART_Callback(u8 UART_data)
 
 }
 
-int UART_TEST(void)
+int main(void)
 {
     // Initialize GPIOs
     GPIO_Init();

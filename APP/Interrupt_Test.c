@@ -2,7 +2,7 @@
 #include "../MCAL/GPIO/GPIO_interface.h"
 #include "../MCAL/EXT_INT/EXT_INT_interface.h"
 #include "../HAL/Switch/Switch_interface.h"
-
+#include "../MCAL/Interrupt Manager/Interrupt_manager.h"
 void delay(void)
 {
     unsigned int i;

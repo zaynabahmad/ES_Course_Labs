@@ -17,6 +17,7 @@ extern volatile u16 target_overflows;  // number of overflows needed for delay
 void TMR_INT_SetCallback(void (*ptr)(void));
 void EXT_INT_SetCallback(void (*ptr)(void));
 void ADC_SetConversionComplete_SetCallback(void (*ptr)(void));
+void UART_SetCallback(void (*ptr)(void));
 void I2C_SetCallback(void (*ptr)(void));
 void SPI_SetCallback(void (*ptr)(void)); // New function to set SPI callback
 /* ISR */

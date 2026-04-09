@@ -40,7 +40,7 @@ void ext_int_logic() {
     }
 }
 
-int TIMER_TEST(void) {
+int main(void) {
     u8 switch_val;
     *((volatile unsigned char*)0x9F) = 0x06; // Direct address for ADCON1
     // Initialize LEDs

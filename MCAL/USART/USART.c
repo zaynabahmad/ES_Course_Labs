@@ -5,7 +5,6 @@
    Global Pointer To Callback
 ================================= */
 
-void (*UART_Callback)(u8) = 0;
 
 /* =================================
    RX Initialization
@@ -86,26 +85,7 @@ u8 UART_TX_Empty(void)
    Callback Setter
 ================================= */
 
-void UART_SetCallback(void (*Callback)(u8))
-{
 
-    if(Callback != 0)
-    {
-        UART_Callback = Callback;
-    }
-
-}
-
-void UART_ISR(void)
-{
-
-    u8 UART_data = RCREG;   //
-    if(UART_Callback != 0)
-    {
-        UART_Callback(UART_data);   //
-    }
-
-}
 
 
 /* =================================

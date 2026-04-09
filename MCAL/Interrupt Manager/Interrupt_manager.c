@@ -29,6 +29,13 @@ void ADC_SetConversionComplete_SetCallback(void (*ptr)(void)) {
 void I2C_SetCallback(void (*ptr)(void)) {
     if (ptr) I2C_Callback = ptr;
 }
+void SPI_SetCallback(void (*ptr)(void)) {
+    if (ptr) SPI_Callback = ptr;
+}
+void UART_SetCallback(void (*ptr)(void)) {
+    if (ptr) UART_Callback = ptr;
+}
+
 
 void interrupt() {
     // Check if Timer0 overflow interrupt occurred and is enabled
