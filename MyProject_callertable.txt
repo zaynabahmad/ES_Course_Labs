@@ -1,0 +1,11 @@
+main
+	APP_ADC_Test
+		ADC_Init
+		GPIO_SetPinDirection
+		ADC_Read
+		GPIO_SetPinValue
+interrupt
+	UART_ISR
+		____DoIFC
+	EXT_INT_ISR
+		____DoIFC
