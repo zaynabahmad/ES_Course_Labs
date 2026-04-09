@@ -31,4 +31,6 @@ void main(void)
     {
         /* Fallback trap if a test accidentally returns */
     }
+
+    return 0;
 }
