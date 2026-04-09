@@ -123,7 +123,7 @@ static unsigned char Test_Read(void)
 /* ════════════════════════════════════════
    MAIN
    ════════════════════════════════════════ */
-void main(void)
+int main(void)
 {
     unsigned char passCount = 0u;
     unsigned char err       = 0u;
@@ -179,4 +179,5 @@ void main(void)
 
         Delay_ms(1000u);
     }
+    return 0;
 }

@@ -43,7 +43,7 @@ static void App_TimerTick(void)
     }
 }
 
-void main(void)
+int main(void)
 {
     /* Init LEDs as outputs, start LOW */
     LED_Init(LED1_PORT, LED1_PIN);
@@ -62,4 +62,5 @@ void main(void)
     {
         /* Nothing here — all work done in App_TimerTick via ISR */
     }
+    return 0;
 }

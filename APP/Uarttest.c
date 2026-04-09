@@ -13,7 +13,7 @@ static void Delay_ms(u16 ms)
 }
 
 /* ── Main ─────────────────────────────────────────────────────────── */
-void main(void)
+int main(void)
 {
     u16 Local_ADC_Raw;
     u32 Local_mV;
@@ -56,4 +56,5 @@ void main(void)
 
         Delay_ms(500u);
     }
+    return 0;
 }

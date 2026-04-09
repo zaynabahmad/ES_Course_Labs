@@ -23,7 +23,7 @@
 #define HBRIDGE_DIR_PORT    GPIO_PORTC
 #define HBRIDGE_DIR_PIN     GPIO_PIN3
 
-void main(void)
+int main(void)
 {
     /* 1. GPIO – sets PORTA/PORTB directions from GPIO_config.h */
     GPIO_Init();
@@ -48,4 +48,5 @@ void main(void)
     while (1)
     {
     }
+    return 0;
 }

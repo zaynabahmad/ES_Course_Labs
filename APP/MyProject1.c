@@ -1,6 +1,6 @@
 /*
  * main_spi_test.c
- * SPI Driver Test – PIC16F877A @ 8 MHz
+ * SPI Driver Test ï¿½ PIC16F877A @ 8 MHz
  * MikroC PRO for PIC
  *
  * -- Test strategy: SPI loopback -------------------------------------
@@ -14,7 +14,7 @@
  *   RC5 ? RC4   (MOSI  shorted to  MISO)
  *   RC2 ? CS    (pulled HIGH internally; not used in loopback test)
  *   RC6 ? TX    (to PC via MAX232 / USB-UART adapter)
- *   RC7 ? RX    (from PC – not used in this test)
+ *   RC7 ? RX    (from PC ï¿½ not used in this test)
  *
  * -- Expected UART output ---------------------------------------------
  *   === SPI Loopback Test ===
@@ -113,7 +113,7 @@ static u8 SPI_BufferLoopbackTest(void)
 /* ----------------------------------------
    MAIN
    ---------------------------------------- */
-void main(void)
+int main(void)
 {
     u8 passCount = 0u;
     u8 result;
@@ -132,9 +132,9 @@ void main(void)
     UART_SendNewLine();
 
     /* -- Single-byte tests -- */
-    passCount += SPI_LoopbackTest(1u, 0xA5u);   /* 1010 0101 – alternating bits */
+    passCount += SPI_LoopbackTest(1u, 0xA5u);   /* 1010 0101 ï¿½ alternating bits */
     Delay_ms(10u);
-    passCount += SPI_LoopbackTest(2u, 0x3Cu);   /* 0011 1100 – another pattern  */
+    passCount += SPI_LoopbackTest(2u, 0x3Cu);   /* 0011 1100 ï¿½ another pattern  */
     Delay_ms(10u);
     passCount += SPI_LoopbackTest(3u, 0x00u);   /* all zeros                    */
     Delay_ms(10u);
@@ -181,4 +181,5 @@ void main(void)
 
         Delay_ms(1000u);
     }
+    return 0;
 }

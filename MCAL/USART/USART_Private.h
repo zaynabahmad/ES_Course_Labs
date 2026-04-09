@@ -1,6 +1,12 @@
 #ifndef UART_PRIVATE_H
 #define UART_PRIVATE_H
 
+// Add to USART_private.h (or UART_private.h):
+#define INTCON      (*(volatile u8*)0x0B)
+#define INTCON_GIE   7
+#define INTCON_PEIE  6   /* Peripheral Interrupt Enable */
+#define PEIE         6   /* alias used in USART.c       */
+
 /* ================= Registers Addresses ================= */
 
 #define TXSTA   (*(volatile unsigned char*)0x98)

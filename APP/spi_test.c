@@ -89,7 +89,7 @@ static u8 SPI_BufferLoopbackTest(void)
 /* ════════════════════════════════════════
    MAIN
    ════════════════════════════════════════ */
-void main(void)
+int main(void)
 {
     u8 passCount = 0u;
     u8 result;
@@ -157,4 +157,5 @@ void main(void)
 
         Delay_ms(1000u);
     }
+    return 0;
 }
