@@ -7,7 +7,7 @@
 #include "ADC_test.h"
 #include "UART_test.h"
 
-void main()
+int main(void)
 {
 #if defined(RUN_LED_TEST)
     LED_Test();
