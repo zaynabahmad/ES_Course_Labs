@@ -1,0 +1,6 @@
+#ifndef SPI_CONFIG_H
+#define SPI_CONFIG_H
+
+#define SPI_DEFAULT_CLOCK_MODE   SPI_MASTER_FOSC_16
+
+#endif
