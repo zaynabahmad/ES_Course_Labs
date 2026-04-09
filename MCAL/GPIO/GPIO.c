@@ -5,7 +5,7 @@
 #include "../../SERVICES/BIT_MATH.h"
 
 
-void GPIO_SetPinDirection(u8 Port, u8 Pin, u8 Direction)
+void GPIO_SetPinDirection(uint8 Port, uint8 Pin, uint8 Direction)
 {
     switch(Port)
     {
@@ -50,7 +50,7 @@ void GPIO_SetPinDirection(u8 Port, u8 Pin, u8 Direction)
 }
 
 
-void GPIO_SetPinValue(u8 Port, u8 Pin, u8 Value)
+void GPIO_SetPinValue(uint8 Port, uint8 Pin, uint8 Value)
 {
     switch(Port)
     {
@@ -95,9 +95,9 @@ void GPIO_SetPinValue(u8 Port, u8 Pin, u8 Value)
 }
 
 
-u8 GPIO_GetPinValue(u8 Port, u8 Pin)
+uint8 GPIO_GetPinValue(uint8 Port, uint8 Pin)
 {
-    u8 Local_Value = 0;
+    uint8 Local_Value = 0;
 
     switch(Port)
     {

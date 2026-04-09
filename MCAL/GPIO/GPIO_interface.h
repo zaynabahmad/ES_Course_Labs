@@ -28,9 +28,15 @@
 #define GPIO_LOW     0
 #define GPIO_HIGH    1
 
+<<<<<<< Updated upstream
 void GPIO_SetPinDirection(unsigned char Port, u8 Pin, u8 Direction);
 void GPIO_SetPinValue(u8 Port, u8 Pin, u8 Value);
 u8   GPIO_GetPinValue(u8 Port, u8 Pin);
+=======
+void GPIO_SetPinDirection(uint8 Port, uint8 Pin, uint8 Direction);
+void GPIO_SetPinValue(uint8 Port, uint8 Pin, uint8 Value);
+uint8   GPIO_GetPinValue(uint8 Port, uint8 Pin);
+>>>>>>> Stashed changes
 void GPIO_Init(void);
 
 #endif
