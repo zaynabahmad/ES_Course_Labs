@@ -1,8 +1,8 @@
 #include "../../SERVICES/STD_TYPES.h"
 #include "../../SERVICES/BIT_MATH.h"
 #include "SPI_Interface.h"
-#include "SPI_private.h"
-#include "SPI_config.h"
+#include "SPI_Private.h"
+#include "SPI_Config.h"
 
  
 void SPI_voidMasterInit(void)

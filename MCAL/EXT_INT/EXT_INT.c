@@ -1,5 +1,5 @@
 #include "EXT_INT_Interface.h"
-
+#include "EXT_INT_Private.h"
 
 void EXT_INT_Init(void)
 {
@@ -8,27 +8,27 @@ void EXT_INT_Init(void)
     EXT_INT_SetEdge(falling_edge);
 
 
-    CLR_BIT(INTCON, INTF_BIT);
-    CLR_BIT(INTCON, INTE_BIT);
+    CLR_BIT(INTCON1, INTF_BIT);
+    CLR_BIT(INTCON1, INTE_BIT);
 
 }
 
 void EXT_INT_Enable(void)
 {
     /* Enable the external interrupt */
-    SET_BIT(INTCON, INTE_BIT);
+    SET_BIT(INTCON1, INTE_BIT);
     /* Enable global interrupts */
-    SET_BIT(INTCON, GIE_BIT);
+    SET_BIT(INTCON1, GIE_BIT);
 
-    CLR_BIT(INTCON, INTF_BIT); // Clear any pending interrupt flag
+    CLR_BIT(INTCON1, INTF_BIT); // Clear any pending interrupt flag
 }
 
 void EXT_INT_Disable(void)
 {
 
-    CLR_BIT(INTCON, INTF_BIT);
+    CLR_BIT(INTCON1, INTF_BIT);
 
-    CLR_BIT(INTCON, INTE_BIT);
+    CLR_BIT(INTCON1, INTE_BIT);
 
 }
 
@@ -57,7 +57,7 @@ void EXT_INT_SetCallback(void (*ptr)(void)) {
 void EXT_INT_ISR(void)
 {
 
-    CLR_BIT(INTCON , INTF_BIT);
+    CLR_BIT(INTCON1 , INTF_BIT);
 
     if(EXT_INT_Callback != 0)
     {

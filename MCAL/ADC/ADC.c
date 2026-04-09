@@ -3,6 +3,7 @@
 #include "ADC_Interface.h"
 #include "ADC_Private.h"
 #include "ADC_Config.h"
+#include "../../SERVICES/Delay.h"
 
 void ADC_voidInit(void)
 {
@@ -26,7 +27,7 @@ u16 ADC_u16GetChannelReading(u8 Copy_u8Channel)
     ADCON0_REG |= (Copy_u8Channel << 3);
 
 
-    Delay_us(20);
+    Delay_ms(20);
 
 
     SET_BIT(ADCON0_REG, GO_DONE);

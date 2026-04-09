@@ -26,5 +26,5 @@ void main()
         APP_Test_I2C();
     }
 
-    return 0;
+
 }
