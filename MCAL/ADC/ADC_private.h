@@ -16,6 +16,8 @@
 #define ADCON0_GO_DONE  2   /* Start conversion / Status bit */
 #define ADCON0_CHS0     3   /* Channel Select Bit 0 */
 
+#define TRISA           *((volatile u8*)0x85)  /* PORTA Data Direction Register */
+
 /* ADCON1 Bit Definitions */
 #define ADCON1_ADFM     7   /* Result Format Select (1=Right, 0=Left) */
 
