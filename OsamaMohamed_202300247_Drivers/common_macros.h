@@ -1,0 +1,14 @@
+/*
+ * common_macros.h
+ * Bit-manipulation macros for PIC16F877A
+ */
+
+#ifndef COMMON_MACROS_H
+#define COMMON_MACROS_H
+
+#define SET_BIT(REG, BIT)       ((REG) |=  (1 << (BIT)))
+#define CLEAR_BIT(REG, BIT)     ((REG) &= ~(1 << (BIT)))
+#define TOGGLE_BIT(REG, BIT)    ((REG) ^=  (1 << (BIT)))
+#define GET_BIT(REG, BIT)       (((REG) >> (BIT)) & 1)
+
+#endif /* COMMON_MACROS_H */
