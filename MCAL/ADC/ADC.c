@@ -4,47 +4,41 @@
 
 void ADC_Init(void)
 {
-    /* AN0 is Analog, Right Justified result */
-    ADCON1_REG = ADCON1_CONFIG;      
+    TRISA_REG = 0xFF;  /* Set ALL PortA pins as input to be safe */
+    ADCON1_REG = 0x80; /* All analog, Vref+ = VDD, Vref- = VSS */
     
-    /* Ensure RA0 is an input */
-    TRISA_REG |= (1 << 0);       
-    
-    /* Fosc/32 clock, Turn ADC ON */
-    ADCON0_REG = 0x81;      
-    Delay_ms(2);
+    /* Turn ADC ON, Fosc/8, Channel 0 */
+    ADCON0_REG = 0x81; 
+    Delay_ms(ADC_CONVERSION_DELAY_MS);
 }
 
 u16 ADC_Read(u8 channel)
 {
-    /* Clear channel bits (Bits 5, 4, 3) safely */
-    ADCON0_REG &= 0xC7;
-    
-    /* Insert the new channel */
+    /* 1. Select the channel */
+    ADCON0_REG &= ~ADC_CHANNEL_MASK;
     ADCON0_REG |= (channel << 3);
+
+    /* 2. CRITICAL: Wait for Acquisition Time */
+    /* Increased delay to ensure the holding capacitor is charged */
+    Delay_ms(20); 
+
+    /* 3. Start conversion */
+    ADCON0_REG |= (1 << 2); 
     
-    /* Give capacitor time to charge */
-    Delay_us(50);
-    
-    /* Start conversion using Bit 2 (GO/DONE) */
-    ADCON0_REG |= (1 << 2);
-    
-    /* Wait for conversion to finish (hardware pulls it back to 0) */
+    /* 4. Wait for completion */
     while (ADCON0_REG & (1 << 2));
-    
-    /* Return result directly from the registers */
+
     return ((u16)ADRESH_REG << 8) | ADRESL_REG;
 }
-
 u16 ADC_Read_mV(u8 channel)
 {
     /* Using standard 'unsigned long' since 'u32' isn't in STD_TYPES.h yet */
     unsigned long voltage;
     u16 raw = ADC_Read(channel);
     
-    /* Break the math into multiple steps to prevent the optimizer from failing */
-    voltage = (unsigned long)raw * 5000UL;
-    voltage = voltage / 1023UL;
+    /* Convert raw ADC reading to millivolts using config constants */
+    voltage = (unsigned long)raw * ADC_REF_MV;
+    voltage = voltage / ADC_MAX_VALUE;
     
     return (u16)voltage;
 }

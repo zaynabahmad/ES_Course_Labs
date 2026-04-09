@@ -9,7 +9,7 @@
    - Right justify result
    - Vref = VDD
    - AN0..AN3 analog, others digital */
-#define ADCON1_CONFIG        0x8E
+#define ADCON1_CONFIG        0x80
 
 /* ADC conversion settle time */
 #define ADC_CONVERSION_DELAY_MS 2U

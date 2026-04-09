@@ -8,7 +8,7 @@ typedef signed long int    s32;
 
 /* Unsigned Types */
 typedef unsigned char        u8;
-typedef unsigned short int   u16;
+typedef unsigned int    u16;  
 typedef unsigned long int    u32;
 
 /* Floating Types */
