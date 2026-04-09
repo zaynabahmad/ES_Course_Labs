@@ -1,27 +1,16 @@
-/*
-* APPLICATION LAYER
+#include "I2C_Test/I2C_Test.h"
 
-
-*/
-#include "../HAL/LED/LED_interface.h"
-#include "../MCAL/GPIO/GPIO_interface.h"
-
-void delay(void)
+int main(void)
 {
-    unsigned int i;
-    for(i = 0; i < 50000; i++);
-}
+    /* Application Initialization Layer */
+    I2C_Test_Init();
 
-void main()
-{
-    LED_Init(GPIO_PORTB, GPIO_PIN0);
-
+    /* Super Loop */
     while(1)
     {
-        LED_On(GPIO_PORTB, GPIO_PIN0);
-        delay();
-
-        LED_Off(GPIO_PORTB, GPIO_PIN0);
-        delay();
+        /* Application Execution Layer */
+        I2C_Test_App();
     }
+
+    return 0;
 }
