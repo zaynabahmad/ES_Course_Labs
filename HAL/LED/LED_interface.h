@@ -3,7 +3,6 @@
 
 #include "../../SERVICES/STD_TYPES.h"
 
-/* LED States */
 #define LED_OFF    0
 #define LED_ON     1
 

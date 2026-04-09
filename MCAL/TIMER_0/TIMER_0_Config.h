@@ -1,0 +1,6 @@
+#ifndef TIMER_0_CONFIG_H
+#define TIMER_0_CONFIG_H
+
+#define TIMER0_PRESCALER TIMER0_PRESCALER_8
+
+#endif
