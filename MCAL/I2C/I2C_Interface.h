@@ -3,11 +3,11 @@
 #include "I2C_private.h"
 #include "I2C_config.h"
 #include "../../SERVICES/STD_TYPES.h"
-
+#include "../../SERVICES/BIT_MATH.h"
 void I2C_Init(u32 feq);
 void I2C_Master_Start(void);
 void I2C_Master_Stop(void);
-void I2C_Write_Byte(u8 data);
+void I2C_Write_Byte(u8 wr_data);
 u8 I2C_Read_Byte(void);
 
 #endif

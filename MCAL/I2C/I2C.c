@@ -23,6 +23,6 @@ void I2C_Master_Stop(void) {
     SET_BIT(SSPCON2, PEN); // Generate Stop Condition
 }
 
-void I2C_Write_Byte(u8 data) {
-    SSPBUF = data;        // Load data to buffer
+void I2C_Write_Byte(u8 wr_data) {
+    SSPBUF = wr_data;        // Load data to buffer
 }

@@ -1,5 +1,6 @@
 #include "SPI_Interface.h"
 void SPI_Init(void) {
+    unsigned char clock_divider = FOSC / (2 * SPI_CLOCK_RATE);
     // Set SPI Master/Slave mode
     if (SPI_MASTER_MODE == 0) {
         SSPCON |= (1 << SSPM0); // Master mode
@@ -8,7 +9,6 @@ void SPI_Init(void) {
     }
     
     // Set SPI Clock Rate
-    unsigned char clock_divider = FOSC / (2 * SPI_CLOCK_RATE);
     SSPCON = (SSPCON & 0xF0) | (clock_divider & 0x0F);
     
     // Set SPI Mode
@@ -43,19 +43,19 @@ void SPI_Init(void) {
     SSPCON |= (1 << SSPEN);
 }
 
-void SPI_Write(unsigned char data) {
+void SPI_Write(unsigned char wr_data) {
     // Check if the buffer is currently empty before writing
     while (GET_BIT(SSPSTAT, BF));
     // Otherwise, we just write and let the ISR handle the completion
-    SSPBUF = data; 
+    SSPBUF = wr_data; 
 }
 
 unsigned char SPI_Read(void) {
     return SSPBUF; // Return received data
 }
 
-void SPI_Transmit(unsigned char data) {
-    SPI_Write(data); // Transmit data using SPI_Write
+void SPI_Transmit(unsigned char tx_data) {
+    SPI_Write(tx_data); // Transmit data using SPI_Write
 }
 
 unsigned char SPI_Receive(void) {

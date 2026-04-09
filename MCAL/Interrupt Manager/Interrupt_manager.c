@@ -85,6 +85,6 @@ void interrupt() {
             // No callback registered, just clear the flag
         }
     CLR_BIT(PIR1, SSPIF); // Clear SPI interrupt flag
-    
+    }
 }
 
