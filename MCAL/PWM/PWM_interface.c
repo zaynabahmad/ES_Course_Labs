@@ -1,7 +1,5 @@
 #include "PWM_interface.h"
 static volatile u8 prescaler_value=16;
-#include "PWM_interface.h"
-
 static u8 g_u8CurrentDutyPercent = 0;
 static u8 g_u8CurrentPrescaler = 16;
 
@@ -29,11 +27,11 @@ void PWM_setfrequency(u16 Copy_u16Frequency) {
     }
 }
 
-void PWM_SetDutyCycle(u8 Copy_u8DutyPercent) {
+void PWM_SetDutyCycle(u16 Copy_u16DutyCycle) {
      u32 local_val;
-    if (Copy_u8DutyPercent > 100) Copy_u8DutyPercent = 100;
+    if (Copy_u16DutyCycle > 100) Copy_u16DutyCycle = 100;
 
-    g_u8CurrentDutyPercent = Copy_u8DutyPercent;
+    g_u8CurrentDutyPercent = Copy_u16DutyCycle;
 
     // Duty_Value = (Percentage / 100) * (PR2 + 1) * 4
     // We use u32 to prevent the multiplication overflow (e.g., 100 * 125 * 4 = 50,000)

@@ -1,4 +1,4 @@
-#include "../HAL/PWM_control/PWM.h"
+#include "../HAL/PWM Control/PWM.h"
 #include "../HAL/LED/LED_interface.h"
 #include "../HAL/Timer/Timer_Interface.h"
 #include "../HAL/Switch/Switch_interface.h"
@@ -48,4 +48,5 @@ int main(void) {
         }
 
     }
+    return 0;
 }
