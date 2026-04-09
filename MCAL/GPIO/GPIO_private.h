@@ -1,8 +1,6 @@
 #ifndef GPIO_PRIVATE_H
 #define GPIO_PRIVATE_H
 
-/* Register Definitions for PIC16F877A */
-
 #define TRISA   (*((volatile u8*)0x85))
 #define TRISB   (*((volatile u8*)0x86))
 #define TRISC   (*((volatile u8*)0x87))
