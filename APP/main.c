@@ -1,11 +1,14 @@
-#include "../APP/ext_int_test.h"
-#include "../APP/gpio_test.h"
-#include "../APP/Timer0_test.h"
-#include "APP/pwm_test.h"
+#include "../APP/adc_test.h"
 
 int main(void)
 {
-    APP_TestPWM();
-    while(1){}
+    // Call the required test function for ADC
+    APP_TestADC();
+
+    while(1)
+    {
+        
+    }
+
     return 0;
 }
