@@ -1,0 +1,55 @@
+0	1	mikroCPIC1618.exe -MSF -DBG -pP16F877A -DL -O11111114 -fo8 -N"C:\Users\Z B O O K\OneDrive\Desktop\Final Project\E_Final.mcppi" -SP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\Defs\" -SP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\Uses\P16\" -SP"C:\Users\Z B O O K\OneDrive\Desktop\Final Project\" -SP"C:\Users\Z B O O K\OneDrive\Desktop\Final Project\ES_Course_Labs-main\APP\" -SP"C:\Users\Z B O O K\OneDrive\Desktop\Final Project\ES_Course_Labs-main\MCAL\ADC\" -SP"C:\Users\Z B O O K\OneDrive\Desktop\Final Project\ES_Course_Labs-main\HAL\SWITCH\" -SP"C:\Users\Z B O O K\OneDrive\Desktop\Final Project\ES_Course_Labs-main\HAL\LED\" -SP"C:\Users\Z B O O K\OneDrive\Desktop\Final Project\ES_Course_Labs-main\MCAL\EXT_INT\" -SP"C:\Users\Z B O O K\OneDrive\Desktop\Final Project\ES_Course_Labs-main\MCAL\GIE\" -SP"C:\Users\Z B O O K\OneDrive\Desktop\Final Project\ES_Course_Labs-main\MCAL\GPIO\" -SP"C:\Users\Z B O O K\OneDrive\Desktop\Final Project\ES_Course_Labs-main\MCAL\I2C\" -SP"C:\Users\Z B O O K\OneDrive\Desktop\Final Project\ES_Course_Labs-main\MCAL\ISR\" -SP"C:\Users\Z B O O K\OneDrive\Desktop\Final Project\ES_Course_Labs-main\MCAL\PWM\" -SP"C:\Users\Z B O O K\OneDrive\Desktop\Final Project\ES_Course_Labs-main\MCAL\SPI\" -SP"C:\Users\Z B O O K\OneDrive\Desktop\Final Project\ES_Course_Labs-main\MCAL\TIMER0\" -SP"C:\Users\Z B O O K\OneDrive\Desktop\Final Project\ES_Course_Labs-main\MCAL\UART\" -IP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\Uses\P16\" -IP"C:\Users\Z B O O K\OneDrive\Desktop\Final Project\ES_Course_Labs-main\SERVICES\" -IP"C:\Users\Z B O O K\OneDrive\Desktop\Final Project\ES_Course_Labs-main\HAL\LED\" -IP"C:\Users\Z B O O K\OneDrive\Desktop\Final Project\ES_Course_Labs-main\HAL\SWITCH\" -IP"C:\Users\Z B O O K\OneDrive\Desktop\Final Project\ES_Course_Labs-main\APP\" -IP"C:\Users\Z B O O K\OneDrive\Desktop\Final Project\ES_Course_Labs-main\MCAL\ADC\" -IP"C:\Users\Z B O O K\OneDrive\Desktop\Final Project\ES_Course_Labs-main\MCAL\EXT_INT\" -IP"C:\Users\Z B O O K\OneDrive\Desktop\Final Project\ES_Course_Labs-main\MCAL\GIE\" -IP"C:\Users\Z B O O K\OneDrive\Desktop\Final Project\ES_Course_Labs-main\MCAL\GPIO\" -IP"C:\Users\Z B O O K\OneDrive\Desktop\Final Project\ES_Course_Labs-main\MCAL\I2C\" -IP"C:\Users\Z B O O K\OneDrive\Desktop\Final Project\ES_Course_Labs-main\MCAL\ISR\" -IP"C:\Users\Z B O O K\OneDrive\Desktop\Final Project\ES_Course_Labs-main\MCAL\PWM\" -IP"C:\Users\Z B O O K\OneDrive\Desktop\Final Project\ES_Course_Labs-main\MCAL\SPI\" -IP"C:\Users\Z B O O K\OneDrive\Desktop\Final Project\ES_Course_Labs-main\MCAL\TIMER0\" -IP"C:\Users\Z B O O K\OneDrive\Desktop\Final Project\ES_Course_Labs-main\MCAL\UART\" "adc_test.c" "ext_int_test.c" "i2c_test.c" "main.c" "pwm_test.c" "spi_test.c" "timer_test.c" "uart_test.c" "ADC_program.c" "SWITCH.c" "LED.c" "EXT_INT0.c" "GIE_program.c" "GPIO.c" "I2C_program.c" "ISR.c" "PWM_program.c" "SPI_program.c" "TIMER0_program.c" "UART_program.c" "__Lib_Math.mcl" "__Lib_MathDouble.mcl" "__Lib_System.mcl" "__Lib_Delays.mcl"	 
+hint: 0	1139	Available RAM: 352 [bytes], Available ROM: 8192 [bytes]	 
+diagnostics: 0	122	Compilation Started	std_types.h
+diagnostics: 15	123	Compiled Successfully	adc_test.c
+hint: 6	1164	Variable 'Digital_Value' has been eliminated by optimizer	adc_test.c
+hint: 7	1164	Variable 'Temperature' has been eliminated by optimizer	adc_test.c
+diagnostics: 0	122	Compilation Started	std_types.h
+diagnostics: 17	123	Compiled Successfully	ext_int_test.c
+diagnostics: 0	122	Compilation Started	std_types.h
+diagnostics: 12	123	Compiled Successfully	i2c_test.c
+diagnostics: 0	122	Compilation Started	std_types.h
+diagnostics: 21	123	Compiled Successfully	main.c
+diagnostics: 0	122	Compilation Started	std_types.h
+diagnostics: 24	123	Compiled Successfully	pwm_test.c
+diagnostics: 0	122	Compilation Started	std_types.h
+diagnostics: 12	123	Compiled Successfully	spi_test.c
+diagnostics: 0	122	Compilation Started	std_types.h
+diagnostics: 28	123	Compiled Successfully	timer_test.c
+hint: 7	1164	Variable 'current' has been eliminated by optimizer	timer_test.c
+diagnostics: 0	122	Compilation Started	std_types.h
+diagnostics: 12	123	Compiled Successfully	uart_test.c
+hint: 4	1164	Variable 'Received_Char' has been eliminated by optimizer	uart_test.c
+diagnostics: 0	122	Compilation Started	std_types.h
+diagnostics: 17	123	Compiled Successfully	ADC_program.c
+diagnostics: 0	122	Compilation Started	std_types.h
+diagnostics: 8	123	Compiled Successfully	SWITCH.c
+diagnostics: 0	122	Compilation Started	std_types.h
+diagnostics: 27	123	Compiled Successfully	LED.c
+hint: 21	1164	Variable 'current' has been eliminated by optimizer	LED.c
+diagnostics: 0	122	Compilation Started	std_types.h
+diagnostics: 43	123	Compiled Successfully	EXT_INT0.c
+diagnostics: 0	122	Compilation Started	gie_interface.h
+diagnostics: 11	123	Compiled Successfully	GIE_program.c
+diagnostics: 0	122	Compilation Started	std_types.h
+diagnostics: 138	123	Compiled Successfully	GPIO.c
+diagnostics: 0	122	Compilation Started	std_types.h
+diagnostics: 38	123	Compiled Successfully	I2C_program.c
+diagnostics: 0	122	Compilation Started	std_types.h
+diagnostics: 31	123	Compiled Successfully	ISR.c
+diagnostics: 0	122	Compilation Started	std_types.h
+diagnostics: 23	123	Compiled Successfully	PWM_program.c
+hint: 14	1164	Variable 'Total_Value' has been eliminated by optimizer	PWM_program.c
+diagnostics: 0	122	Compilation Started	std_types.h
+diagnostics: 33	123	Compiled Successfully	SPI_program.c
+diagnostics: 0	122	Compilation Started	std_types.h
+diagnostics: 26	123	Compiled Successfully	TIMER0_program.c
+diagnostics: 0	122	Compilation Started	std_types.h
+diagnostics: 24	123	Compiled Successfully	UART_program.c
+diagnostics: 0	127	All files Compiled in 2000 ms	 
+hint: 0	1144	Used RAM (bytes): 17 (5%)  Free RAM (bytes): 335 (95%)	Used RAM (bytes): 17 (5%)  Free RAM (bytes): 335 (95%)
+hint: 0	1144	Used ROM (program words): 820 (10%)  Free ROM (program words): 7372 (90%)	Used ROM (program words): 820 (10%)  Free ROM (program words): 7372 (90%)
+diagnostics: 0	125	Project Linked Successfully	E_Final.mcppi
+diagnostics: 0	128	Linked in 63 ms	 
+diagnostics: 0	129	Project 'E_Final.mcppi' completed: 2219 ms	 
+diagnostics: 0	103	Finished successfully: 08 Apr 2026, 18:14:32	E_Final.mcppi
