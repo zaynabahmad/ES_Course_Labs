@@ -3,14 +3,14 @@
 
 #include "../../SERVICES/STD_TYPES.h"
 
-/*Architecture Requirements */
+/* External Interrupt functions */
 void EXT_INT0_Init(void);
 void EXT_INT0_Enable(void);
-void EXT_INT0_Disable(void);
-void EXT_INT0_SetEdge(u8 edge_type);
 void EXT_INT0_SetCallback(void (*LocalPtr)(void));
 
-#define RISING_EDGE   1
-#define FALLING_EDGE  0
+
+void TMR0_Init(void);
+void TMR0_Enable(void);
+void TMR0_SetCallback(void (*LocalPtr)(void));
 
 #endif
