@@ -7,9 +7,9 @@ typedef signed short int   s16;
 typedef signed long int    s32;
 
 /* Unsigned Types */
-typedef unsigned char        u8;
-typedef unsigned short int   u16;
-typedef unsigned long int    u32;
+typedef unsigned char      u8;
+typedef unsigned short int u16;
+typedef unsigned long int  u32;
 
 /* Floating Types */
 typedef float       f32;
