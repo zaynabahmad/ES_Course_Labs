@@ -10,7 +10,7 @@
 void I2C_Init(void);
 void I2C_Start(void);
 void I2C_Stop(void);
-void I2C_Write(u8 Data);
+u8 I2C_Write(u8 Data);
 u8 I2C_Read(u8 Ack);
 u8 I2C_WriteDevice(u8 Address, u8 *Data, u8 Length);
 u8 I2C_ReadDevice(u8 Address, u8 *Data, u8 Length);

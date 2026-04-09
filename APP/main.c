@@ -1,9 +1,9 @@
-#include "SERVICES/STD_TYPES.h"
-#include "MCAL/GPIO/GPIO_interface.h"
-#include "MCAL/USART/USART_Interface.h"
-#include "HAL/LED/LED_interface.h"
-#include "HAL/MOTOR/MOTOR_interface.h"
-#include "HAL/SWITCH/SWITCH_interface.h"
+#include "../SERVICES/STD_TYPES.h"
+#include "../MCAL/GPIO/GPIO_interface.h"
+#include "../MCAL/USART/USART_Interface.h"
+#include "../HAL/LED/LED_interface.h"
+#include "../HAL/MOTOR/MOTOR_interface.h"
+#include "../HAL/SWITCH/SWITCH_interface.h"
 
 #define RUN_APPLICATION    1
 #define RUN_GPIO_TEST      0
