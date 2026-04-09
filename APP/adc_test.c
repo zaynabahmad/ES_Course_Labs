@@ -1,8 +1,7 @@
 #include "../SERVICES/STD_TYPES.h"
 #include "../MCAL/GPIO/GPIO_interface.h"
 #include "../MCAL/ADC/ADC_interface.h"
-// Include your instructor's UART driver here!
-#include "../MCAL/USART/USART_interface.h"
+#include "../MCAL/USART/USART_Interface.h"
 #include "adc_test.h"
 
 // We use the built-in mikroC function for float to string conversion
