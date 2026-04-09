@@ -33,7 +33,7 @@ void Bluetooth_UART_Callback(u8 UART_data)
 
 }
 
-int main(void)
+void UART_Test(void)
 {
     // Initialize GPIOs
     GPIO_Init();
@@ -54,6 +54,4 @@ int main(void)
     {
         // main loop can be empty because interrupts handle everything
     }
-
-    return 0;
 }

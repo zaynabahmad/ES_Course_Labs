@@ -21,7 +21,7 @@ void long_sequence() {
     LED_Toggle(GPIO_PORTC, GPIO_PIN1);
     delay_ms(500);
 }
-int main(void)
+void GPIO_Test(void)
 {
    // Lab Task 1
     LED_Init(GPIO_PORTC, GPIO_PIN0);
@@ -46,7 +46,4 @@ int main(void)
             GPIO_SetPinValue(GPIO_PORTC, GPIO_PIN1, GPIO_LOW);
         }
     }
-
-    return 0;
-    
 }

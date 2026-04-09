@@ -17,7 +17,7 @@ void External_INT_ISR(void) {
     g_UpdatePWM_Flag = 1; // Just set a flag and leave!
 }
 
-int main(void) {
+void PWM_Test(void) {
     /* Initialize Hardware */
     LED_Init(GPIO_PORTC, GPIO_PIN2); // RC2 is usually the PWM output
     SWITCH_Init(GPIO_PORTB, GPIO_PIN1);
@@ -48,5 +48,4 @@ int main(void) {
         }
 
     }
-    return 0;
 }

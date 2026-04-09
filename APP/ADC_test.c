@@ -14,7 +14,7 @@ void ADC_ConversionComplete_ISR() {
     flag=1;
 }
 
-int main(void) {
+void ADC_Test(void) {
     //LM35 connected to A0 and temperature displayed on virtual terminal via UART
     LM35_init(GPIO_PORTA, GPIO_PIN0);
     LED_Init(GPIO_PORTC, GPIO_PIN2);
@@ -34,8 +34,7 @@ int main(void) {
         }
         if (flag){
            LED_Toggle(GPIO_PORTC, GPIO_PIN3); // Toggle LED to indicate conversion complete (for testing)
+            flag=0;
         }
     }
-   return 0;
-
 }

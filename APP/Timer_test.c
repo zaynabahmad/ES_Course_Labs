@@ -7,40 +7,23 @@
 // Without this, RA4 will not toggle
 
 
-u8 volatile timer0_flag = 0;
+volatile u8  timer0_flag = 0;
 // Global variable to alternate LED toggling
+volatile u8  timer0_int_flag=0;
 volatile u8 ext_int_counter = 0;
 volatile u8 led1_active = 1; // Start with LED1 active
+volatile u8 ext_int_flag = 0; // Flag to indicate external interrupt occurred
 // Callback function for Timer0 interrupt
 void tmr_int_logic() {
-    if(led1_active){
-        timer0_flag = 1; // Set flag to indicate timer interrupt occurred
-    }
+    timer0_int_flag = 1; // Set flag to indicate Timer0 interrupt occurred
 }
 static volatile u8 led2_state = 0; // Shadow variable (0=OFF, 1=ON)
 
 void ext_int_logic() {
-    if(led1_active) {
-        led2_state = !led2_state; // Toggle our memory of the state
-
-        if(led2_state == 1) {
-            /* LED ON: Make RA4 "Float" by setting it to 1 */
-            *((volatile u8*)0x05) |= (1 << 4);
-        } else {
-            /* LED OFF: Make RA4 "Short to GND" by setting it to 0 */
-            *((volatile u8*)0x05) &= ~(1 << 4);
-        }
-
-        ext_int_counter++;
-        if(ext_int_counter >= 5) {
-            led1_active = 0;
-            /* Lock LED ON for 5th click */
-            *((volatile u8*)0x05) |= (1 << 4);
-        }
-    }
+    ext_int_flag = 1; // Set flag to indicate external interrupt occurred
 }
 
-int main(void) {
+void Timer_Test(void) {
     u8 switch_val;
     *((volatile unsigned char*)0x9F) = 0x06; // Direct address for ADCON1
     // Initialize LEDs
@@ -75,8 +58,33 @@ int main(void) {
                 LED_Toggle(GPIO_PORTB, GPIO_PIN1);
                 timer0_flag = 0; // Clear flag after handling
         }
+        if(timer0_int_flag){
+                if(led1_active){
+                    timer0_flag = 1; // Set flag to indicate timer interrupt occurred
+                }
+                timer0_int_flag = 0; // Clear flag after handling
+        }
+        if(ext_int_flag){
+            if(led1_active) {
+                led2_state = !led2_state; // Toggle our memory of the state
+
+                if(led2_state == 1) {
+                    /* LED ON: Make RA4 "Float" by setting it to 1 */
+                    *((volatile u8*)0x05) |= (1 << 4);
+                } else {
+                    /* LED OFF: Make RA4 "Short to GND" by setting it to 0 */
+                    *((volatile u8*)0x05) &= ~(1 << 4);
+                }
+
+                ext_int_counter++;
+                if(ext_int_counter >= 5) {
+                    led1_active = 0;
+                    /* Lock LED ON for 5th click */
+                    *((volatile u8*)0x05) |= (1 << 4);
+                }
+            }
+            ext_int_flag=0;
+        }
 
     }
-
-    return 0;
 }
