@@ -1,4 +1,4 @@
-# MikroC build files
+# === MikroC PRO Build Artifacts ===
 *.asm
 *.cp
 *.mcl
@@ -10,11 +10,21 @@
 *.dbg
 *.dbt
 *.dlt
-*.mcppi
 *.user.dic
-*.callertable.txt
+*_callertable.txt
 *.ini
+*.ccl
+*.pma
+*.brk
 
-# OS files
+# === Project Files ===
+*.cfg
+
+# === OS & IDE mess ===
 .DS_Store
 Thumbs.db
+*.tmp
+
+
+
+*.bat
