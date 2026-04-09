@@ -132,7 +132,71 @@ void GPIO_Init(void)
 {
     TRISA = GPIO_PORTA_DIR;
     TRISB = GPIO_PORTB_DIR;
+    TRISC = GPIO_PORTC_DIR;
+    TRISD = GPIO_PORTD_DIR;
+    TRISE = GPIO_PORTE_DIR;
 
     PORTA = GPIO_PORTA_INIT_VAL;
     PORTB = GPIO_PORTB_INIT_VAL;
+    PORTC = GPIO_PORTC_INIT_VAL;
+    PORTD = GPIO_PORTD_INIT_VAL;
+    PORTE = GPIO_PORTE_INIT_VAL;
+}
+
+void GPIO_SetPortDirection(u8 Port, u8 DirectionMask)
+{
+    switch(Port)
+    {
+        case GPIO_PORTA:
+            TRISA = DirectionMask;
+        break;
+
+        case GPIO_PORTB:
+            TRISB = DirectionMask;
+        break;
+
+        case GPIO_PORTC:
+            TRISC = DirectionMask;
+        break;
+
+        case GPIO_PORTD:
+            TRISD = DirectionMask;
+        break;
+
+        case GPIO_PORTE:
+            TRISE = DirectionMask;
+        break;
+
+        default:
+        break;
+    }
+}
+
+void GPIO_SetPortValue(u8 Port, u8 ValueMask)
+{
+    switch(Port)
+    {
+        case GPIO_PORTA:
+            PORTA = ValueMask;
+        break;
+
+        case GPIO_PORTB:
+            PORTB = ValueMask;
+        break;
+
+        case GPIO_PORTC:
+            PORTC = ValueMask;
+        break;
+
+        case GPIO_PORTD:
+            PORTD = ValueMask;
+        break;
+
+        case GPIO_PORTE:
+            PORTE = ValueMask;
+        break;
+
+        default:
+        break;
+    }
 }

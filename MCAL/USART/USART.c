@@ -1,4 +1,5 @@
 #include "USART_Interface.h"
+#include "../../SERVICES/BIT_MATH.h"
 
 
 /* =================================
@@ -48,6 +49,12 @@ void UART_TX_Init(void)
     SET_BIT(TXSTA , TXEN);      // Enable Transmission
 }
 
+void UART_Init(void)
+{
+    UART_TX_Init();
+    UART_RX_Init();
+}
+
 /* =================================
    Send Byte
 ================================= */
@@ -58,6 +65,20 @@ void UART_Write(u8 Data)
     while(!GET_BIT(TXSTA , TRMT));   // Wait until TX empty
 
     TXREG = Data;
+}
+
+void UART_WriteString(const u8* String)
+{
+    if (String == 0)
+    {
+        return;
+    }
+
+    while (*String != '\0')
+    {
+        UART_Write(*String);
+        String++;
+    }
 }
 
 /* =================================
@@ -99,18 +120,18 @@ void UART_SetCallback(void (*Callback)(u8))
 void UART_ISR(void)
 {
 
-    u8 UART_data = RCREG;   //
+    u8 UART_data = RCREG;
     if(UART_Callback != 0)
     {
-        UART_Callback(UART_data);   //
+        UART_Callback(UART_data);
     }
 
 }
 
-
-/* =================================
-   ISR Handler
-================================= */
+void USART_ISR(void)
+{
+    UART_ISR();
+}
 
 /*
 void interrupt()

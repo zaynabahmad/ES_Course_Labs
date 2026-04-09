@@ -1,0 +1,27 @@
+#ifndef TIMER0_CONFIG_H
+#define TIMER0_CONFIG_H
+
+/* Clock source */
+#define TIMER0_INTERNAL_CLOCK  0
+#define TIMER0_EXTERNAL_CLOCK  1
+
+/* Prescaler assignment */
+#define TIMER0_PRESCALER_ON    0
+#define TIMER0_PRESCALER_OFF   1
+
+/* Prescaler values */
+#define TIMER0_PRESCALER_2     0
+#define TIMER0_PRESCALER_4     1
+#define TIMER0_PRESCALER_8     2
+#define TIMER0_PRESCALER_16    3
+#define TIMER0_PRESCALER_32    4
+#define TIMER0_PRESCALER_64    5
+#define TIMER0_PRESCALER_128   6
+#define TIMER0_PRESCALER_256   7
+
+/* Default settings */
+#define TIMER0_CLOCK_SOURCE      TIMER0_INTERNAL_CLOCK
+#define TIMER0_PRESCALER_ENABLE  TIMER0_PRESCALER_ON
+#define TIMER0_PRESCALER_VALUE   TIMER0_PRESCALER_256
+
+#endif
