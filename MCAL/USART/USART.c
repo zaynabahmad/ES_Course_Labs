@@ -1,12 +1,13 @@
 #include "USART_Interface.h"
 #include "../GPIO/GPIO_interface.h"
 
-void (*UART_Callback)(u8) = 0;
+void (*UART_RX_Callback)(u8) = 0;
+void (*UART_TX_Callback)(void) = 0;
 
 void UART_RX_Init(void)
 {
     SET_BIT(TXSTA, BRGH);
-    SPBRG = (FOSC / (16UL * UART_BAUDRATE)) - 1;   /* was hardcoded 25 */
+    SPBRG = (FOSC / (16UL * UART_BAUDRATE)) - 1;
     CLR_BIT(TXSTA, SYNC);
     SET_BIT(RCSTA, SPEN);
 
@@ -22,7 +23,7 @@ void UART_RX_Init(void)
 void UART_TX_Init(void)
 {
     SET_BIT(TXSTA, BRGH);
-    SPBRG = (FOSC / (16UL * UART_BAUDRATE)) - 1;   /* was hardcoded 25 */
+    SPBRG = (FOSC / (16UL * UART_BAUDRATE)) - 1;
     CLR_BIT(TXSTA, SYNC);
     SET_BIT(RCSTA, SPEN);
 
@@ -30,6 +31,9 @@ void UART_TX_Init(void)
     GPIO_SetPinDirection(GPIO_PORTC, GPIO_PIN7, GPIO_INPUT);  /* RC7/RX */
 
     SET_BIT(TXSTA, TXEN);
+    SET_BIT(PIE1, TXIE);
+    SET_BIT(INTCON, PEIE);
+    SET_BIT(INTCON, GIE);
 }
 
 void UART_Write(u8 Data)
@@ -41,6 +45,13 @@ void UART_Write(u8 Data)
 u8 UART_Read(void)
 {
     while(!GET_BIT(PIR1, RCIF));
+
+    /* Check for RX errors */
+    if(GET_BIT(RCSTA, OERR)) {
+        CLR_BIT(RCSTA, CREN);
+        SET_BIT(RCSTA, CREN);
+    }
+
     return RCREG;
 }
 
@@ -52,12 +63,25 @@ u8 UART_TX_Empty(void)
 void UART_SetCallback(void (*Callback)(u8))
 {
     if(Callback != 0)
-        UART_Callback = Callback;
+        UART_RX_Callback = Callback;
+}
+
+void UART_SetTXCallback(void (*Callback)(void))
+{
+    if(Callback != 0)
+        UART_TX_Callback = Callback;
 }
 
 void UART_ISR(void)
 {
-    u8 data = RCREG;   /* reading RCREG clears RCIF automatically */
-    if(UART_Callback != 0)
-        UART_Callback(data);
+    if(GET_BIT(PIR1, RCIF)) {
+        u8 data = RCREG;
+        if(UART_RX_Callback != 0)
+            UART_RX_Callback(data);
+    }
+
+    if(GET_BIT(PIR1, TXIF)) {
+        if(UART_TX_Callback != 0)
+            UART_TX_Callback();
+    }
 }

@@ -4,6 +4,7 @@
 #include "../USART/USART_Interface.h"
 #include "../EXT_INT/EXT_INT_Interface.h"
 #include "../EXT_INT/EXT_INT_Private.h"
+#include "../TIMER_0/TIMER_0_Interface.h"
 
 /* PIR1 register and flags */
 #define PIR1    (*((volatile u8*)0x0C))
@@ -13,9 +14,9 @@
 
 void interrupt()
 {
-    if(GET_BIT(INTCON, T0IF))   /* Timer0 - not implemented yet */
+    if(GET_BIT(INTCON, T0IF))   /* Timer0 */
     {
-        /* TIMER0_ISR(); will later be implemented*/
+        TIMER_0_ISR();
     }
 
     if(GET_BIT(INTCON, INTF))   /* External interrupt RB0 */

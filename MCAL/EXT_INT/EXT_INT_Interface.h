@@ -10,7 +10,6 @@
 #define GIE_BIT      7
 #define INTE_BIT     4
 #define INTF_BIT     1
-#define INTEDGE_BIT  6
 
 #define rising_edge   1
 #define falling_edge  0

@@ -23,14 +23,17 @@
 
 #define SPEN   7
 #define CREN   4
+#define OERR   1
 
 /* ================= PIR1 Bits ================= */
 
 #define RCIF   5
+#define TXIF   4
 
 /* ================= PIE1 Bits ================= */
 
 #define RCIE   5
+#define TXIE   4
 
 /* ================= INTCON Bits ================= */
 
