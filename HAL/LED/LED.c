@@ -1,27 +1,27 @@
 #include "LED_interface.h"
 #include "../../MCAL/GPIO/GPIO_interface.h"
 
-void LED_Init(u8 Port, u8 Pin)
+void LED_Init(char Port, char Pin)
 {
-    GPIO_SetPinDirection(Port, Pin, GPIO_OUTPUT);
+    GPIO_SetPinDirection(Port, Pin, OUTPUT);
 }
 
-void LED_On(u8 Port, u8 Pin)
+void LED_On(char Port, char Pin)
 {
-    GPIO_SetPinValue(Port, Pin, GPIO_HIGH);
+    GPIO_WritePin(Port, Pin, HIGH);
 }
 
-void LED_Off(u8 Port, u8 Pin)
+void LED_Off(char Port, char Pin)
 {
-    GPIO_SetPinValue(Port, Pin, GPIO_LOW);
+    GPIO_WritePin(Port, Pin, LOW);
 }
 
-void LED_Toggle(u8 Port, u8 Pin)
+void LED_Toggle(char Port, char Pin)
 {
-    u8 current = GPIO_GetPinValue(Port, Pin);
+    char current = GPIO_ReadPin(Port, Pin);
 
-    if(current == GPIO_HIGH)
-        GPIO_SetPinValue(Port, Pin, GPIO_LOW);
+    if (current == HIGH)
+        GPIO_WritePin(Port, Pin, LOW);
     else
-        GPIO_SetPinValue(Port, Pin, GPIO_HIGH);
+        GPIO_WritePin(Port, Pin, HIGH);
 }
