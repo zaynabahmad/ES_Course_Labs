@@ -165,4 +165,6 @@ void Test_I2C_Communication(void) {
         I2C_WriteBlock(0x50, sensor_data, 2);
         Delay_ms(2000);
     }
+
+    return 0;
 }
