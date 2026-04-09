@@ -13,18 +13,13 @@ void MOTOR_Init(u8 Port, u8 Pin1, u8 Pin2, u8 PWMChannel)
     GPIO_SetPinDirection(motor_port, motor_pin1, GPIO_OUTPUT);
     GPIO_SetPinDirection(motor_port, motor_pin2, GPIO_OUTPUT);
 
-    /* Initialize PWM with 5kHz frequency for motor control */
-    PWM_Init(motor_pwm_channel, 5000);
-
+    PWM_Init(motor_pwm_channel, 5000); // 5kHz PWM
     MOTOR_Stop();
 }
 
 void MOTOR_Forward(u8 Speed)
 {
-    /* Clamp speed between 0-100 */
-    if (Speed > 100)
-        Speed = 100;
-
+    if (Speed > 100) Speed = 100;
     GPIO_SetPinValue(motor_port, motor_pin1, GPIO_HIGH);
     GPIO_SetPinValue(motor_port, motor_pin2, GPIO_LOW);
     PWM_SetDutyCycle(motor_pwm_channel, Speed);
@@ -39,10 +34,7 @@ void MOTOR_Stop(void)
 
 void MOTOR_Backward(u8 Speed)
 {
-    /* Clamp speed between 0-100 */
-    if (Speed > 100)
-        Speed = 100;
-
+    if (Speed > 100) Speed = 100;
     GPIO_SetPinValue(motor_port, motor_pin1, GPIO_LOW);
     GPIO_SetPinValue(motor_port, motor_pin2, GPIO_HIGH);
     PWM_SetDutyCycle(motor_pwm_channel, Speed);

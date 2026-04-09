@@ -8,9 +8,7 @@ static void (*SWITCH_Callback)(void) = 0;
 
 void SWITCH_Init(void)
 {
-    /* Enable PORTB internal pull-ups for switch */
-    CLR_BIT(OPTION_REG, 7);  /* RBPU bit = 0 enables pull-ups */
-
+    CLR_BIT(OPTION_REG, 7); // Enable PORTB pull-ups
     EXT_INT_Init();
     EXT_INT_Enable();
 }

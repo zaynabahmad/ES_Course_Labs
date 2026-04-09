@@ -2,6 +2,7 @@
 #define MOTOR_INTERFACE_H
 
 #include "../../SERVICES/STD_TYPES.h"
+#include "../../MCAL/PWM/PWM_interface.h"
 
 /* Motor States */
 #define MOTOR_FORWARD  1
@@ -18,4 +19,3 @@ void MOTOR_Stop(void);
 void MOTOR_Backward(u8 Speed);
 
 #endif
-

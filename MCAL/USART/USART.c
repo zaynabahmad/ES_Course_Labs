@@ -11,8 +11,8 @@ void UART_RX_Init(void)
     CLR_BIT(TXSTA, SYNC);
     SET_BIT(RCSTA, SPEN);
 
-    GPIO_SetPinDirection(GPIO_PORTC, GPIO_PIN6, GPIO_INPUT);  /* RC6/TX */
-    GPIO_SetPinDirection(GPIO_PORTC, GPIO_PIN7, GPIO_INPUT);  /* RC7/RX */
+    GPIO_SetPinDirection(GPIO_PORTC, GPIO_PIN6, GPIO_INPUT);  // RC6/TX
+    GPIO_SetPinDirection(GPIO_PORTC, GPIO_PIN7, GPIO_INPUT);  // RC7/RX
 
     SET_BIT(RCSTA, CREN);
     SET_BIT(PIE1, RCIE);
@@ -27,8 +27,8 @@ void UART_TX_Init(void)
     CLR_BIT(TXSTA, SYNC);
     SET_BIT(RCSTA, SPEN);
 
-    GPIO_SetPinDirection(GPIO_PORTC, GPIO_PIN6, GPIO_INPUT);  /* RC6/TX */
-    GPIO_SetPinDirection(GPIO_PORTC, GPIO_PIN7, GPIO_INPUT);  /* RC7/RX */
+    GPIO_SetPinDirection(GPIO_PORTC, GPIO_PIN6, GPIO_INPUT);  // RC6/TX
+    GPIO_SetPinDirection(GPIO_PORTC, GPIO_PIN7, GPIO_INPUT);  // RC7/RX
 
     SET_BIT(TXSTA, TXEN);
     SET_BIT(PIE1, TXIE);
@@ -46,8 +46,7 @@ u8 UART_Read(void)
 {
     while(!GET_BIT(PIR1, RCIF));
 
-    /* Check for RX errors */
-    if(GET_BIT(RCSTA, OERR)) {
+    if(GET_BIT(RCSTA, OERR)) { // Check RX overflow
         CLR_BIT(RCSTA, CREN);
         SET_BIT(RCSTA, CREN);
     }
