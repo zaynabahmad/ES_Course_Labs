@@ -1,0 +1,8 @@
+#ifndef TIMER0_PRIVATE_H
+#define TIMER0_PRIVATE_H
+
+#define TMR0       (*((volatile u8*)0x01))
+#define INTCON     (*((volatile u8*)0x0B))
+#define OPTION_REG (*((volatile u8*)0x81))
+
+#endif

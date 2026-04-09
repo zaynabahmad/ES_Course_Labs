@@ -28,6 +28,7 @@
 #define GPIO_LOW     0
 #define GPIO_HIGH    1
 
+/* APIs */
 void GPIO_SetPinDirection(u8 Port, u8 Pin, u8 Direction);
 void GPIO_SetPinValue(u8 Port, u8 Pin, u8 Value);
 u8   GPIO_GetPinValue(u8 Port, u8 Pin);
