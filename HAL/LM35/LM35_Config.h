@@ -1,0 +1,6 @@
+#ifndef LM35_CONFIG_H
+#define LM35_CONFIG_H
+
+#define LM35_ADC_CHANNEL    ADC_CHANNEL_0
+
+#endif /* LM35_CONFIG_H */

@@ -1,0 +1,11 @@
+main
+	GPIO_Init
+	GPIO_SetPinDirection
+	UART_RX_Init
+	UART_TX_Init
+	UART_SetCallback
+interrupt
+	UART_ISR
+		____DoIFC
+	EXT_INT_ISR
+		____DoIFC

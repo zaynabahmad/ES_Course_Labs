@@ -1,0 +1,15 @@
+#ifndef TIMER0_CONFIG_H
+#define TIMER0_CONFIG_H
+
+
+#define TMR0_FOSC_FREQ          8000000UL
+
+
+#define TMR0_PRESCALER_VAL      TMR0_PRESCALER_256
+#define TMR0_PRELOAD_VAL        178
+
+#define TMR0_PRELOAD_VAL        178
+
+#define TMR0_CLOCK_SRC          TMR0_INTERNAL_CLK
+
+#endif /* TIMER0_CONFIG_H */
