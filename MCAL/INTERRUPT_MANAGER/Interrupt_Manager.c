@@ -1,23 +1,29 @@
-#include "../USART/USART_interface.h"
-#include "../EXT_INT/EXT_INT_interface.h"
 #include "../../SERVICES/BIT_MATH.h"
+#include "../../SERVICES/STD_TYPES.h"
 
-extern void (*EXT_INT_Callback)(void);
-extern void (*UART_Callback)(void);
+#include "../USART/USART_Interface.h"
+#include "../USART/USART_Private.h"
+#include "../EXT_INT/EXT_INT_Interface.h"
+#include "../EXT_INT/EXT_INT_Private.h"
+#include "../TIMER_0/TIMER_0_Interface.h"
+#include "../TIMER_0/TIMER_0_Private.h"
+
+#define RCIF    5
 
 void interrupt()
 {
-
-    //UART RX interrupt
-    if(GET_BIT(PIR1 , RCIF))
+    if(GET_BIT(INTCON, T0IF_BIT))   // Timer0
     {
-        UART_ISR();
+        TIMER_0_ISR();
     }
 
-    // external interrupt flag
-    if(GET_BIT(INTCON , INTF_BIT))
+    if(GET_BIT(INTCON, INTF_BIT))   // External interrupt RB0
     {
         EXT_INT_ISR();
     }
 
+    if(GET_BIT(PIR1, RCIF))     // UART RX
+    {
+        UART_ISR();
+    }
 }

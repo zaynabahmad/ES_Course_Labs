@@ -1,9 +1,24 @@
 #include "GPIO_interface.h"
 #include "GPIO_private.h"
 #include "GPIO_config.h"
-
 #include "../../SERVICES/BIT_MATH.h"
 
+void GPIO_Init(void)
+{
+    // Initialize all port directions
+    TRISA = GPIO_PORTA_DIR;
+    TRISB = GPIO_PORTB_DIR;
+    TRISC = GPIO_PORTC_DIR;
+    TRISD = GPIO_PORTD_DIR;
+    TRISE = GPIO_PORTE_DIR;
+
+    // Initialize all port values
+    PORTA = GPIO_PORTA_INIT_VAL;
+    PORTB = GPIO_PORTB_INIT_VAL;
+    PORTC = GPIO_PORTC_INIT_VAL;
+    PORTD = GPIO_PORTD_INIT_VAL;
+    PORTE = GPIO_PORTE_INIT_VAL;
+}
 
 void GPIO_SetPinDirection(u8 Port, u8 Pin, u8 Direction)
 {
@@ -14,41 +29,37 @@ void GPIO_SetPinDirection(u8 Port, u8 Pin, u8 Direction)
                 CLR_BIT(TRISA, Pin);
             else
                 SET_BIT(TRISA, Pin);
-        break;
+            break;
 
         case GPIO_PORTB:
             if(Direction == GPIO_OUTPUT)
                 CLR_BIT(TRISB, Pin);
             else
                 SET_BIT(TRISB, Pin);
-        break;
+            break;
 
         case GPIO_PORTC:
             if(Direction == GPIO_OUTPUT)
                 CLR_BIT(TRISC, Pin);
             else
                 SET_BIT(TRISC, Pin);
-        break;
+            break;
 
         case GPIO_PORTD:
             if(Direction == GPIO_OUTPUT)
                 CLR_BIT(TRISD, Pin);
             else
                 SET_BIT(TRISD, Pin);
-        break;
+            break;
 
         case GPIO_PORTE:
             if(Direction == GPIO_OUTPUT)
                 CLR_BIT(TRISE, Pin);
             else
                 SET_BIT(TRISE, Pin);
-        break;
-
-        default:
-        break;
+            break;
     }
 }
-
 
 void GPIO_SetPinValue(u8 Port, u8 Pin, u8 Value)
 {
@@ -59,41 +70,37 @@ void GPIO_SetPinValue(u8 Port, u8 Pin, u8 Value)
                 SET_BIT(PORTA, Pin);
             else
                 CLR_BIT(PORTA, Pin);
-        break;
+            break;
 
         case GPIO_PORTB:
             if(Value == GPIO_HIGH)
                 SET_BIT(PORTB, Pin);
             else
                 CLR_BIT(PORTB, Pin);
-        break;
+            break;
 
         case GPIO_PORTC:
             if(Value == GPIO_HIGH)
                 SET_BIT(PORTC, Pin);
             else
                 CLR_BIT(PORTC, Pin);
-        break;
+            break;
 
         case GPIO_PORTD:
             if(Value == GPIO_HIGH)
                 SET_BIT(PORTD, Pin);
             else
                 CLR_BIT(PORTD, Pin);
-        break;
+            break;
 
         case GPIO_PORTE:
             if(Value == GPIO_HIGH)
                 SET_BIT(PORTE, Pin);
             else
                 CLR_BIT(PORTE, Pin);
-        break;
-
-        default:
-        break;
+            break;
     }
 }
-
 
 u8 GPIO_GetPinValue(u8 Port, u8 Pin)
 {
@@ -103,36 +110,24 @@ u8 GPIO_GetPinValue(u8 Port, u8 Pin)
     {
         case GPIO_PORTA:
             Local_Value = GET_BIT(PORTA, Pin);
-        break;
+            break;
 
         case GPIO_PORTB:
             Local_Value = GET_BIT(PORTB, Pin);
-        break;
+            break;
 
         case GPIO_PORTC:
             Local_Value = GET_BIT(PORTC, Pin);
-        break;
+            break;
 
         case GPIO_PORTD:
             Local_Value = GET_BIT(PORTD, Pin);
-        break;
+            break;
 
         case GPIO_PORTE:
             Local_Value = GET_BIT(PORTE, Pin);
-        break;
-
-        default:
-        break;
+            break;
     }
 
     return Local_Value;
-}
-
-void GPIO_Init(void)
-{
-    TRISA = GPIO_PORTA_DIR;
-    TRISB = GPIO_PORTB_DIR;
-
-    PORTA = GPIO_PORTA_INIT_VAL;
-    PORTB = GPIO_PORTB_INIT_VAL;
 }
