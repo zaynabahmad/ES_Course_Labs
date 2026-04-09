@@ -1,130 +1,63 @@
 #include "USART_Interface.h"
-
-
-/* =================================
-   Global Pointer To Callback
-================================= */
+#include "../GPIO/GPIO_interface.h"
 
 void (*UART_Callback)(u8) = 0;
 
-/* =================================
-   RX Initialization
-================================= */
-
 void UART_RX_Init(void)
 {
+    SET_BIT(TXSTA, BRGH);
+    SPBRG = (FOSC / (16UL * UART_BAUDRATE)) - 1;   /* was hardcoded 25 */
+    CLR_BIT(TXSTA, SYNC);
+    SET_BIT(RCSTA, SPEN);
 
-    SET_BIT(TXSTA , BRGH);      // High Speed Mode
+    GPIO_SetPinDirection(GPIO_PORTC, GPIO_PIN6, GPIO_INPUT);  /* RC6/TX */
+    GPIO_SetPinDirection(GPIO_PORTC, GPIO_PIN7, GPIO_INPUT);  /* RC7/RX */
 
-    SPBRG = 25;                 // 9600 Baud
-
-    CLR_BIT(TXSTA , SYNC);      // Asynchronous Mode
-
-    SET_BIT(RCSTA , SPEN);      // Enable Serial Port
-
-    SET_BIT(RCSTA , CREN);      // Continuous Receive
-
-    SET_BIT(PIE1 , RCIE);       // Enable UART RX Interrupt
-
-    SET_BIT(INTCON , PEIE);     // Peripheral Interrupt Enable
-    SET_BIT(INTCON , GIE);      // Global Interrupt Enable
+    SET_BIT(RCSTA, CREN);
+    SET_BIT(PIE1, RCIE);
+    SET_BIT(INTCON, PEIE);
+    SET_BIT(INTCON, GIE);
 }
-
-/* =================================
-   TX Initialization
-================================= */
 
 void UART_TX_Init(void)
 {
+    SET_BIT(TXSTA, BRGH);
+    SPBRG = (FOSC / (16UL * UART_BAUDRATE)) - 1;   /* was hardcoded 25 */
+    CLR_BIT(TXSTA, SYNC);
+    SET_BIT(RCSTA, SPEN);
 
-    SET_BIT(TXSTA , BRGH);      // High Speed
+    GPIO_SetPinDirection(GPIO_PORTC, GPIO_PIN6, GPIO_INPUT);  /* RC6/TX */
+    GPIO_SetPinDirection(GPIO_PORTC, GPIO_PIN7, GPIO_INPUT);  /* RC7/RX */
 
-    SPBRG = 25;                 // Baud Rate
-
-    CLR_BIT(TXSTA , SYNC);      // Asynchronous Mode
-
-    SET_BIT(RCSTA , SPEN);      // Enable Serial Port
-
-    SET_BIT(TXSTA , TXEN);      // Enable Transmission
+    SET_BIT(TXSTA, TXEN);
 }
-
-/* =================================
-   Send Byte
-================================= */
 
 void UART_Write(u8 Data)
 {
-
-    while(!GET_BIT(TXSTA , TRMT));   // Wait until TX empty
-
+    while(!GET_BIT(TXSTA, TRMT));
     TXREG = Data;
 }
 
-/* =================================
-   Receive Byte (Polling)
-================================= */
-
 u8 UART_Read(void)
 {
-
-    while(!GET_BIT(PIR1 , RCIF));    // Wait for data
-
+    while(!GET_BIT(PIR1, RCIF));
     return RCREG;
 }
 
-/* =================================
-   TX Buffer Status
-================================= */
-
 u8 UART_TX_Empty(void)
 {
-
-    return GET_BIT(TXSTA , TRMT);
+    return GET_BIT(TXSTA, TRMT);
 }
-
-/* =================================
-   Callback Setter
-================================= */
 
 void UART_SetCallback(void (*Callback)(u8))
 {
-
     if(Callback != 0)
-    {
         UART_Callback = Callback;
-    }
-
 }
 
 void UART_ISR(void)
 {
-
-    u8 UART_data = RCREG;   //
+    u8 data = RCREG;   /* reading RCREG clears RCIF automatically */
     if(UART_Callback != 0)
-    {
-        UART_Callback(UART_data);   //
-    }
-
+        UART_Callback(data);
 }
-
-
-/* =================================
-   ISR Handler
-================================= */
-
-/*
-void interrupt()
-{
-
-   if(GET_BIT(PIR1 , RCIF))
-    {
-
-        if(UART_Callback != 0)
-        {
-            UART_Callback();   // Call user function
-        }
-
-    }
-
-}
-  */
