@@ -1,4 +1,4 @@
-#include "../MCAL/EXT_INT/EXT_INT_interface.h"
+#include "../MCAL/EXT_INT/EXT_INT_Interface.h"
 
 
 void EXTI_APP_Callback(void)

@@ -1,4 +1,4 @@
-#include "../MCAL/SPI/SPI_interface.h"
+#include "../MCAL/SPI/SPI_Interface.h"
 #include "../MCAL/USART/USART_Interface.h"
 
 void APP_Test_SPI(void)

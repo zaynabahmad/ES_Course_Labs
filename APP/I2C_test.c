@@ -1,5 +1,6 @@
 #include "../MCAL/I2C/I2C_Interface.h"
 #include "../MCAL/USART/USART_Interface.h"
+#include "util/delay.h"
 
 void APP_Test_I2C(void)
 {

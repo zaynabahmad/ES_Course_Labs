@@ -1,9 +1,10 @@
 #include "../../SERVICES/STD_TYPES.h"
 #include "../../SERVICES/BIT_MATH.h"
-#include "SPI_interface.h"
+#include "SPI_Interface.h"
 #include "SPI_private.h"
 #include "SPI_config.h"
 
+ 
 void SPI_voidMasterInit(void)
 {
 

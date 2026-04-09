@@ -9,7 +9,7 @@ void APP_Test_PWM(void);
 void APP_Test_SPI(void);
 void APP_Test_I2C(void);
 
-int main(void)
+void main()
 {
 
 

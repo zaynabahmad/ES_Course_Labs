@@ -1,4 +1,4 @@
-#include "EXT_INT_interface.h"
+#include "EXT_INT_Interface.h"
 
 
 void EXT_INT_Init(void)
@@ -65,6 +65,3 @@ void EXT_INT_ISR(void)
     }
 
 }
-
-
-

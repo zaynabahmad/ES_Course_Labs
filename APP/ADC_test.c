@@ -1,5 +1,5 @@
 
-#include "../MCAL/ADC/ADC_interface.h"
+#include "../MCAL/ADC/ADC_Interface.h"
 #include "../MCAL/USART/USART_Interface.h"
 
 void APP_Test_ADC(void)

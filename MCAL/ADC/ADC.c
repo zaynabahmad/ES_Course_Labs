@@ -1,8 +1,8 @@
 #include "../../SERVICES/STD_TYPES.h"
 #include "../../SERVICES/BIT_MATH.h"
-#include "ADC_interface.h"
-#include "ADC_private.h"
-#include "ADC_config.h"
+#include "ADC_Interface.h"
+#include "ADC_Private.h"
+#include "ADC_Config.h"
 
 void ADC_voidInit(void)
 {

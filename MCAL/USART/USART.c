@@ -1,4 +1,9 @@
+
+#include "../../SERVICES/STD_TYPES.h"
+#include "../../SERVICES/BIT_MATH.h"
 #include "USART_Interface.h"
+#include "USART_Private.h"
+#include "USART_Config.h"
 
 
 /* =================================
