@@ -3,13 +3,7 @@
 
 #include "../../SERVICES/STD_TYPES.h"
 #include "../GPIO/GPIO_interface.h"
-#include "../../SERVICES/BIT_MATH.h"
 #include "EXT_INT_Config.h"
-
-
-#define GIE_BIT      7
-#define INTE_BIT     4
-#define INTF_BIT     1
 
 #define rising_edge   1
 #define falling_edge  0

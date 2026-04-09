@@ -1,7 +1,8 @@
 #include "EXT_INT_interface.h"
 #include "EXT_INT_Private.h"
+#include "../../SERVICES/BIT_MATH.h"
 
-static void (*EXT_INT_Callback)(void) = 0;  /* static - not accessible outside */
+static void (*EXT_INT_Callback)(void) = 0;
 
 void EXT_INT_Init(void)
 {
@@ -9,6 +10,7 @@ void EXT_INT_Init(void)
     EXT_INT_SetEdge(falling_edge);
     CLR_BIT(INTCON, INTF_BIT);
     CLR_BIT(INTCON, INTE_BIT);
+    CLR_BIT(OPTION_REG, 7);  // Enable PORTB pull-ups (RBPU=0)
 }
 
 void EXT_INT_Enable(void)

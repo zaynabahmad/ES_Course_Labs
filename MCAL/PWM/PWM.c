@@ -61,21 +61,19 @@ void PWM_SetDutyCycle(u8 Channel, u8 DutyCycle)
 {
     u16 pwm_value;
 
-    /* Clamp duty cycle between 0 and 100 */
     if (DutyCycle > 100)
         DutyCycle = 100;
 
-    /* Calculate PWM value (16-bit) */
-    /* PWM = DutyCycle% * (PR2 + 1) * 4 */
+    // Calculate PWM value (16-bit): DutyCycle% * (PR2 + 1) * 4
     pwm_value = ((u32)DutyCycle * (pwm_period + 1) * 4) / 100;
 
     if (Channel == PWM_CHANNEL_1) {
-        CCPR1L = pwm_value >> 2;      /* Upper 8 bits */
-        CCPR1H = (pwm_value & 0x03) << 4;  /* Lower 2 bits shifted to bits 7-6 */
+        CCPR1L = pwm_value >> 2;      // Upper 8 bits
+        CCP1CON = (CCP1CON & 0xCF) | ((pwm_value & 0x03) << 4); // Lower 2 bits -> CCP1CON<5:4>
     }
     else if (Channel == PWM_CHANNEL_2) {
-        CCPR2L = pwm_value >> 2;      /* Upper 8 bits */
-        CCPR2H = (pwm_value & 0x03) << 4;  /* Lower 2 bits shifted to bits 7-6 */
+        CCPR2L = pwm_value >> 2;      // Upper 8 bits
+        CCP2CON = (CCP2CON & 0xCF) | ((pwm_value & 0x03) << 4); // Lower 2 bits -> CCP2CON<5:4>
     }
 }
 

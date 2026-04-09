@@ -3,6 +3,11 @@
 #include "../../MCAL/GPIO/GPIO_interface.h"
 #include "../../MCAL/PWM/PWM_interface.h"
 
+static u8 motor_port;
+static u8 motor_pin1;
+static u8 motor_pin2;
+static u8 motor_pwm_channel;
+
 void MOTOR_Init(u8 Port, u8 Pin1, u8 Pin2, u8 PWMChannel)
 {
     motor_port = Port;

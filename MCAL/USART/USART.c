@@ -11,7 +11,7 @@ void UART_RX_Init(void)
     CLR_BIT(TXSTA, SYNC);
     SET_BIT(RCSTA, SPEN);
 
-    GPIO_SetPinDirection(GPIO_PORTC, GPIO_PIN6, GPIO_INPUT);  // RC6/TX
+    GPIO_SetPinDirection(GPIO_PORTC, GPIO_PIN6, GPIO_OUTPUT);  // RC6/TX
     GPIO_SetPinDirection(GPIO_PORTC, GPIO_PIN7, GPIO_INPUT);  // RC7/RX
 
     SET_BIT(RCSTA, CREN);
@@ -27,7 +27,7 @@ void UART_TX_Init(void)
     CLR_BIT(TXSTA, SYNC);
     SET_BIT(RCSTA, SPEN);
 
-    GPIO_SetPinDirection(GPIO_PORTC, GPIO_PIN6, GPIO_INPUT);  // RC6/TX
+    GPIO_SetPinDirection(GPIO_PORTC, GPIO_PIN6, GPIO_OUTPUT);  // RC6/TX
     GPIO_SetPinDirection(GPIO_PORTC, GPIO_PIN7, GPIO_INPUT);  // RC7/RX
 
     SET_BIT(TXSTA, TXEN);
