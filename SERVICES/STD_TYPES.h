@@ -10,7 +10,7 @@ typedef signed long int      s32;
 typedef float                f32;
 typedef double               f64;
 typedef long double          f128;
-typedef unsigned char        bool;
+//typedef unsigned char        bool;
 
 #define NULL                 ((void*)0)
 #define NULL_PTR             ((void*)0)
