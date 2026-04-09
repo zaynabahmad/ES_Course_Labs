@@ -5,7 +5,7 @@
 void TIMER_INT(void);
 void TIMER_RESET(void);
 void TIMER_SetCallback(void (*ptr)(void));
-void TIMER_SetCallback2(void (*ptr) (void));
+
 
 
 

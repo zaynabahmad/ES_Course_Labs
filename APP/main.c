@@ -14,6 +14,7 @@
 
 
 
+
 void delay(void)
 {
     unsigned int i;
@@ -92,12 +93,18 @@ void main()
     LED_Init(GPIO_PORTA, GPIO_PIN4);*/
 
     
-    LED_Init(GPIO_PORTB, GPIO_PIN1);
+    /*LED_Init(GPIO_PORTB, GPIO_PIN1);
     LED_Init(GPIO_PORTB, GPIO_PIN2);
     
     TIMER_INT();
-    TIMER_SetCallback(ButtonPressedCallback);
-    TIMER_SetCallback2(ButtonPressedCallback2);
+    TIMER_SetCallback(ButtonPressedCallback); */
+    
+    
+    // APP_voidPWMTest();
+    // APP_voidADCTest();
+    // APP_voidI2CTest();
+    // APP_voidSPITest();
+
 
 
 

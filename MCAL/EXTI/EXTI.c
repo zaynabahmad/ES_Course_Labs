@@ -47,13 +47,13 @@ void EXT_INT0_SetEdge(u8 edge_type)
 
 
 
-/* static void (*EXT_INT0_Callback)(void) = 0;
+void (*EXTI_Callback)(void) = 0;
 
 void EXT_INT0_SetCallback(void (*ptr)(void))
 {
-    EXT_INT0_Callback = ptr;
+    EXTI_Callback = ptr;
 }
-static void (*TIMER_Callback)(void) = 0;
+/* static void (*TIMER_Callback)(void) = 0;
 
 void TIMER_SetCallback(void (*ptr)(void))
 {

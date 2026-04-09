@@ -1,8 +1,5 @@
 main
-	LED_Init
-		GPIO_SetPinDirection
-	TIMER_INT
-	TIMER_SetCallback
-	TIMER_SetCallback2
 interrupt
+	UART_ISR
+		____DoIFC
 	____DoIFC
