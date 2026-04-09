@@ -1,59 +1,25 @@
-#include "../SERVICES/STD_TYPES.h"
-#include "../SERVICES/BIT_MATH.h"
-#include "../HAL/LED/LED_interface.h"
-#include "../MCAL/GPIO/GPIO_interface.h"
-#include "../MCAL/USART/USART_Interface.h"
-#include "../MCAL/EXT_INT/EXT_INT_Interface.h"
+/* Application Layer */
+/* This file calls the test functions for all implemented drivers as per assignment requirements */
 
+extern void TIMER0_Test(void);
+extern void PWM_Test(void);
+extern void ADC_Test(void);
+extern void UART_Test(void);
+extern void SPI_Test(void);
+extern void I2C_Test(void);
 
-#define MOTOR_PORT GPIO_PORTC
-#define MOTOR_PIN1  GPIO_PIN0
-#define MOTOR_PIN2  GPIO_PIN2
+int main(void) {
+  
+    TIMER0_Test();
+    PWM_Test();
+    ADC_Test();
+    UART_Test();
+    SPI_Test();
+    I2C_Test();
 
-#define LED_PORT   GPIO_PORTC
-#define LED_PIN    GPIO_PIN1
-
-//u8 USART_data = 0;
-void Bluetooth_UART_Callback(u8 UART_data)
-{
-     //UART_Write(UART_data);
-    if (UART_data == 'f')  // forward
-    {
-        GPIO_SetPinValue(MOTOR_PORT, MOTOR_PIN1, GPIO_HIGH);
-        GPIO_SetPinValue(MOTOR_PORT, MOTOR_PIN2, GPIO_LOW);
-        GPIO_SetPinValue(LED_PORT, LED_PIN, GPIO_HIGH);
-    }
-    else if (UART_data == 's') // stop
-    {
-        GPIO_SetPinValue(MOTOR_PORT, MOTOR_PIN1, GPIO_LOW);
-        GPIO_SetPinValue(MOTOR_PORT, MOTOR_PIN2, GPIO_LOW);
-        GPIO_SetPinValue(LED_PORT, LED_PIN, GPIO_LOW);
+    while (1) {
+       
     }
     
-
-}
-
-int main(void)
-{
-    // Initialize GPIOs
-    GPIO_Init();
-    GPIO_SetPinDirection(MOTOR_PORT, MOTOR_PIN1, GPIO_OUTPUT);
-    GPIO_SetPinDirection(MOTOR_PORT, MOTOR_PIN2, GPIO_OUTPUT);
-    GPIO_SetPinDirection(LED_PORT, LED_PIN, GPIO_OUTPUT);
-
-    // Initialize UART
-    UART_RX_Init();
-    UART_TX_Init();
-    //UART_Write('A');  // write  A  to the  Virtual Terminal
-
-
-    // Set UART callback
-    UART_SetCallback(Bluetooth_UART_Callback);
-
-    while(1)
-    {
-        // main loop can be empty because interrupts handle everything
-    }
-
     return 0;
 }
