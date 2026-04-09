@@ -1,0 +1,10 @@
+#ifndef TIMER0_CONFIG_H
+#define TIMER0_CONFIG_H
+
+#define TIMER0_CLK_SRC      TIMER0_INTERNAL_CLK
+
+#define TIMER0_PRESCALER     TIMER0_PRESCALER_8
+
+#define TIMER0_PRELOAD       0
+
+#endif
