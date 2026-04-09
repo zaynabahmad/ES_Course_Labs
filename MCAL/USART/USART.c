@@ -1,130 +1,126 @@
 #include "USART_Interface.h"
+#include "USART_Private.h"
+#include "USART_Config.h"
 
+#include "../../SERVICES/BIT_MATH.h"
 
-/* =================================
-   Global Pointer To Callback
-================================= */
-
-void (*UART_Callback)(u8) = 0;
-
-/* =================================
-   RX Initialization
-================================= */
+/* Global Pointer To Callback Function */
+void (*UART_Callback)(u8) = NULL;
 
 void UART_RX_Init(void)
 {
+    /* Set Baud Rate using the calculated value */
+    SPBRG = SPBRG_VALUE;
 
-    SET_BIT(TXSTA , BRGH);      // High Speed Mode
+    /* Set Speed Mode */
+    #if UART_HIGH_SPEED == 1
+        SET_BIT(TXSTA, BRGH_BIT);
+    #else
+        CLR_BIT(TXSTA, BRGH_BIT);
+    #endif
 
-    SPBRG = 25;                 // 9600 Baud
+    /* Set Asynchronous Mode */
+    CLR_BIT(TXSTA, SYNC_BIT);
 
-    CLR_BIT(TXSTA , SYNC);      // Asynchronous Mode
+    /* Enable Serial Port */
+    SET_BIT(RCSTA, SPEN_BIT);
 
-    SET_BIT(RCSTA , SPEN);      // Enable Serial Port
+    /* Enable Continuous Receive */
+    SET_BIT(RCSTA, CREN_BIT);
 
-    SET_BIT(RCSTA , CREN);      // Continuous Receive
+    /* Enable UART RX Interrupt */
+    SET_BIT(PIE1, RCIE_BIT);
 
-    SET_BIT(PIE1 , RCIE);       // Enable UART RX Interrupt
+    /* Enable Peripheral Interrupt */
+    SET_BIT(INTCON, PEIE_BIT);
 
-    SET_BIT(INTCON , PEIE);     // Peripheral Interrupt Enable
-    SET_BIT(INTCON , GIE);      // Global Interrupt Enable
+    /* Enable Global Interrupt */
+    SET_BIT(INTCON, GIE_BIT);
 }
-
-/* =================================
-   TX Initialization
-================================= */
 
 void UART_TX_Init(void)
 {
+    /* Set Baud Rate using the calculated value */
+    SPBRG = SPBRG_VALUE;
 
-    SET_BIT(TXSTA , BRGH);      // High Speed
+    /* Set Speed Mode */
+    #if UART_HIGH_SPEED == 1
+        SET_BIT(TXSTA, BRGH_BIT);
+    #else
+        CLR_BIT(TXSTA, BRGH_BIT);
+    #endif
 
-    SPBRG = 25;                 // Baud Rate
+    /* Set Asynchronous Mode */
+    CLR_BIT(TXSTA, SYNC_BIT);
+    
+    /* Enable Serial Port */
+    SET_BIT(RCSTA, SPEN_BIT);
 
-    CLR_BIT(TXSTA , SYNC);      // Asynchronous Mode
-
-    SET_BIT(RCSTA , SPEN);      // Enable Serial Port
-
-    SET_BIT(TXSTA , TXEN);      // Enable Transmission
+    /* Enable Transmission */
+    SET_BIT(TXSTA, TXEN_BIT);
 }
-
-/* =================================
-   Send Byte
-================================= */
 
 void UART_Write(u8 Data)
 {
-
-    while(!GET_BIT(TXSTA , TRMT));   // Wait until TX empty
-
+    /* Wait until the Transmit Shift Register is empty */
+    while(!GET_BIT(TXSTA, TRMT_BIT));
+    
+    /* Send the data byte */
     TXREG = Data;
 }
 
-/* =================================
-   Receive Byte (Polling)
-================================= */
-
 u8 UART_Read(void)
 {
+    /* Wait until data is received and the buffer is full */
+    while(!GET_BIT(PIR1, RCIF_BIT));
 
-    while(!GET_BIT(PIR1 , RCIF));    // Wait for data
-
+    /* Return the received data */
     return RCREG;
 }
 
-/* =================================
-   TX Buffer Status
-================================= */
-
 u8 UART_TX_Empty(void)
 {
-
-    return GET_BIT(TXSTA , TRMT);
+    return GET_BIT(TXSTA, TRMT_BIT);
 }
-
-/* =================================
-   Callback Setter
-================================= */
 
 void UART_SetCallback(void (*Callback)(u8))
 {
-
-    if(Callback != 0)
+    if(Callback != NULL)
     {
         UART_Callback = Callback;
     }
+}
 
+void UART_SendString(char* str)
+{
+    u8 i = 0;
+    while(str[i] != '\0')
+    {
+        UART_Write(str[i]);
+        i++;
+    }
+}
+
+void UART_SendNumber(s32 num)
+{
+    char str[13]; // Buffer for up to 10 digits + sign
+    
+    /* mikroC has a built-in function to convert Long to String */
+    LongToStr(num, str);
+    
+    /* The LongToStr often adds spaces at the start, 
+       we send the whole converted string. */
+    UART_SendString(str);
 }
 
 void UART_ISR(void)
 {
+    /* Reading RCREG automatically clears the RCIF flag */
+    u8 uart_data = RCREG;
 
-    u8 UART_data = RCREG;   //
-    if(UART_Callback != 0)
+    /* Execute the callback if it is registered */
+    if(UART_Callback != NULL)
     {
-        UART_Callback(UART_data);   //
+        UART_Callback(uart_data);
     }
-
 }
-
-
-/* =================================
-   ISR Handler
-================================= */
-
-/*
-void interrupt()
-{
-
-   if(GET_BIT(PIR1 , RCIF))
-    {
-
-        if(UART_Callback != 0)
-        {
-            UART_Callback();   // Call user function
-        }
-
-    }
-
-}
-  */
