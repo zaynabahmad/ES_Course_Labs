@@ -1,3 +1,6 @@
+#ifndef __XC8
+#define __interrupt()
+#endif
 #include "../../SERVICES/STD_TYPES.h"
 #include "../../SERVICES/BIT_MATH.h"
 #include "../GPIO/GPIO_interface.h"
