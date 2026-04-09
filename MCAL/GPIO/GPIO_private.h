@@ -1,18 +1,24 @@
 #ifndef GPIO_PRIVATE_H
 #define GPIO_PRIVATE_H
 
-/* Register Definitions for PIC16F877A */
+// PORTA Registers
+#define DDRA   (*(volatile unsigned char*)0x3A)
+#define PORTA  (*(volatile unsigned char*)0x3B)
+#define PINA   (*(volatile unsigned char*)0x39)
 
-#define TRISA   (*((volatile u8*)0x85))
-#define TRISB   (*((volatile u8*)0x86))
-#define TRISC   (*((volatile u8*)0x87))
-#define TRISD   (*((volatile u8*)0x88))
-#define TRISE   (*((volatile u8*)0x89))
+// PORTB Registers
+#define DDRB   (*(volatile unsigned char*)0x37)
+#define PORTB  (*(volatile unsigned char*)0x38)
+#define PINB   (*(volatile unsigned char*)0x36)
 
-#define PORTA   (*((volatile u8*)0x05))
-#define PORTB   (*((volatile u8*)0x06))
-#define PORTC   (*((volatile u8*)0x07))
-#define PORTD   (*((volatile u8*)0x08))
-#define PORTE   (*((volatile u8*)0x09))
+// PORTC Registers
+#define DDRC   (*(volatile unsigned char*)0x34)
+#define PORTC  (*(volatile unsigned char*)0x35)
+#define PINC   (*(volatile unsigned char*)0x33)
+
+// PORTD Registers
+#define DDRD   (*(volatile unsigned char*)0x31)
+#define PORTD  (*(volatile unsigned char*)0x32)
+#define PIND   (*(volatile unsigned char*)0x30)
 
 #endif
