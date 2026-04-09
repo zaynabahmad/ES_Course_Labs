@@ -1,27 +1,18 @@
-/*
-* APPLICATION LAYER
+#include "timer0_test.h"
+#include "pwm_test.h"
+#include "adc_uart_test.h"
+#include "spi_test.h"
+#include "i2c_test.h"
+#include "gpio_test.h"
 
-
-*/
-#include "../HAL/LED/LED_interface.h"
-#include "../MCAL/GPIO/GPIO_interface.h"
-
-void delay(void)
+void main(void)
 {
-    unsigned int i;
-    for(i = 0; i < 50000; i++);
-}
+     GPIO_TEST_Run();      // LED sequence with switches
+    // TIMER0_TEST_Run();    // 1-second LED toggle using Timer0 interrupt
+    // PWM_TEST_Run();       // motor speed control with button (INT0)
+    // ADC_UART_TEST_Run();  // LM35 temperature reading via UART
+     //SPI_TEST_Run();       // loopback test
+     //I2C_TEST_Run();       // EEPROM write/read
 
-void main()
-{
-    LED_Init(GPIO_PORTB, GPIO_PIN0);
-
-    while(1)
-    {
-        LED_On(GPIO_PORTB, GPIO_PIN0);
-        delay();
-
-        LED_Off(GPIO_PORTB, GPIO_PIN0);
-        delay();
-    }
+    while (1);
 }
