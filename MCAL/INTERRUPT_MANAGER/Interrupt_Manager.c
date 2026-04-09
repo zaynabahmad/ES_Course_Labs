@@ -1,5 +1,5 @@
-#include "../USART/USART_interface.h"
-#include "../EXT_INT/EXT_INT_interface.h"
+#include "../USART/USART_Interface.h"
+#include "../EXT_INT/EXT_INT_Interface.h"
 #include "../../SERVICES/BIT_MATH.h"
 
 extern void (*EXT_INT_Callback)(void);
