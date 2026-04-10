@@ -1,9 +1,29 @@
-# MikroC build files
+# === XC8 Compiler Artifacts ===
+*.hex
+*.cmf
+*.elf
+*.hxl
+*.lst
+*.map
+*.o
+*.p1
+*.srl
+*.sym
+*.d
+*.i
+*.pre
+*.as
+
+# === Proteus Simulation & Backup Files ===
+*.pdsbak
+*.pdsprj.bak
+*.txt
+Last\ Loaded\ *
+
+# === Old MikroC artifacts (Keeping for safety) ===
 *.asm
 *.cp
 *.mcl
-*.hex
-*.lst
 *.log
 *.bmk
 *.dct
@@ -15,6 +35,9 @@
 *.callertable.txt
 *.ini
 
-# OS files
+# === Local Device Family Pack (The DFP folder we created) ===
+DFP/
+
+# === OS junk ===
 .DS_Store
-Thumbs.db
+Thumbs.db/
