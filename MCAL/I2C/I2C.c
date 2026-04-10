@@ -8,9 +8,7 @@ void I2C_Wait() {
     ;
 }
 
-void I2C_Master_Init(u8 BaudRate)
-
-{
+void I2C_Master_Init(u8 BaudRate) {
 
   SSPCON = 0x28;
 
@@ -22,6 +20,26 @@ void I2C_Master_Init(u8 BaudRate)
 
   GPIO_SetPinDirection(I2C_PORT, I2C_SDA_PIN, GPIO_INPUT);
   GPIO_SetPinDirection(I2C_PORT, I2C_SCL_PIN, GPIO_INPUT);
+}
+
+void I2C_Slave_Init(void) {
+  GPIO_SetPinDirection(I2C_PORT, I2C_SDA_PIN, GPIO_INPUT);
+  GPIO_SetPinDirection(I2C_PORT, I2C_SCL_PIN, GPIO_INPUT);
+
+  SSPADD = Address; // Set I2C Device Address
+
+  SSPSTAT = 0x80; // Disable Slew Rate Control (Standard Mode)
+
+  SSPCON = 0x36; // Select & Enable I2C (Slave Mode)
+
+  SSPCON2 = 0x01; // Enable Clock Stretching
+
+  CLR_BIT(PIR1, SSPIF_BIT); // Enable Interrupts
+
+  SET_BIT(PIE1, SSPIE_BIT);
+
+  SET_BIT(INTCON, PEIE_BIT);
+  SET_BIT(INTCON, GIE_BIT);
 }
 void I2C_Start()
 
@@ -114,4 +132,6 @@ void I2C_ISR(void) {
   if (I2C_Callback != 0) {
     I2C_Callback(I2C_data); //
   }
+  SET_BIT(SSPCON, CKP_BIT);
+  CLR_BIT(PIR1, SSPIF_BIT);
 }

@@ -8,9 +8,18 @@
 #include "I2C_Private.h"
 
 #define _XTAL_FREQ 8e6
+#define Address 00000000
+
+// PIR, PIE, INTCON
+#define GIE_BIT 7
+#define PEIE_BIT 6
+
+#define SSPIF_BIT 3
+#define SSPIE_BIT 3
 
 // SSPCON
 #define SSPEN_BIT 5
+#define CKP_BIT 4
 #define SSPM3_BIT 3
 #define SSPM2_BIT 2
 #define SSPM1_BIT 1
@@ -32,9 +41,6 @@
 #define GIE_BIT 7
 #define INTE_BIT 4
 #define INTF_BIT 1
-
-// SSPCON
-#define SSPIF_BIT 3
 
 void I2C_Wait(void);
 void I2C_Master_Init(u8 BaudRate);
