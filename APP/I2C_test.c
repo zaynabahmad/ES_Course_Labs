@@ -21,3 +21,9 @@ void APP_I2C_Test(void) {
         Delay_ms(1000);
     }
 }
+#ifndef Delay_ms
+  #define Delay_ms(x)  // Dummy macro for GCC syntax check
+#endif
+#ifndef Delay_us
+  #define Delay_us(x)  // Dummy macro for GCC syntax check
+#endif
