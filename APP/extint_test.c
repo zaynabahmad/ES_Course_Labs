@@ -1,7 +1,7 @@
 // ES_Drivers/APP/extint_test.c
 #include "ISR_Actions.h"
 #include "../HAL/LED/LED_interface.h"
-#include "../MCAL/EXT_INT0/EXT_INT0_interface.h"
+#include "../MCAL/EXT_INT/EXT_INT_interface.h"
 #include "extint_test.h"
 
 void App_ToggleLed(void)
