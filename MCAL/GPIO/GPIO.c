@@ -4,7 +4,6 @@
 
 #include "../../SERVICES/BIT_MATH.h"
 
-
 void GPIO_SetPinDirection(u8 Port, u8 Pin, u8 Direction)
 {
     switch(Port)

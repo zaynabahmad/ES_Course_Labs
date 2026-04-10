@@ -10,7 +10,7 @@
 #define RCREG   (*(volatile unsigned char*)0x1A)
 #define PIR1    (*(volatile unsigned char*)0x0C)
 #define PIE1    (*(volatile unsigned char*)0x8C)
-//#define INTCON  (*(volatile unsigned char*)0x0B)
+#define INTCON  (*(volatile unsigned char*)0x0B)
 
 /* ================= TXSTA Bits ================= */
 

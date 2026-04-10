@@ -8,7 +8,7 @@ typedef signed long int    s32;
 
 /* Unsigned Types */
 typedef unsigned char        u8;
-typedef unsigned short int   u16;
+typedef unsigned int    u16;  
 typedef unsigned long int    u32;
 
 /* Floating Types */
@@ -18,5 +18,9 @@ typedef long double f128;
 
 /* Standard Values */
 #define NULL_PTR   ((void*)0)
+
+/* Delay Functions Prototypes */
+void Delay_ms(u32 ms);
+void Delay_us(u32 us);
 
 #endif

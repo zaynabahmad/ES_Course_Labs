@@ -1,0 +1,8 @@
+#ifndef UART_CONFIG_H
+#define UART_CONFIG_H
+
+#define UART_BAUD_RATE       9600U
+#define UART_XTAL_FREQ       8000000UL
+#define UART_SPBRG_VALUE     ((UART_XTAL_FREQ / (64UL * UART_BAUD_RATE)) - 1U)
+
+#endif
