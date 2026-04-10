@@ -1,8 +1,8 @@
 // ES_Drivers/MCAL/INTERRUPT_MANAGER/Interrupt_Manager.c
 #include "../../SERVICES/BIT_MATH.h"
 #include "../../SERVICES/STD_TYPES.h"
-#include "../EXT_INT0/EXT_INT0_private.h"   // for INTCON register
-#include "../TIMER0/TIMER0_interface.h"      // for TMR0IF, TMR0 
+#include "../MCAL/EXT_INT/EXT_INT_interface.h"
+#include "../MCAL/TIMER_0/TIMER_0_interface.h"
 #include "../USART/USART_Private.h"          // for PIR1, RCREG, RCIF
 #include "../../APP/ISR_Actions.h"
 
