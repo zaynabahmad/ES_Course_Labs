@@ -1,0 +1,23 @@
+main
+	__CC2DW
+		____DoICP
+	SWITCH_Init
+		GPIO_SetPinDirection
+	EXT_INT_SetCallback
+	EXT_INT_Init
+		GPIO_SetPinDirection
+		EXT_INT_SetEdge
+	EXT_INT_Enable
+	LED_Toggle
+		GPIO_GetPinValue
+		GPIO_SetPinValue
+	LED_On
+		GPIO_SetPinValue
+	delay
+	LED_Off
+		GPIO_SetPinValue
+interrupt
+	UART_ISR
+		____DoIFC
+	EXT_INT_ISR
+		____DoIFC
