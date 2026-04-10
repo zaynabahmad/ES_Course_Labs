@@ -1,0 +1,15 @@
+main
+	__CC2DW
+		____DoICP
+	UART_TX_Init
+	UART_RX_Init
+	UART_SetCallback
+	UART_WriteString
+		UART_Write
+interrupt
+	TIMER0_ISR
+		____DoIFC
+	EXT_INT_ISR
+		____DoIFC
+	UART_ISR
+		____DoIFC

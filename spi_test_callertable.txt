@@ -1,0 +1,14 @@
+main
+	SetPortDirection
+	SetPinDirection
+	SPI_Init
+	SetPinValue
+	SPI_Transfer
+	SetPortValue
+interrupt
+	TIMER0_ISR
+		____DoIFC
+	EXT_INT_ISR
+		____DoIFC
+	UART_ISR
+		____DoIFC

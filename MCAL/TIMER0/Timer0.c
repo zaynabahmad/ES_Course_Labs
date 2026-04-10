@@ -26,6 +26,9 @@ void TMR0_Enable(void) {
 void TMR0_Disable(void) {
         CLR_BIT(INTCON, TMR0IE);
 }
+void TMR0_Reset(void) {
+     TMR0 = 0;
+}
 void TMR0_SetInterval_s(u8 seconds) {
     u32 total_ticks = seconds * 7812;
     u8 remainder = total_ticks % 256;
@@ -38,7 +41,7 @@ void TMR0_SetCallback(void (*ptr)(void)) {
                 TMR0_Callback = ptr;
         }
 }
-void TMR0_ISR_Handler(void) {
+void TIMER0_ISR(void) {
         current_overflows++;
         
     if (current_overflows == overflows_needed) {

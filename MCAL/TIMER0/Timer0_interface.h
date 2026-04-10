@@ -6,9 +6,10 @@
 void TMR0_Init(void);
 void TMR0_Enable(void);
 void TMR0_Disable(void);
+void TMR0_Reset(void);
 void TMR0_SetInterval_s(u8 seconds);
 void TMR0_SetCallback(void (*ptr)(void));
-void TMR0_ISR_Handler(void);
+void TIMER0_ISR(void);
 
 
 

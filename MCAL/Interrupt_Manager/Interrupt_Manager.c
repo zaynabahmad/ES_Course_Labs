@@ -1,13 +1,28 @@
-#include "../EXTINT/EXTINT_interface.h"
-#include "../TIMER0/Timer0_interface.h"
-#include "../MCU_Registers.h"
-#include "../../SERVICES/BIT_MATH.h"
+#include "Interrupt_Manager_Interface.h"
 
-void interrupt() {
-        if (GET_BIT(INTCON, INTF)) {
-                EXT_INT_ISR_Handler();
-        }
-        else if (GET_BIT(INTCON, TMR0IF) == 1) {
-                TMR0_ISR_Handler();
-        }
+void interrupt()
+{
+    /* Timer0 Overflow Interrupt */
+    #if INT_MGR_TIMER0_EN == 1
+    if(GET_BIT(INTCON, T0IE_BIT) && GET_BIT(INTCON, T0IF_BIT))
+    {
+        TIMER0_ISR();
+    }
+    #endif
+
+    /* External Interrupt (RB0/INT) */
+    #if INT_MGR_EXT_INT_EN == 1
+    if(GET_BIT(INTCON, INTE_BIT) && GET_BIT(INTCON, INTF_BIT))
+    {
+        EXT_INT_ISR();
+    }
+    #endif
+
+    /* UART Receive Interrupt */
+    #if INT_MGR_UART_RX_EN == 1
+    if(GET_BIT(PIR1, RCIF_BIT))
+    {
+        UART_ISR();
+    }
+    #endif
 }

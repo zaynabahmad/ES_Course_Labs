@@ -12,7 +12,6 @@ void EXT_INT_Init(void) {
         SET_BIT(OPTION_REG, INTEDG);
 }
 void EXT_INT_Enable(void) {
-        SET_BIT(INTCON, GIE);
         SET_BIT(INTCON, INTE);
 }
 void EXT_INT_Disable(void) {
@@ -28,7 +27,7 @@ void EXT_INT_SetEdge(u8 type) {
 void EXT_INT_SetCallback(void (*ptr)(void)) {
         EXT_INT_Callback = ptr;
 }
-void EXT_INT_ISR_Handler(void) {
+void EXT_INT_ISR(void) {
         if (EXT_INT_Callback != 0) {
                 EXT_INT_Callback();
         }
