@@ -1,0 +1,12 @@
+#ifndef SPI_CONFIG_H
+#define SPI_CONFIG_H
+
+#define SS_PORT GPIO_PORTA
+#define SS_PIN GPIO_PIN5
+
+#define SPI_PORT GPIO_PORTC
+#define SPI_SDO_PIN GPIO_PIN5
+#define SPI_SDI_PIN GPIO_PIN4
+#define SPI_SCK_PIN GPIO_PIN3
+
+#endif

@@ -1,0 +1,8 @@
+#ifndef I2C_CONFIG_H
+#define I2C_CONFIG_H
+
+#define I2C_PORT GPIO_PORTC
+#define I2C_SCL_PIN GPIO_PIN3
+#define I2C_SDA_PIN GPIO_PIN4
+
+#endif
