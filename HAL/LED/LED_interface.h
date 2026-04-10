@@ -1,15 +1,15 @@
 #ifndef LED_INTERFACE_H
 #define LED_INTERFACE_H
 
-#include "../../SERVICES/STD_TYPES.h"
 
-/* LED States */
-#define LED_OFF    0
-#define LED_ON     1
+#include "../../SERVICES/std_types.h"
 
-void LED_Init(u8 Port, u8 Pin);
-void LED_On(u8 Port, u8 Pin);
-void LED_Off(u8 Port, u8 Pin);
-void LED_Toggle(u8 Port, u8 Pin);
+#define LED0    0
+#define LED1    1
+
+void LED_voidInit(u8 copy_u8Led);
+void LED_voidOn(u8 copy_u8Led);
+void LED_voidOff(u8 copy_u8Led);
+void LED_voidToggle(u8 copy_u8Led);
 
 #endif

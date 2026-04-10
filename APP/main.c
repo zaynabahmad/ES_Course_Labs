@@ -1,59 +1,68 @@
-#include "../SERVICES/STD_TYPES.h"
-#include "../SERVICES/BIT_MATH.h"
-#include "../HAL/LED/LED_interface.h"
-#include "../MCAL/GPIO/GPIO_interface.h"
-#include "../MCAL/USART/USART_Interface.h"
-#include "../MCAL/EXT_INT/EXT_INT_Interface.h"
+/*
+ * ----------------------- TEST SUMMARY -----------------------------------------
+ * Press a number on your UART terminal to run the corresponding driver test:
+ * 1. GPIO_test:   Blinks an LED every 500ms to verify Pin Output logic.
+ * 2. EXTI_test:   Toggles an LED using the External Interrupt (RB0/INT0) flag.
+ * 3. TIMER0_test: Uses Timer0 overflow to toggle an LED at precise intervals.
+ * 4. PWM_test:    Fades an LED on RC2 (CCP1) from 0% to 100% duty cycle.
+ * 5. ADC_test:    Reads Analog input; turns LED ON if voltage is > 2.5V (512).
+ * 6. UART_test:   Sends "UART Ready" and echoes back any received characters.
+ * 7. SPI_test:    Transmits a fixed character ('A') via the SPI Master lines.
+ * 8. I2C_test:    Sends an I2C Start condition and a dummy Slave Address (0xA0).
+ * ------------------------------------------------------------------------------
+ */
 
 
-#define MOTOR_PORT GPIO_PORTC
-#define MOTOR_PIN1  GPIO_PIN0
-#define MOTOR_PIN2  GPIO_PIN2
+#include "../SERVICES/std_types.h"
+#include "../SERVICES/bit_math.h"
 
-#define LED_PORT   GPIO_PORTC
-#define LED_PIN    GPIO_PIN1
+/* Include the UART interface to handle the Menu Selection */
+#include "../MCAL/UART/UART_interface.h"
 
-//u8 USART_data = 0;
-void Bluetooth_UART_Callback(u8 UART_data)
-{
-     //UART_Write(UART_data);
-    if (UART_data == 'f')  // forward
-    {
-        GPIO_SetPinValue(MOTOR_PORT, MOTOR_PIN1, GPIO_HIGH);
-        GPIO_SetPinValue(MOTOR_PORT, MOTOR_PIN2, GPIO_LOW);
-        GPIO_SetPinValue(LED_PORT, LED_PIN, GPIO_HIGH);
+/* Function Prototypes */
+void GPIO_test(void);
+void EXTI_test(void);
+void TIMER0_test(void);
+void PWM_test(void);
+void ADC_test(void);
+void UART_test(void);
+void SPI_test(void);
+void I2C_test(void);
+
+
+#pragma config FOSC = HS, WDTE = OFF, PWRTE = ON, BOREN = ON, LVP = OFF, CPD = OFF, WRT = OFF, CP = OFF
+
+void main(void) {
+    u8 Local_u8Choice = 0;
+
+    /* Initialize UART for the Interactive Menu */
+    UART_voidInit();
+
+    UART_voidSendString("\r\n--- PIC16F877A System Ready ---\r\n");
+    UART_voidSendString("Select Test: 1-GPIO, 2-EXTI, 3-TMR0, 4-PWM, 5-ADC, 6-UART, 7-SPI, 8-I2C\r\n");
+
+    while(1) {
+        /* Receive the user choice */
+        Local_u8Choice = UART_u8ReceiveData();
+
+        UART_voidSendString("\r\nStarting Test Selection...\r\n");
+
+        switch(Local_u8Choice) {
+            case '1': GPIO_test();   break;
+            case '2': EXTI_test();   break;
+            case '3': TIMER0_test(); break;
+            case '4': PWM_test();    break;
+            case '5': ADC_test();    break;
+            case '6': UART_test();   break;
+            case '7': SPI_test();    break;
+            case '8': I2C_test();    break;
+            default:  UART_voidSendString("Invalid input! Please press 1-8.\r\n"); break;
+        }
     }
-    else if (UART_data == 's') // stop
-    {
-        GPIO_SetPinValue(MOTOR_PORT, MOTOR_PIN1, GPIO_LOW);
-        GPIO_SetPinValue(MOTOR_PORT, MOTOR_PIN2, GPIO_LOW);
-        GPIO_SetPinValue(LED_PORT, LED_PIN, GPIO_LOW);
-    }
-    
-
 }
 
-int main(void)
-{
-    // Initialize GPIOs
-    GPIO_Init();
-    GPIO_SetPinDirection(MOTOR_PORT, MOTOR_PIN1, GPIO_OUTPUT);
-    GPIO_SetPinDirection(MOTOR_PORT, MOTOR_PIN2, GPIO_OUTPUT);
-    GPIO_SetPinDirection(LED_PORT, LED_PIN, GPIO_OUTPUT);
-
-    // Initialize UART
-    UART_RX_Init();
-    UART_TX_Init();
-    //UART_Write('A');  // write  A  to the  Virtual Terminal
-
-
-    // Set UART callback
-    UART_SetCallback(Bluetooth_UART_Callback);
-
-    while(1)
-    {
-        // main loop can be empty because interrupts handle everything
-    }
-
-    return 0;
-}
+/* * TEST INSTRUCTIONS:
+ * 1. Use UART at 9600 Baud (RC6=TX, RC7=RX).
+ * 2. Press keys 1-8 to run specific driver tests.
+ * 3. Reset the MCU to return to the menu and switch tests.
+ */
