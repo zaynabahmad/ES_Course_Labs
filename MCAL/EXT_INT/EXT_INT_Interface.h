@@ -16,8 +16,8 @@
 #define INTF_BIT 1
 /* Edge types */
 #define INTEDGE_BIT 6
-#define rising_edge 1
-#define falling_edge 0
+#define RISING_EDGE 1
+#define FALLING_EDGE 0
 
 void EXT_INT_Init(void);
 void EXT_INT_Enable(void);

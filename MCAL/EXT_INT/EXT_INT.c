@@ -1,4 +1,5 @@
-#include "EXT_INT_interface.h"
+#include "EXT_INT_Interface.h"
+#include "../../SERVICES/BIT_MATH.h"
 
 
 void EXT_INT_Init(void)
@@ -7,7 +8,7 @@ void EXT_INT_Init(void)
     GPIO_SetPinDirection(EXT_INT_PORT, EXT_INT_PIN, GPIO_INPUT);
 
     /* Configure the edge type for the external interrupt */
-    EXT_INT_SetEdge(falling_edge); // Default to falling edge, can be changed later
+    EXT_INT_SetEdge(FALLING_EDGE); // Default to falling edge, can be changed later
 
     /* Clear the interrupt flag */
     CLR_BIT(INTCON, INTF_BIT);
@@ -36,12 +37,12 @@ void EXT_INT_Disable(void)
 
 void EXT_INT_SetEdge(u8 Edgetype)
 {
-    if (Edgetype == rising_edge)
+    if (Edgetype == RISING_EDGE)
     {
         /* Configure for rising edge */
         CLR_BIT(OPTION_REG, INTEDGE_BIT); // INTEDG0 = 0 for rising edge
     }
-    else if (Edgetype == falling_edge)
+    else if (Edgetype == FALLING_EDGE)
     {
         /* Configure for falling edge */
         SET_BIT(OPTION_REG, INTEDGE_BIT); // INTEDG0 = 1 for falling edge
