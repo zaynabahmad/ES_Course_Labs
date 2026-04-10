@@ -15,7 +15,7 @@ The PIC16F877A shares hardware pins (RC3/RC4) for both I2C and SPI. To overcome 
 2.  **Runtime Phase:** The hardware is reconfigured for **SPI** to stream high-speed motor telemetry.
 
 ## 📺 Simulation Demo
-![System Demo](docs/simulation_demo.gif)
+![System Demo](Docs/simulation_demo.gif)
 
 ## 🕹 How to Test
 1. **Potentiometer (RA0):** Adjusts motor speed (PWM duty cycle on RC2).

@@ -35,6 +35,16 @@ Last\ Loaded\ *
 *.callertable.txt
 *.ini
 
+# Command line accidental files
+cls
+dir
+where
+xc8-cc
+temp.py
+combined_code.txt
+*.sdb
+*.zip
+
 # === Local Device Family Pack (The DFP folder we created) ===
 DFP/
 
