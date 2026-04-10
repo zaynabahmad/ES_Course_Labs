@@ -1,77 +1,57 @@
 #include "../SERVICES/STD_TYPES.h"
 #include "../MCAL/GPIO/GPIO_interface.h"
-#include "../HAL/LED/LED_interface.h"
-#include "../HAL/SWITCH/SWITCH_Interface.h"
+#include "../MCAL/PWM/PWM_interface.h"
+#include "../MCAL/ADC/ADC_interface.h"
+#include "../MCAL/SPI/SPI_interface.h"
+#include "../MCAL/I2C/I2C_interface.h"
+#include "../MCAL/USART/USART_Interface.h"
+#include "../MCAL/EXT_INT/EXT_INT_Interface.h"
 
-/* ── Pin assignment ─────────────────────────── */
-#define LED1_PORT GPIO_PORTA
-#define LED1_PIN GPIO_PIN0
+// Test Functions
+void GPIO_Test(void);
+void PWM_Test(void);
+void ADC_Test(void);
+void SPI_Test(void);
+void I2C_Test(void);
+void UART_Test(void);
+void TIMER0_Test(void);
+void EXT_INT_Test(void);
 
-#define LED2_PORT GPIO_PORTA
-#define LED2_PIN GPIO_PIN1
-
-#define SW1_PORT GPIO_PORTB /* short-sequence button */
-#define SW1_PIN GPIO_PIN1
-
-#define SW2_PORT GPIO_PORTB /* long-sequence button  */
-#define SW2_PIN GPIO_PIN2
-
-/* ── Timing ─────────────────────────────────── */
-#define SHORT_ON_MS 200
-#define SHORT_OFF_MS 200
-#define LONG_ON_MS 500
-#define LONG_OFF_MS 500
-
-/* ── Sequences ──────────────────────────────── */
-static void Short_Sequence(void)
+static void Run_All_Tests(void)
 {
-    LED_On(LED1_PORT, LED1_PIN);
-    LED_On(LED2_PORT, LED2_PIN);
-    Delay_ms(SHORT_ON_MS);
-    LED_Off(LED1_PORT, LED1_PIN);
-    LED_Off(LED2_PORT, LED2_PIN);
-    Delay_ms(SHORT_OFF_MS);
+    u32 i;
+
+    GPIO_Test();
+    for (i = 0; i < 100000; i++);
+
+    PWM_Test();
+    for (i = 0; i < 100000; i++);
+
+    ADC_Test();
+    for (i = 0; i < 100000; i++);
+
+    SPI_Test();
+    for (i = 0; i < 100000; i++);
+
+    I2C_Test();
+    for (i = 0; i < 100000; i++);
+
+    UART_Test();
+    for (i = 0; i < 100000; i++);
+
+    TIMER0_Test();
+    for (i = 0; i < 100000; i++);
+
+    EXT_INT_Test();
+    for (i = 0; i < 100000; i++);
 }
 
-static void Long_Sequence(void)
-{
-    LED_On(LED1_PORT, LED1_PIN);
-    LED_On(LED2_PORT, LED2_PIN);
-    Delay_ms(LONG_ON_MS);
-    LED_Off(LED1_PORT, LED1_PIN);
-    LED_Off(LED2_PORT, LED2_PIN);
-    Delay_ms(LONG_OFF_MS);
-}
-
-static void LEDs_Off(void)
-{
-    LED_Off(LED1_PORT, LED1_PIN);
-    LED_Off(LED2_PORT, LED2_PIN);
-}
-
-/* ── Main ───────────────────────────────────── */
 int main(void)
 {
     GPIO_Init();
+    Run_All_Tests();
 
-    LED_Init(LED1_PORT, LED1_PIN);
-    LED_Init(LED2_PORT, LED2_PIN);
-
-    SWITCH_Init(SW1_PORT, SW1_PIN);
-    SWITCH_Init(SW2_PORT, SW2_PIN);
-
-    while (1)
-    {
-        u8 sw1 = SWITCH_Read(SW1_PORT, SW1_PIN);
-        u8 sw2 = SWITCH_Read(SW2_PORT, SW2_PIN);
-
-        if (sw1 == SWITCH_PRESSED)
-            Short_Sequence();
-        else if (sw2 == SWITCH_PRESSED)
-            Long_Sequence();
-        else
-            LEDs_Off();
-    }
+    while (1);
 
     return 0;
 }
