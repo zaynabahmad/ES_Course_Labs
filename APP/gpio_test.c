@@ -7,7 +7,7 @@
 #define SWITCH1  GPIO_PIN3
 #define SWITCH2  GPIO_PIN4
 
-void main()
+int main(void)
 {
     LED_Init(LED1);
     LED_Init(LED2);
@@ -49,4 +49,11 @@ void main()
             LED_Off(LED2);
         }
     }
+    return 0;
 }
+#ifndef Delay_ms
+  #define Delay_ms(x)  // Dummy macro for GCC syntax check
+#endif
+#ifndef Delay_us
+  #define Delay_us(x)  // Dummy macro for GCC syntax check
+#endif

@@ -3,7 +3,7 @@
 #include "../SERVICES/BIT_MATH.h"
 #include "../HAL/LED/LED_interface.h"
 #include "../MCAL/GPIO/GPIO_interface.h"
-#include "../MCAL/USART/UART_Interface.h"
+#include "../MCAL/UART/UART_Interface.h"
 #include "../MCAL/EXT_INT/EXT_INT_Interface.h"
 
 

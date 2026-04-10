@@ -1,7 +1,7 @@
 #include "../SERVICES/STD_TYPES.h"
 #include "../MCAL/GPIO/GPIO_interface.h"
 #include "../MCAL/PWM/PWM_interface.h"
-#include "../MCAL/INT/EXT_interface.h"
+#include "../MCAL/EXT_INT/EXT_INT_Interface.h"
 
 /* Motor Control Pins */
 #define MOTOR_PORT      GPIO_PORTD
@@ -62,7 +62,7 @@ void APP_PWM_Test(void)
     PWM1_Init();
     
     EXT_INT0_Init();
-    EXT_INT0_SetEdge(EXT_INT0_RISING_EDGE); /* Triggers when button is pressed */
+    EXT_INT0_SetEdge(RISING_EDGE); /* Triggers when button is pressed */
     EXT_INT0_SetCallback(APP_PWM_Change_Speed_ISR);
     EXT_INT0_Enable();
 
@@ -81,3 +81,9 @@ void APP_PWM_Test(void)
         }
     }
 }
+#ifndef Delay_ms
+  #define Delay_ms(x)  // Dummy macro for GCC syntax check
+#endif
+#ifndef Delay_us
+  #define Delay_us(x)  // Dummy macro for GCC syntax check
+#endif

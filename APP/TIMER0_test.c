@@ -37,7 +37,7 @@ void interrupt(void)
     }
 }
 
-void main() 
+int main(void) 
 {
     /* 1. Initialize LEDs (This happens in the main thread) */
     LED_Init(GPIO_PORTB, GPIO_PIN1);
@@ -74,4 +74,11 @@ void main()
             flag_2sec = 0; /* Reset flag after doing the work */
         }
     }
+    return 0;
 }
+#ifndef Delay_ms
+  #define Delay_ms(x)  // Dummy macro for GCC syntax check
+#endif
+#ifndef Delay_us
+  #define Delay_us(x)  // Dummy macro for GCC syntax check
+#endif

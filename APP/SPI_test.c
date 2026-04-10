@@ -18,8 +18,14 @@ void APP_SPI_Test(void)
     {
         /* Exchange data (Send 0x55, receive whatever the slave sends) */
         received_data = SPI_Exchange(0x55);
-        
+        (void)received_data;
         /* Small delay */
         Delay_ms(500);
     }
 }
+#ifndef Delay_ms
+  #define Delay_ms(x)  // Dummy macro for GCC syntax check
+#endif
+#ifndef Delay_us
+  #define Delay_us(x)  // Dummy macro for GCC syntax check
+#endif
