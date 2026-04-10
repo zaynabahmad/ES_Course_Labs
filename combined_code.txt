@@ -1,0 +1,825 @@
+==================================================
+FILE: .\APP\main.c
+==================================================
+
+#include "../SERVICES/STD_TYPES.h"
+#include "../SERVICES/BIT_MATH.h"
+#include "../HAL/LED/LED_interface.h"
+#include "../MCAL/GPIO/GPIO_interface.h"
+#include "../MCAL/USART/USART_Interface.h"
+#include "../MCAL/EXT_INT/EXT_INT_Interface.h"
+
+
+#define MOTOR_PORT GPIO_PORTC
+#define MOTOR_PIN1  GPIO_PIN0
+#define MOTOR_PIN2  GPIO_PIN2
+
+#define LED_PORT   GPIO_PORTC
+#define LED_PIN    GPIO_PIN1
+
+//u8 USART_data = 0;
+void Bluetooth_UART_Callback(u8 UART_data)
+{
+     //UART_Write(UART_data);
+    if (UART_data == 'f')  // forward
+    {
+        GPIO_SetPinValue(MOTOR_PORT, MOTOR_PIN1, GPIO_HIGH);
+        GPIO_SetPinValue(MOTOR_PORT, MOTOR_PIN2, GPIO_LOW);
+        GPIO_SetPinValue(LED_PORT, LED_PIN, GPIO_HIGH);
+    }
+    else if (UART_data == 's') // stop
+    {
+        GPIO_SetPinValue(MOTOR_PORT, MOTOR_PIN1, GPIO_LOW);
+        GPIO_SetPinValue(MOTOR_PORT, MOTOR_PIN2, GPIO_LOW);
+        GPIO_SetPinValue(LED_PORT, LED_PIN, GPIO_LOW);
+    }
+    
+
+}
+
+int main(void)
+{
+    // Initialize GPIOs
+    GPIO_Init();
+    GPIO_SetPinDirection(MOTOR_PORT, MOTOR_PIN1, GPIO_OUTPUT);
+    GPIO_SetPinDirection(MOTOR_PORT, MOTOR_PIN2, GPIO_OUTPUT);
+    GPIO_SetPinDirection(LED_PORT, LED_PIN, GPIO_OUTPUT);
+
+    // Initialize UART
+    UART_RX_Init();
+    UART_TX_Init();
+    //UART_Write('A');  // write  A  to the  Virtual Terminal
+
+
+    // Set UART callback
+    UART_SetCallback(Bluetooth_UART_Callback);
+
+    while(1)
+    {
+        // main loop can be empty because interrupts handle everything
+    }
+
+    return 0;
+}
+
+
+==================================================
+FILE: .\HAL\LED\LED.c
+==================================================
+
+#include "LED_interface.h"
+#include "../../MCAL/GPIO/GPIO_interface.h"
+
+void LED_Init(u8 Port, u8 Pin)
+{
+    GPIO_SetPinDirection(Port, Pin, GPIO_OUTPUT);
+}
+
+void LED_On(u8 Port, u8 Pin)
+{
+    GPIO_SetPinValue(Port, Pin, GPIO_HIGH);
+}
+
+void LED_Off(u8 Port, u8 Pin)
+{
+    GPIO_SetPinValue(Port, Pin, GPIO_LOW);
+}
+
+void LED_Toggle(u8 Port, u8 Pin)
+{
+    u8 current = GPIO_GetPinValue(Port, Pin);
+
+    if(current == GPIO_HIGH)
+        GPIO_SetPinValue(Port, Pin, GPIO_LOW);
+    else
+        GPIO_SetPinValue(Port, Pin, GPIO_HIGH);
+}
+
+==================================================
+FILE: .\HAL\LED\LED_config.h
+==================================================
+
+
+
+==================================================
+FILE: .\HAL\LED\LED_interface.h
+==================================================
+
+#ifndef LED_INTERFACE_H
+#define LED_INTERFACE_H
+
+#include "../../SERVICES/STD_TYPES.h"
+
+/* LED States */
+#define LED_OFF    0
+#define LED_ON     1
+
+void LED_Init(u8 Port, u8 Pin);
+void LED_On(u8 Port, u8 Pin);
+void LED_Off(u8 Port, u8 Pin);
+void LED_Toggle(u8 Port, u8 Pin);
+
+#endif
+
+==================================================
+FILE: .\HAL\LED\LED_private.h
+==================================================
+
+
+
+==================================================
+FILE: .\MCAL\EXT_INT\EXT_INT.c
+==================================================
+
+#include "EXT_INT_interface.h"
+
+
+void EXT_INT_Init(void)
+{
+    /* Configure the external interrupt pin as input */
+    GPIO_SetPinDirection(EXT_INT_PORT, EXT_INT_PIN, GPIO_INPUT);
+
+    /* Configure the edge type for the external interrupt */
+    EXT_INT_SetEdge(falling_edge); // Default to falling edge, can be changed later
+
+    /* Clear the interrupt flag */
+    CLR_BIT(INTCON, INTF_BIT);
+    CLR_BIT(INTCON, INTE_BIT); // Ensure the external interrupt is disabled initially
+
+}
+
+void EXT_INT_Enable(void)
+{
+    /* Enable the external interrupt */
+    SET_BIT(INTCON, INTE_BIT);
+    /* Enable global interrupts */
+    SET_BIT(INTCON, GIE_BIT);
+
+    CLR_BIT(INTCON, INTF_BIT); // Clear any pending interrupt flag
+}
+
+void EXT_INT_Disable(void)
+{
+    /* Clear the interrupt flag */
+    CLR_BIT(INTCON, INTF_BIT);
+    /* Disable the external interrupt */
+    CLR_BIT(INTCON, INTE_BIT);
+
+}
+
+void EXT_INT_SetEdge(u8 Edgetype)
+{
+    if (Edgetype == rising_edge)
+    {
+        /* Configure for rising edge */
+        CLR_BIT(OPTION_REG, INTEDGE_BIT); // INTEDG0 = 0 for rising edge
+    }
+    else if (Edgetype == falling_edge)
+    {
+        /* Configure for falling edge */
+        SET_BIT(OPTION_REG, INTEDGE_BIT); // INTEDG0 = 1 for falling edge
+    }
+}
+
+void (*EXT_INT_Callback)(void) = 0;
+
+void EXT_INT_SetCallback(void (*ptr)(void)) {
+    if (ptr != 0) {
+        EXT_INT_Callback = ptr;
+    }
+}
+
+void EXT_INT_ISR(void)
+{
+
+    CLR_BIT(INTCON , INTF_BIT);
+
+    if(EXT_INT_Callback != 0)
+    {
+        EXT_INT_Callback();
+    }
+
+}
+
+/*
+void interrupt() {
+    if (GET_BIT(INTCON, INTF_BIT)) {
+        // Clear the interrupt flag
+        CLR_BIT(INTCON, INTF_BIT);
+
+        // Call the registered callback function
+        if (EXT_INT_Callback != 0) {
+            EXT_INT_Callback();
+        }
+    }
+}
+
+*/
+
+==================================================
+FILE: .\MCAL\EXT_INT\EXT_INT_Config.h
+==================================================
+
+#ifndef EXT_INT_CONFIG_H
+#define EXT_INT_CONFIG_H
+
+
+#define EXT_INT_PORT GPIO_PORTB
+#define EXT_INT_PIN GPIO_PIN0
+
+#endif
+
+==================================================
+FILE: .\MCAL\EXT_INT\EXT_INT_Interface.h
+==================================================
+
+#ifndef EXT_INT_INTERFACE_H
+#define EXT_INT_INTERFACE_H
+
+#include "../../SERVICES/STD_TYPES.h"
+#include "../GPIO/GPIO_interface.h"
+#include "../../SERVICES/BIT_MATH.h"
+#include "EXT_INT_Config.h"
+#include "EXT_INT_Private.h"
+
+
+
+/* External Interrupt Configuration */
+
+#define GIE_BIT 7
+#define INTE_BIT 4
+#define INTF_BIT 1
+/* Edge types */
+#define INTEDGE_BIT 6
+#define rising_edge 1
+#define falling_edge 0
+
+void EXT_INT_Init(void);
+void EXT_INT_Enable(void);
+void EXT_INT_Disable(void);
+void EXT_INT_SetEdge(u8 Edgetype);
+void EXT_INT_SetCallback(void (*Callback)(void));
+void EXT_INT_ISR(void);
+
+
+
+#endif
+
+==================================================
+FILE: .\MCAL\EXT_INT\EXT_INT_Private.h
+==================================================
+
+#ifndef EXT_INT_PRIVATE_H
+#define EXT_INT_PRIVATE_H
+
+
+
+#define INTCON  (*((volatile u8*)0x18B))
+#define OPTION_REG (*((volatile u8*)0x181))
+#endif
+
+==================================================
+FILE: .\MCAL\GPIO\GPIO.c
+==================================================
+
+#include "GPIO_interface.h"
+#include "GPIO_private.h"
+#include "GPIO_config.h"
+
+#include "../../SERVICES/BIT_MATH.h"
+
+
+void GPIO_SetPinDirection(u8 Port, u8 Pin, u8 Direction)
+{
+    switch(Port)
+    {
+        case GPIO_PORTA:
+            if(Direction == GPIO_OUTPUT)
+                CLR_BIT(TRISA, Pin);
+            else
+                SET_BIT(TRISA, Pin);
+        break;
+
+        case GPIO_PORTB:
+            if(Direction == GPIO_OUTPUT)
+                CLR_BIT(TRISB, Pin);
+            else
+                SET_BIT(TRISB, Pin);
+        break;
+
+        case GPIO_PORTC:
+            if(Direction == GPIO_OUTPUT)
+                CLR_BIT(TRISC, Pin);
+            else
+                SET_BIT(TRISC, Pin);
+        break;
+
+        case GPIO_PORTD:
+            if(Direction == GPIO_OUTPUT)
+                CLR_BIT(TRISD, Pin);
+            else
+                SET_BIT(TRISD, Pin);
+        break;
+
+        case GPIO_PORTE:
+            if(Direction == GPIO_OUTPUT)
+                CLR_BIT(TRISE, Pin);
+            else
+                SET_BIT(TRISE, Pin);
+        break;
+
+        default:
+        break;
+    }
+}
+
+
+void GPIO_SetPinValue(u8 Port, u8 Pin, u8 Value)
+{
+    switch(Port)
+    {
+        case GPIO_PORTA:
+            if(Value == GPIO_HIGH)
+                SET_BIT(PORTA, Pin);
+            else
+                CLR_BIT(PORTA, Pin);
+        break;
+
+        case GPIO_PORTB:
+            if(Value == GPIO_HIGH)
+                SET_BIT(PORTB, Pin);
+            else
+                CLR_BIT(PORTB, Pin);
+        break;
+
+        case GPIO_PORTC:
+            if(Value == GPIO_HIGH)
+                SET_BIT(PORTC, Pin);
+            else
+                CLR_BIT(PORTC, Pin);
+        break;
+
+        case GPIO_PORTD:
+            if(Value == GPIO_HIGH)
+                SET_BIT(PORTD, Pin);
+            else
+                CLR_BIT(PORTD, Pin);
+        break;
+
+        case GPIO_PORTE:
+            if(Value == GPIO_HIGH)
+                SET_BIT(PORTE, Pin);
+            else
+                CLR_BIT(PORTE, Pin);
+        break;
+
+        default:
+        break;
+    }
+}
+
+
+u8 GPIO_GetPinValue(u8 Port, u8 Pin)
+{
+    u8 Local_Value = 0;
+
+    switch(Port)
+    {
+        case GPIO_PORTA:
+            Local_Value = GET_BIT(PORTA, Pin);
+        break;
+
+        case GPIO_PORTB:
+            Local_Value = GET_BIT(PORTB, Pin);
+        break;
+
+        case GPIO_PORTC:
+            Local_Value = GET_BIT(PORTC, Pin);
+        break;
+
+        case GPIO_PORTD:
+            Local_Value = GET_BIT(PORTD, Pin);
+        break;
+
+        case GPIO_PORTE:
+            Local_Value = GET_BIT(PORTE, Pin);
+        break;
+
+        default:
+        break;
+    }
+
+    return Local_Value;
+}
+
+void GPIO_Init(void)
+{
+    TRISA = GPIO_PORTA_DIR;
+    TRISB = GPIO_PORTB_DIR;
+
+    PORTA = GPIO_PORTA_INIT_VAL;
+    PORTB = GPIO_PORTB_INIT_VAL;
+}
+
+==================================================
+FILE: .\MCAL\GPIO\GPIO_config.h
+==================================================
+
+#ifndef GPIO_CONFIG_H
+#define GPIO_CONFIG_H
+
+/* Initial Directions */
+#define GPIO_PORTA_DIR   0x00   // All Output
+#define GPIO_PORTB_DIR   0xFF   // All Input
+
+/* Initial Values */
+#define GPIO_PORTA_INIT_VAL  0x00
+#define GPIO_PORTB_INIT_VAL  0x00
+
+#endif
+
+==================================================
+FILE: .\MCAL\GPIO\GPIO_interface.h
+==================================================
+
+#ifndef GPIO_INTERFACE_H
+#define GPIO_INTERFACE_H
+
+#include "../../SERVICES/STD_TYPES.h"
+
+/* Port IDs */
+#define GPIO_PORTA   0
+#define GPIO_PORTB   1
+#define GPIO_PORTC   2
+#define GPIO_PORTD   3
+#define GPIO_PORTE   4
+
+/* Pin IDs */
+#define GPIO_PIN0    0
+#define GPIO_PIN1    1
+#define GPIO_PIN2    2
+#define GPIO_PIN3    3
+#define GPIO_PIN4    4
+#define GPIO_PIN5    5
+#define GPIO_PIN6    6
+#define GPIO_PIN7    7
+
+/* Direction */
+#define GPIO_OUTPUT  0
+#define GPIO_INPUT   1
+
+/* Values */
+#define GPIO_LOW     0
+#define GPIO_HIGH    1
+
+void GPIO_SetPinDirection(unsigned char Port, u8 Pin, u8 Direction);
+void GPIO_SetPinValue(u8 Port, u8 Pin, u8 Value);
+u8   GPIO_GetPinValue(u8 Port, u8 Pin);
+void GPIO_Init(void);
+
+#endif
+
+==================================================
+FILE: .\MCAL\GPIO\GPIO_private.h
+==================================================
+
+#ifndef GPIO_PRIVATE_H
+#define GPIO_PRIVATE_H
+
+/* Register Definitions for PIC16F877A */
+
+#define TRISA   (*((volatile u8*)0x85))
+#define TRISB   (*((volatile u8*)0x86))
+#define TRISC   (*((volatile u8*)0x87))
+#define TRISD   (*((volatile u8*)0x88))
+#define TRISE   (*((volatile u8*)0x89))
+
+#define PORTA   (*((volatile u8*)0x05))
+#define PORTB   (*((volatile u8*)0x06))
+#define PORTC   (*((volatile u8*)0x07))
+#define PORTD   (*((volatile u8*)0x08))
+#define PORTE   (*((volatile u8*)0x09))
+
+#endif
+
+==================================================
+FILE: .\MCAL\INTERRUPT_MANAGER\Interrupt_Manager.c
+==================================================
+
+#include "../USART/USART_interface.h"
+#include "../EXT_INT/EXT_INT_interface.h"
+#include "../../SERVICES/BIT_MATH.h"
+
+extern void (*EXT_INT_Callback)(void);
+extern void (*UART_Callback)(void);
+
+void interrupt()
+{
+
+    //UART RX interrupt
+    if(GET_BIT(PIR1 , RCIF))
+    {
+        UART_ISR();
+    }
+
+    // external interrupt flag
+    if(GET_BIT(INTCON , INTF_BIT))
+    {
+        EXT_INT_ISR();
+    }
+
+}
+
+
+==================================================
+FILE: .\MCAL\TIMER_0\TIMER_0.c
+==================================================
+
+
+
+==================================================
+FILE: .\MCAL\TIMER_0\TIMER_0_Config.h
+==================================================
+
+
+
+==================================================
+FILE: .\MCAL\TIMER_0\TIMER_0_Interface.h
+==================================================
+
+
+
+==================================================
+FILE: .\MCAL\TIMER_0\TIMER_0_Private.h
+==================================================
+
+
+
+==================================================
+FILE: .\MCAL\USART\USART.c
+==================================================
+
+#include "USART_Interface.h"
+
+
+/* =================================
+   Global Pointer To Callback
+================================= */
+
+void (*UART_Callback)(u8) = 0;
+
+/* =================================
+   RX Initialization
+================================= */
+
+void UART_RX_Init(void)
+{
+
+    SET_BIT(TXSTA , BRGH);      // High Speed Mode
+
+    SPBRG = 25;                 // 9600 Baud
+
+    CLR_BIT(TXSTA , SYNC);      // Asynchronous Mode
+
+    SET_BIT(RCSTA , SPEN);      // Enable Serial Port
+
+    SET_BIT(RCSTA , CREN);      // Continuous Receive
+
+    SET_BIT(PIE1 , RCIE);       // Enable UART RX Interrupt
+
+    SET_BIT(INTCON , PEIE);     // Peripheral Interrupt Enable
+    SET_BIT(INTCON , GIE);      // Global Interrupt Enable
+}
+
+/* =================================
+   TX Initialization
+================================= */
+
+void UART_TX_Init(void)
+{
+
+    SET_BIT(TXSTA , BRGH);      // High Speed
+
+    SPBRG = 25;                 // Baud Rate
+
+    CLR_BIT(TXSTA , SYNC);      // Asynchronous Mode
+
+    SET_BIT(RCSTA , SPEN);      // Enable Serial Port
+
+    SET_BIT(TXSTA , TXEN);      // Enable Transmission
+}
+
+/* =================================
+   Send Byte
+================================= */
+
+void UART_Write(u8 Data)
+{
+
+    while(!GET_BIT(TXSTA , TRMT));   // Wait until TX empty
+
+    TXREG = Data;
+}
+
+/* =================================
+   Receive Byte (Polling)
+================================= */
+
+u8 UART_Read(void)
+{
+
+    while(!GET_BIT(PIR1 , RCIF));    // Wait for data
+
+    return RCREG;
+}
+
+/* =================================
+   TX Buffer Status
+================================= */
+
+u8 UART_TX_Empty(void)
+{
+
+    return GET_BIT(TXSTA , TRMT);
+}
+
+/* =================================
+   Callback Setter
+================================= */
+
+void UART_SetCallback(void (*Callback)(u8))
+{
+
+    if(Callback != 0)
+    {
+        UART_Callback = Callback;
+    }
+
+}
+
+void UART_ISR(void)
+{
+
+    u8 UART_data = RCREG;   //
+    if(UART_Callback != 0)
+    {
+        UART_Callback(UART_data);   //
+    }
+
+}
+
+
+/* =================================
+   ISR Handler
+================================= */
+
+/*
+void interrupt()
+{
+
+   if(GET_BIT(PIR1 , RCIF))
+    {
+
+        if(UART_Callback != 0)
+        {
+            UART_Callback();   // Call user function
+        }
+
+    }
+
+}
+  */
+
+==================================================
+FILE: .\MCAL\USART\USART_Config.h
+==================================================
+
+#ifndef UART_CONFIG_H
+#define UART_CONFIG_H
+
+/* CPU Frequency */
+#define FOSC 4000000
+
+/* Baud Rate */
+#define UART_BAUDRATE 9600
+
+/* Speed Mode */
+#define UART_HIGH_SPEED 1
+
+#endif
+
+==================================================
+FILE: .\MCAL\USART\USART_Interface.h
+==================================================
+
+#ifndef USART_INTERFACE_H
+#define USART_INTERFACE_H
+
+#include "USART_Private.h"
+#include "USART_Config.h"
+#include "../../SERVICES/STD_TYPES.h"
+#include "../../SERVICES/BIT_MATH.h"
+
+/* Initialization */
+void UART_RX_Init(void);
+void UART_TX_Init(void);
+
+/* Data Operations */
+void UART_Write(u8 Data);
+u8 UART_Read(void);
+
+/* Status */
+u8 UART_TX_Empty(void);
+
+void UART_SetCallback(void (*Callback)(u8));
+void UART_ISR(void);
+
+#endif
+
+
+==================================================
+FILE: .\MCAL\USART\USART_Private.h
+==================================================
+
+#ifndef UART_PRIVATE_H
+#define UART_PRIVATE_H
+
+/* ================= Registers Addresses ================= */
+
+#define TXSTA   (*(volatile unsigned char*)0x98)
+#define RCSTA   (*(volatile unsigned char*)0x18)
+#define SPBRG   (*(volatile unsigned char*)0x99)
+#define TXREG   (*(volatile unsigned char*)0x19)
+#define RCREG   (*(volatile unsigned char*)0x1A)
+#define PIR1    (*(volatile unsigned char*)0x0C)
+#define PIE1    (*(volatile unsigned char*)0x8C)
+//#define INTCON  (*(volatile unsigned char*)0x0B)
+
+/* ================= TXSTA Bits ================= */
+
+#define TXEN   5
+#define BRGH   2
+#define SYNC   4
+#define TRMT   1
+
+/* ================= RCSTA Bits ================= */
+
+#define SPEN   7
+#define CREN   4
+
+/* ================= PIR1 Bits ================= */
+
+#define RCIF   5
+
+/* ================= PIE1 Bits ================= */
+
+#define RCIE   5
+
+/* ================= INTCON Bits ================= */
+
+#define PEIE   6
+#define GIE    7
+
+#endif
+
+==================================================
+FILE: .\SERVICES\BIT_MATH.h
+==================================================
+
+#ifndef BIT_MATH_H
+#define BIT_MATH_H
+
+#define SET_BIT(REG,BIT)      ( (REG) |=  (1U << (BIT)) )
+#define CLR_BIT(REG,BIT)      ( (REG) &= ~(1U << (BIT)) )
+#define TOG_BIT(REG,BIT)      ( (REG) ^=  (1U << (BIT)) )
+#define GET_BIT(REG,BIT)      ( ((REG) >> (BIT)) & 1U )
+
+#endif
+
+==================================================
+FILE: .\SERVICES\STD_TYPES.h
+==================================================
+
+#ifndef STD_TYPES_H
+#define STD_TYPES_H
+
+/* Signed Types */
+typedef signed char        s8;
+typedef signed short int   s16;
+typedef signed long int    s32;
+
+/* Unsigned Types */
+typedef unsigned char        u8;
+typedef unsigned short int   u16;
+typedef unsigned long int    u32;
+
+/* Floating Types */
+typedef float       f32;
+typedef double      f64;
+typedef long double f128;
+
+/* Standard Values */
+#define NULL_PTR   ((void*)0)
+
+#endif
+
