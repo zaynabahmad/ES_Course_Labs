@@ -49,7 +49,7 @@ void I2C_NACK(void);
 unsigned char I2C_Write(unsigned char Data);
 unsigned char I2C_Read_Byte(void);
 
-void I2C_SetCallback(void (*Callback)(void));
+void I2C_SetCallback(void (*Callback)(u8));
 void I2C_ISR(void);
 
 #endif

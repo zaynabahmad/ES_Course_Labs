@@ -98,3 +98,20 @@ unsigned char I2C_Read_Byte(void)
 
   return SSPBUF; // Return The Received Byte
 }
+
+void (*I2C_Callback)(u8) = 0;
+
+void I2C_SetCallback(void (*Callback)(u8)) {
+
+  if (Callback != 0) {
+    I2C_Callback = Callback;
+  }
+}
+
+void I2C_ISR(void) {
+
+  u8 I2C_data = SSPBUF; //
+  if (I2C_Callback != 0) {
+    I2C_Callback(I2C_data); //
+  }
+}
