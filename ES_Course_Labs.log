@@ -1,0 +1,38 @@
+0	1	mikroCPIC1618.exe -MSF -DBG -pP16F877A -DL -O11101114 -fo4 -N"C:\Users\Dr.Vista™\Downloads\ES_Course_Labs-main\ES_Course_Labs.mcppi" -SP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\Defs\" -SP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\Uses\P16\" -SP"C:\Users\Dr.Vista™\Downloads\ES_Course_Labs-main\" -SP"C:\Users\Dr.Vista™\Downloads\ES_Course_Labs-main\ES_Course_Labs-main\APP\" -SP"C:\Users\Dr.Vista™\Downloads\ES_Course_Labs-main\ES_Course_Labs-main\HAL\LED\" -SP"C:\Users\Dr.Vista™\Downloads\ES_Course_Labs-main\ES_Course_Labs-main\MCAL\GPIO\" -SP"C:\Users\Dr.Vista™\Downloads\ES_Course_Labs-main\ES_Course_Labs-main\HAL\Switch\" -SP"C:\Users\Dr.Vista™\Downloads\ES_Course_Labs-main\ES_Course_Labs-main\MCAL\External_Interrupt_INT0\" -SP"C:\Users\Dr.Vista™\Downloads\ES_Course_Labs-main\ES_Course_Labs-main\MCAL\Timer\" -SP"C:\Users\Dr.Vista™\Downloads\ES_Course_Labs-main\ES_Course_Labs-main\MCAL\UART\" -SP"C:\Users\Dr.Vista™\Downloads\ES_Course_Labs-main\ES_Course_Labs-main\MCAL\SPI\" -SP"C:\Users\Dr.Vista™\Downloads\ES_Course_Labs-main\ES_Course_Labs-main\MCAL\ADC\" -SP"C:\Users\Dr.Vista™\Downloads\ES_Course_Labs-main\ES_Course_Labs-main\MCAL\PWM\" -SP"C:\Users\Dr.Vista™\Downloads\ES_Course_Labs-main\ES_Course_Labs-main\MCAL\I2C\" -IP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\Uses\P16\" "main.c" "LED.c" "GPIO.c" "SWITCH.c" "EXT_INT0.c" "TIMER.c" "USART.c" "SPI.c" "ADC.c" "ADC_test.c" "PWM.c" "I2C.c" "__Lib_Math.mcl" "__Lib_MathDouble.mcl" "__Lib_System.mcl" "__Lib_Delays.mcl"	 
+hint: 0	1139	Available RAM: 352 [bytes], Available ROM: 8192 [bytes]	 
+diagnostics: 0	122	Compilation Started	std_types.h
+diagnostics: 71	123	Compiled Successfully	main.c
+diagnostics: 0	122	Compilation Started	std_types.h
+diagnostics: 27	123	Compiled Successfully	LED.c
+hint: 21	1164	Variable 'current' has been eliminated by optimizer	LED.c
+diagnostics: 0	122	Compilation Started	std_types.h
+diagnostics: 138	123	Compiled Successfully	GPIO.c
+diagnostics: 0	122	Compilation Started	std_types.h
+diagnostics: 13	123	Compiled Successfully	SWITCH.c
+hint: 11	1164	Variable 'state' has been eliminated by optimizer	SWITCH.c
+diagnostics: 0	122	Compilation Started	std_types.h
+diagnostics: 50	123	Compiled Successfully	EXT_INT0.c
+diagnostics: 0	122	Compilation Started	std_types.h
+diagnostics: 79	123	Compiled Successfully	TIMER.c
+diagnostics: 0	122	Compilation Started	std_types.h
+diagnostics: 58	123	Compiled Successfully	USART.c
+diagnostics: 0	122	Compilation Started	std_types.h
+diagnostics: 76	123	Compiled Successfully	SPI.c
+diagnostics: 0	122	Compilation Started	std_types.h
+diagnostics: 45	123	Compiled Successfully	ADC.c
+hint: 37	1164	Variable 'adc_value' has been eliminated by optimizer	ADC.c
+diagnostics: 0	122	Compilation Started	std_types.h
+diagnostics: 30	123	Compiled Successfully	ADC_test.c
+hint: 4	1164	Variable 'temp' has been eliminated by optimizer	ADC_test.c
+diagnostics: 0	122	Compilation Started	std_types.h
+diagnostics: 46	123	Compiled Successfully	PWM.c
+hint: 26	1164	Variable 'Local_u16DutyValue' has been eliminated by optimizer	PWM.c
+diagnostics: 0	122	Compilation Started	std_types.h
+diagnostics: 96	123	Compiled Successfully	I2C.c
+diagnostics: 0	127	All files Compiled in 1203 ms	 
+hint: 0	1144	Used RAM (bytes): 13 (4%)  Free RAM (bytes): 339 (96%)	Used RAM (bytes): 13 (4%)  Free RAM (bytes): 339 (96%)
+hint: 0	1144	Used ROM (program words): 712 (9%)  Free ROM (program words): 7480 (91%)	Used ROM (program words): 712 (9%)  Free ROM (program words): 7480 (91%)
+diagnostics: 0	125	Project Linked Successfully	ES_Course_Labs.mcppi
+diagnostics: 0	128	Linked in 31 ms	 
+diagnostics: 0	129	Project 'ES_Course_Labs.mcppi' completed: 1391 ms	 
+diagnostics: 0	103	Finished successfully: 10 Apr 2026, 08:54:17	ES_Course_Labs.mcppi

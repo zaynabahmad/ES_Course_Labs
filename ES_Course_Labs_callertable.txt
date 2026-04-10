@@ -1,0 +1,19 @@
+main
+	ADC_test
+		GPIO_SetPinDirection
+		UART_TX_init
+		ADConversion
+		word2double
+			NRM3232
+				RES032
+				SETFUN32
+				FIXSIGN32
+		Mul_32x32_FP
+			RES032
+			SETFOV32
+			SETFUN32
+		double2byte
+			SETIOV3224
+		UART_Write
+interrupt
+	____DoIFC
