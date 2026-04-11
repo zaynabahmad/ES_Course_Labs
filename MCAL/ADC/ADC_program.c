@@ -1,6 +1,7 @@
 #include "ADC_interface.h"
 #include "ADC_private.h"
 #include "../../SERVICES/BIT_MATH.h"
+#include "../../SERVICES/DELAY/DELAY_interface.h"
 
 static u8 ADC_ResultFormat = ADC_RIGHT_JUSTIFIED;
 

@@ -1,31 +1,90 @@
 #include "UART_interface.h"
-#include "../GPIO/GPIO_private.h"
+#include "UART_private.h"
+#include "UART_config.h"
 #include "../../SERVICES/BIT_MATH.h"
+
+void UART_Init(u32 baud_rate)
+{
+    u32 spbrg_value;
+
+    /* High-speed async UART
+       baud = Fosc / (16 * (SPBRG + 1))
+    */
+    spbrg_value = (UART_FOSC_HZ / (16UL * baud_rate)) - 1UL;
+
+    if(spbrg_value > 255UL)
+    {
+        spbrg_value = 255UL;
+    }
+
+    SPBRG = (u8)spbrg_value;
+
+    /* BRGH = 1 */
+    SET_BIT(TXSTA, BRGH_BIT);
+
+    /* Async mode */
+    CLR_BIT(TXSTA, SYNC_BIT);
+
+    /* Enable serial port */
+    SET_BIT(RCSTA, SPEN_BIT);
+
+    /* UART pins mode */
+    SET_BIT(TRISC, 6);
+    SET_BIT(TRISC, 7);
+
+    /* Enable transmitter and receiver */
+    SET_BIT(TXSTA, TXEN_BIT);
+    SET_BIT(RCSTA, CREN_BIT);
+}
 
 void UART_Init9600(void)
 {
-    /* RC6 = TX output, RC7 = RX input */
-    CLR_BIT(TRISC, 6);
-    SET_BIT(TRISC, 7);
- 
-    UART1_Init(9600);
-    Delay_ms(100);
+    UART_Init(9600);
 }
 
 void UART_WriteChar(u8 tx_byte)
 {
-    UART1_Write(tx_byte);
+    while(GET_BIT(PIR1, TXIF_BIT) == 0)
+    {
+    }
+
+    TXREG = tx_byte;
+}
+
+u8 UART_IsRxReady(void)
+{
+    return GET_BIT(PIR1, RCIF_BIT);
+}
+
+u8 UART_ReadChar(void)
+{
+    /* Handle overrun error */
+    if(GET_BIT(RCSTA, OERR_BIT))
+    {
+        CLR_BIT(RCSTA, CREN_BIT);
+        SET_BIT(RCSTA, CREN_BIT);
+    }
+
+    while(GET_BIT(PIR1, RCIF_BIT) == 0)
+    {
+    }
+
+    return RCREG;
 }
 
 void UART_WriteText(char *str)
 {
-    UART1_Write_Text(str);
+    while(*str != '\0')
+    {
+        UART_WriteChar(*str);
+        str++;
+    }
 }
 
 void UART_WriteNewLine(void)
 {
-    UART1_Write(13);
-    UART1_Write(10);
+    UART_WriteChar('\r');
+    UART_WriteChar('\n');
 }
 
 void UART_WriteU16(u16 number)
@@ -41,8 +100,8 @@ void UART_WriteU16(u16 number)
 
     while(number > 0)
     {
-        digits[i] = (number % 10) + '0';
-        number /= 10;
+        digits[i] = (number % 10U) + '0';
+        number /= 10U;
         i++;
     }
 
@@ -58,9 +117,9 @@ void UART_WriteTempCenti(u16 temp_x100)
     u16 int_part;
     u8 frac1, frac2;
 
-    int_part = temp_x100 / 100;
-    frac1 = (temp_x100 / 10) % 10;
-    frac2 = temp_x100 % 10;
+    int_part = temp_x100 / 100U;
+    frac1 = (temp_x100 / 10U) % 10U;
+    frac2 = temp_x100 % 10U;
 
     UART_WriteU16(int_part);
     UART_WriteChar('.');

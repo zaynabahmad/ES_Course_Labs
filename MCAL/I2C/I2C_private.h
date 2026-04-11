@@ -9,6 +9,7 @@
 #define SSPSTAT    (*((volatile u8*)0x94))
 #define SSPADD     (*((volatile u8*)0x93))
 #define SSPBUF     (*((volatile u8*)0x13))
+#define PIR1       (*((volatile u8*)0x0C))
 #define TRISC      (*((volatile u8*)0x87))
 
 /* SSPCON Bits */
@@ -32,5 +33,8 @@
 #define RW_BIT         2
 #define SMP_BIT        7
 #define CKE_BIT        6
+
+/* PIR1 Bits */
+#define SSPIF_BIT      3
 
 #endif

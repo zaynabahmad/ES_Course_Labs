@@ -1,59 +1,46 @@
-#include "../SERVICES/STD_TYPES.h"
-#include "../SERVICES/BIT_MATH.h"
-#include "../HAL/LED/LED_interface.h"
-#include "../MCAL/GPIO/GPIO_interface.h"
-#include "../MCAL/USART/USART_Interface.h"
-#include "../MCAL/EXT_INT/EXT_INT_Interface.h"
 
+void APP_GPIO_Test(void);
+void APP_EXTI_Test(void);
+void APP_TIMER0_Test(void);
+void APP_PWM_Test(void);
+void APP_ADC_Test(void);
+void APP_UART_Test(void);
+void APP_SPI_Test(void);
+void APP_I2C_Test(void);
 
-#define MOTOR_PORT GPIO_PORTC
-#define MOTOR_PIN1  GPIO_PIN0
-#define MOTOR_PIN2  GPIO_PIN2
+#define APP_TEST_GPIO     1
+#define APP_TEST_EXTI     2
+#define APP_TEST_TIMER0   3
+#define APP_TEST_PWM      4
+#define APP_TEST_ADC      5
+#define APP_TEST_UART     6
+#define APP_TEST_SPI      7
+#define APP_TEST_I2C      8
 
-#define LED_PORT   GPIO_PORTC
-#define LED_PIN    GPIO_PIN1
-
-//u8 USART_data = 0;
-void Bluetooth_UART_Callback(u8 UART_data)
-{
-     //UART_Write(UART_data);
-    if (UART_data == 'f')  // forward
-    {
-        GPIO_SetPinValue(MOTOR_PORT, MOTOR_PIN1, GPIO_HIGH);
-        GPIO_SetPinValue(MOTOR_PORT, MOTOR_PIN2, GPIO_LOW);
-        GPIO_SetPinValue(LED_PORT, LED_PIN, GPIO_HIGH);
-    }
-    else if (UART_data == 's') // stop
-    {
-        GPIO_SetPinValue(MOTOR_PORT, MOTOR_PIN1, GPIO_LOW);
-        GPIO_SetPinValue(MOTOR_PORT, MOTOR_PIN2, GPIO_LOW);
-        GPIO_SetPinValue(LED_PORT, LED_PIN, GPIO_LOW);
-    }
-    
-
-}
-
+#define APP_SELECTED_TEST  APP_TEST_GPIO
 int main(void)
 {
-    // Initialize GPIOs
-    GPIO_Init();
-    GPIO_SetPinDirection(MOTOR_PORT, MOTOR_PIN1, GPIO_OUTPUT);
-    GPIO_SetPinDirection(MOTOR_PORT, MOTOR_PIN2, GPIO_OUTPUT);
-    GPIO_SetPinDirection(LED_PORT, LED_PIN, GPIO_OUTPUT);
-
-    // Initialize UART
-    UART_RX_Init();
-    UART_TX_Init();
-    //UART_Write('A');  // write  A  to the  Virtual Terminal
-
-
-    // Set UART callback
-    UART_SetCallback(Bluetooth_UART_Callback);
-
+#if APP_SELECTED_TEST == APP_TEST_GPIO
+    APP_GPIO_Test();
+#elif APP_SELECTED_TEST == APP_TEST_EXTI
+    APP_EXTI_Test();
+#elif APP_SELECTED_TEST == APP_TEST_TIMER0
+    APP_TIMER0_Test();
+#elif APP_SELECTED_TEST == APP_TEST_PWM
+    APP_PWM_Test();
+#elif APP_SELECTED_TEST == APP_TEST_ADC
+    APP_ADC_Test();
+#elif APP_SELECTED_TEST == APP_TEST_UART
+    APP_UART_Test();
+#elif APP_SELECTED_TEST == APP_TEST_SPI
+    APP_SPI_Test();
+#elif APP_SELECTED_TEST == APP_TEST_I2C
+    APP_I2C_Test();
+#else
     while(1)
     {
-        // main loop can be empty because interrupts handle everything
     }
+#endif
 
     return 0;
 }
