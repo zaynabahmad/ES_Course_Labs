@@ -106,25 +106,3 @@ void UART_ISR(void)
     }
 
 }
-
-
-/* =================================
-   ISR Handler
-================================= */
-
-/*
-void interrupt()
-{
-
-   if(GET_BIT(PIR1 , RCIF))
-    {
-
-        if(UART_Callback != 0)
-        {
-            UART_Callback();   // Call user function
-        }
-
-    }
-
-}
-  */

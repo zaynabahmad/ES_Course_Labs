@@ -1,0 +1,1 @@
+I’ve organized my project tasks using a configuration file located at ES_Drivers/APP/app_config.h. To make testing easier, I’ve implemented a series of macros that allow you to enable or disable specific peripheral tests (LED, ADC, PWM, etc.) by simply uncommenting the relevant line.

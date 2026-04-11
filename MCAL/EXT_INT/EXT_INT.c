@@ -1,18 +1,11 @@
 #include "EXT_INT_interface.h"
 
-
-void EXT_INT_Init(void)
+void EXT_INT_Init(u8 Copy_u8EdgeType)
 {
-    /* Configure the external interrupt pin as input */
     GPIO_SetPinDirection(EXT_INT_PORT, EXT_INT_PIN, GPIO_INPUT);
-
-    /* Configure the edge type for the external interrupt */
-    EXT_INT_SetEdge(falling_edge); // Default to falling edge, can be changed later
-
-    /* Clear the interrupt flag */
+    EXT_INT_SetEdge(Copy_u8EdgeType);
     CLR_BIT(INTCON, INTF_BIT);
-    CLR_BIT(INTCON, INTE_BIT); // Ensure the external interrupt is disabled initially
-
+    CLR_BIT(INTCON, INTE_BIT);
 }
 
 void EXT_INT_Enable(void)
@@ -56,10 +49,13 @@ void EXT_INT_SetCallback(void (*ptr)(void)) {
     }
 }
 
+
+
 void EXT_INT_ISR(void)
 {
-
     CLR_BIT(INTCON , INTF_BIT);
+
+    //g_extint_flag = 1;
 
     if(EXT_INT_Callback != 0)
     {
@@ -67,18 +63,3 @@ void EXT_INT_ISR(void)
     }
 
 }
-
-/*
-void interrupt() {
-    if (GET_BIT(INTCON, INTF_BIT)) {
-        // Clear the interrupt flag
-        CLR_BIT(INTCON, INTF_BIT);
-
-        // Call the registered callback function
-        if (EXT_INT_Callback != 0) {
-            EXT_INT_Callback();
-        }
-    }
-}
-
-*/

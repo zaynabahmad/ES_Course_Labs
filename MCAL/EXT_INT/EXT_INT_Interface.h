@@ -19,7 +19,9 @@
 #define rising_edge 1
 #define falling_edge 0
 
-void EXT_INT_Init(void);
+// volatile u8 g_extint_flag = 0;
+
+void EXT_INT_Init(u8 Copy_u8EdgeType);  // pass edge at init time, not separately
 void EXT_INT_Enable(void);
 void EXT_INT_Disable(void);
 void EXT_INT_SetEdge(u8 Edgetype);
