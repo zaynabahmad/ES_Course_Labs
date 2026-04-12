@@ -1,5 +1,4 @@
-#include "EXT_INT_interface.h"
-
+#include "EXT_INT_Interface.h"
 
 void EXT_INT_Init(void)
 {
@@ -12,7 +11,6 @@ void EXT_INT_Init(void)
     /* Clear the interrupt flag */
     CLR_BIT(INTCON, INTF_BIT);
     CLR_BIT(INTCON, INTE_BIT); // Ensure the external interrupt is disabled initially
-
 }
 
 void EXT_INT_Enable(void)
@@ -31,7 +29,6 @@ void EXT_INT_Disable(void)
     CLR_BIT(INTCON, INTF_BIT);
     /* Disable the external interrupt */
     CLR_BIT(INTCON, INTE_BIT);
-
 }
 
 void EXT_INT_SetEdge(u8 Edgetype)
@@ -50,8 +47,10 @@ void EXT_INT_SetEdge(u8 Edgetype)
 
 void (*EXT_INT_Callback)(void) = 0;
 
-void EXT_INT_SetCallback(void (*ptr)(void)) {
-    if (ptr != 0) {
+void EXT_INT_SetCallback(void (*ptr)(void))
+{
+    if (ptr != 0)
+    {
         EXT_INT_Callback = ptr;
     }
 }
@@ -59,13 +58,12 @@ void EXT_INT_SetCallback(void (*ptr)(void)) {
 void EXT_INT_ISR(void)
 {
 
-    CLR_BIT(INTCON , INTF_BIT);
+    CLR_BIT(INTCON, INTF_BIT);
 
-    if(EXT_INT_Callback != 0)
+    if (EXT_INT_Callback != 0)
     {
         EXT_INT_Callback();
     }
-
 }
 
 /*
