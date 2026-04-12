@@ -20,4 +20,7 @@ u8 UART_TX_Empty(void);
 void UART_SetCallback(void (*Callback)(u8));
 void UART_ISR(void);
 
+/* Call from main to process bytes received in IRQ (avoids mikroC reentrancy) */
+void UART_ServiceRx(void);
+
 #endif

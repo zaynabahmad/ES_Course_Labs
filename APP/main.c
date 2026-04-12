@@ -1,58 +1,48 @@
 #include "../SERVICES/STD_TYPES.h"
 #include "../SERVICES/BIT_MATH.h"
-#include "../HAL/LED/LED_interface.h"
 #include "../MCAL/GPIO/GPIO_interface.h"
-#include "../MCAL/USART/USART_Interface.h"
 #include "../MCAL/EXT_INT/EXT_INT_Interface.h"
+#include "../MCAL/TIMER_0/TIMER_0_Interface.h"
+#include "../MCAL/USART/USART_Interface.h"
+#include "../MCAL/PWM/PWM_Interface.h"
+#include "../MCAL/ADC/ADC_Interface.h"
+#include "../MCAL/SPI/SPI_Interface.h"
+#include "../MCAL/I2C/I2C_Interface.h"
+#include "../HAL/LED/LED_interface.h"
 
+/* ================= External Test Functions ================= */
 
-#define MOTOR_PORT GPIO_PORTC
-#define MOTOR_PIN1  GPIO_PIN0
-#define MOTOR_PIN2  GPIO_PIN2
+void GPIO_Test(void);
+void EXT_INT_Test(void);
+void TIMER_Test(void);
+void UART_Test(void);
+void PWM_Test(void);
+void ADC_Test(void);
+void SPI_Test(void);
+void I2C_Test(void);
 
-#define LED_PORT   GPIO_PORTC
-#define LED_PIN    GPIO_PIN1
-
-//u8 USART_data = 0;
-void Bluetooth_UART_Callback(u8 UART_data)
-{
-     //UART_Write(UART_data);
-    if (UART_data == 'f')  // forward
-    {
-        GPIO_SetPinValue(MOTOR_PORT, MOTOR_PIN1, GPIO_HIGH);
-        GPIO_SetPinValue(MOTOR_PORT, MOTOR_PIN2, GPIO_LOW);
-        GPIO_SetPinValue(LED_PORT, LED_PIN, GPIO_HIGH);
-    }
-    else if (UART_data == 's') // stop
-    {
-        GPIO_SetPinValue(MOTOR_PORT, MOTOR_PIN1, GPIO_LOW);
-        GPIO_SetPinValue(MOTOR_PORT, MOTOR_PIN2, GPIO_LOW);
-        GPIO_SetPinValue(LED_PORT, LED_PIN, GPIO_LOW);
-    }
-    
-
-}
+/* ================= Main Entry Point ================= */
 
 int main(void)
 {
-    // Initialize GPIOs
+    /* Initialize GPIO first (required by most drivers) */
     GPIO_Init();
-    GPIO_SetPinDirection(MOTOR_PORT, MOTOR_PIN1, GPIO_OUTPUT);
-    GPIO_SetPinDirection(MOTOR_PORT, MOTOR_PIN2, GPIO_OUTPUT);
-    GPIO_SetPinDirection(LED_PORT, LED_PIN, GPIO_OUTPUT);
 
-    // Initialize UART
-    UART_RX_Init();
-    UART_TX_Init();
-    //UART_Write('A');  // write  A  to the  Virtual Terminal
+    /* Run all driver tests */
+    GPIO_Test();
+    EXT_INT_Test();
+    TIMER_Test();
+    UART_Test();
+    PWM_Test();
+    SPI_Test();
+    I2C_Test();
 
+    /* ADC_Test runs its own loop - call last */
+    ADC_Test();
 
-    // Set UART callback
-    UART_SetCallback(Bluetooth_UART_Callback);
-
+    /* Should never reach here */
     while(1)
     {
-        // main loop can be empty because interrupts handle everything
     }
 
     return 0;

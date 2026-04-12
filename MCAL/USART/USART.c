@@ -1,5 +1,8 @@
 #include "USART_Interface.h"
 
+/* =================================
+   RX queue (ISR only enqueues;
+   UART_ServiceRx runs callbacks in main)
 
 /* =================================
    Global Pointer To Callback
@@ -13,21 +16,17 @@ void (*UART_Callback)(u8) = 0;
 
 void UART_RX_Init(void)
 {
+    UART_RxWriteIdx = 0;
+    UART_RxReadIdx  = 0;
 
-    SET_BIT(TXSTA , BRGH);      // High Speed Mode
-
-    SPBRG = 25;                 // 9600 Baud
-
-    CLR_BIT(TXSTA , SYNC);      // Asynchronous Mode
-
-    SET_BIT(RCSTA , SPEN);      // Enable Serial Port
-
-    SET_BIT(RCSTA , CREN);      // Continuous Receive
-
-    SET_BIT(PIE1 , RCIE);       // Enable UART RX Interrupt
-
-    SET_BIT(INTCON , PEIE);     // Peripheral Interrupt Enable
-    SET_BIT(INTCON , GIE);      // Global Interrupt Enable
+    SET_BIT(TXSTA , BRGH);
+    SPBRG = 25;
+    CLR_BIT(TXSTA , SYNC);
+    SET_BIT(RCSTA , SPEN);
+    SET_BIT(RCSTA , CREN);
+    SET_BIT(PIE1 , RCIE);
+    SET_BIT(INTCON , PEIE);
+    SET_BIT(INTCON , GIE);
 }
 
 /* =================================
@@ -36,16 +35,11 @@ void UART_RX_Init(void)
 
 void UART_TX_Init(void)
 {
-
-    SET_BIT(TXSTA , BRGH);      // High Speed
-
-    SPBRG = 25;                 // Baud Rate
-
-    CLR_BIT(TXSTA , SYNC);      // Asynchronous Mode
-
-    SET_BIT(RCSTA , SPEN);      // Enable Serial Port
-
-    SET_BIT(TXSTA , TXEN);      // Enable Transmission
+    SET_BIT(TXSTA , BRGH);
+    SPBRG = 25;
+    CLR_BIT(TXSTA , SYNC);
+    SET_BIT(RCSTA , SPEN);
+    SET_BIT(TXSTA , TXEN);
 }
 
 /* =================================
@@ -54,9 +48,7 @@ void UART_TX_Init(void)
 
 void UART_Write(u8 Data)
 {
-
-    while(!GET_BIT(TXSTA , TRMT));   // Wait until TX empty
-
+    while(!GET_BIT(TXSTA , TRMT));
     TXREG = Data;
 }
 
@@ -66,9 +58,7 @@ void UART_Write(u8 Data)
 
 u8 UART_Read(void)
 {
-
-    while(!GET_BIT(PIR1 , RCIF));    // Wait for data
-
+    while(!GET_BIT(PIR1 , RCIF));
     return RCREG;
 }
 
@@ -78,7 +68,6 @@ u8 UART_Read(void)
 
 u8 UART_TX_Empty(void)
 {
-
     return GET_BIT(TXSTA , TRMT);
 }
 
@@ -88,43 +77,12 @@ u8 UART_TX_Empty(void)
 
 void UART_SetCallback(void (*Callback)(u8))
 {
-
     if(Callback != 0)
     {
         UART_Callback = Callback;
     }
-
 }
-
-void UART_ISR(void)
-{
-
-    u8 UART_data = RCREG;   //
-    if(UART_Callback != 0)
-    {
-        UART_Callback(UART_data);   //
-    }
-
-}
-
 
 /* =================================
-   ISR Handler
-================================= */
-
-/*
-void interrupt()
-{
-
-   if(GET_BIT(PIR1 , RCIF))
-    {
-
-        if(UART_Callback != 0)
-        {
-            UART_Callback();   // Call user function
-        }
-
-    }
-
-}
-  */
+   Drain RX queue in main context
+   (calls registered callback)
