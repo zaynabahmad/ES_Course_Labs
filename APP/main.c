@@ -1,59 +1,126 @@
-#include "../SERVICES/STD_TYPES.h"
-#include "../SERVICES/BIT_MATH.h"
-#include "../HAL/LED/LED_interface.h"
-#include "../MCAL/GPIO/GPIO_interface.h"
-#include "../MCAL/USART/USART_Interface.h"
-#include "../MCAL/EXT_INT/EXT_INT_Interface.h"
+#include "Services/bit_math.h"
+#include "MCAL/GPIO/GPIO_interface.h"
+#include "MCAL/UART/UART_interface.h"
+#include "MCAL/TIMER0/TIMER0_interface.h"
+#include "MCAL/TIMER0/TIMER0_private.h"
+#include "MCAL/SPI/SPI_interface.h"
+#include "MCAL/PWM/PWM_interface.h"
+#include "MCAL/I2C/I2C_interface.h"
+#include "MCAL/EXTI/EXTI_interface.h"
+#include "MCAL/EXTI/EXTI_private.h"
+#include "MCAL/ADC/ADC_interface.h"
 
+/* ?? shared state ????????????????????????????????????????????????????????? */
+volatile unsigned char timer_tick = 0;
+volatile unsigned char exti_flag  = 0;
 
-#define MOTOR_PORT GPIO_PORTC
-#define MOTOR_PIN1  GPIO_PIN0
-#define MOTOR_PIN2  GPIO_PIN2
-
-#define LED_PORT   GPIO_PORTC
-#define LED_PIN    GPIO_PIN1
-
-//u8 USART_data = 0;
-void Bluetooth_UART_Callback(u8 UART_data)
+/* ?? isr (mikroC syntax: no name after 'interrupt') ???????????????????? */
+void interrupt()
 {
-     //UART_Write(UART_data);
-    if (UART_data == 'f')  // forward
+    if (GET_BIT(INTCON_REG, TMR0IF_BIT))
     {
-        GPIO_SetPinValue(MOTOR_PORT, MOTOR_PIN1, GPIO_HIGH);
-        GPIO_SetPinValue(MOTOR_PORT, MOTOR_PIN2, GPIO_LOW);
-        GPIO_SetPinValue(LED_PORT, LED_PIN, GPIO_HIGH);
+        CLR_BIT(INTCON_REG, TMR0IF_BIT);
+        timer_tick = 1;
     }
-    else if (UART_data == 's') // stop
-    {
-        GPIO_SetPinValue(MOTOR_PORT, MOTOR_PIN1, GPIO_LOW);
-        GPIO_SetPinValue(MOTOR_PORT, MOTOR_PIN2, GPIO_LOW);
-        GPIO_SetPinValue(LED_PORT, LED_PIN, GPIO_LOW);
-    }
-    
 
+    if (GET_BIT(INTCON_REG, INTF_BIT))
+    {
+        CLR_BIT(INTCON_REG, INTF_BIT);
+        exti_flag = 1;
+    }
 }
 
-int main(void)
+
+static void run_adc_uart(void)
 {
-    // Initialize GPIOs
-    GPIO_Init();
-    GPIO_SetPinDirection(MOTOR_PORT, MOTOR_PIN1, GPIO_OUTPUT);
-    GPIO_SetPinDirection(MOTOR_PORT, MOTOR_PIN2, GPIO_OUTPUT);
-    GPIO_SetPinDirection(LED_PORT, LED_PIN, GPIO_OUTPUT);
+    unsigned int  val;
+    unsigned char buf[6];
 
-    // Initialize UART
-    UART_RX_Init();
-    UART_TX_Init();
-    //UART_Write('A');  // write  A  to the  Virtual Terminal
+    val    = ADC_Read(0);
+    buf[0] = '0' + (unsigned char)((val / 1000) % 10);
+    buf[1] = '0' + (unsigned char)((val / 100)  % 10);
+    buf[2] = '0' + (unsigned char)((val / 10)   % 10);
+    buf[3] = '0' + (unsigned char)( val          % 10);
+    buf[4] = '\r';
+    buf[5] = '\n';
 
+    UART_SendByte(buf[0]);
+    UART_SendByte(buf[1]);
+    UART_SendByte(buf[2]);
+    UART_SendByte(buf[3]);
+    UART_SendByte(buf[4]);
+    UART_SendByte(buf[5]);
+}
 
-    // Set UART callback
-    UART_SetCallback(Bluetooth_UART_Callback);
+static void run_spi(void)
+{
+    unsigned char resp = SPI_Transfer(0xAB);
+    UART_SendByte(resp);
+}
 
-    while(1)
+static void run_i2c(void)
+{
+    unsigned char val;
+
+    /* write 0x55 to eeprom address 0x00 */
+    I2C_Start();
+    I2C_Write(0xA0);
+    I2C_Write(0x00);
+    I2C_Write(0x55);
+    I2C_Stop();
+
+    /* read back */
+    I2C_Start();
+    I2C_Write(0xA0);
+    I2C_Write(0x00);
+    I2C_Start();
+    I2C_Write(0xA1);
+    val = I2C_Read(I2C_NACK);
+    I2C_Stop();
+
+    UART_SendByte(val);
+}
+
+void main()
+{
+    unsigned int pwm_duty = 0;
+
+    GPIO_SetPinDirection(GPIO_PORTB, GPIO_PIN0, GPIO_INPUT);
+    GPIO_SetPinDirection(GPIO_PORTB, GPIO_PIN1, GPIO_OUTPUT);
+    GPIO_WritePin(GPIO_PORTB, GPIO_PIN1, GPIO_LOW);
+
+    UART_Init();
+    TIMER0_Init();
+    ADC_Init();
+    SPI_Init();
+    I2C_Init();
+    PWM_Init();
+
+    EXTI_Init(EXTI_RISING_EDGE);
+    EXTI_Enable();
+
+    TIMER0_Start();
+
+    UART_SendString("system ready\r\n");
+
+    while (1)
     {
-        // main loop can be empty because interrupts handle everything
-    }
+        while (!timer_tick);
+        timer_tick = 0;
 
-    return 0;
+        run_adc_uart();
+
+        pwm_duty = (pwm_duty + 32) & 0x03FF;
+        PWM_SetDuty(pwm_duty);
+
+        GPIO_TogglePin(GPIO_PORTB, GPIO_PIN1);
+
+        if (exti_flag)
+        {
+            exti_flag = 0;
+            UART_SendString("btn\r\n");
+            run_spi();
+            run_i2c();
+        }
+    }
 }
