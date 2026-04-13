@@ -2,58 +2,62 @@
 #include "../SERVICES/BIT_MATH.h"
 #include "../HAL/LED/LED_interface.h"
 #include "../MCAL/GPIO/GPIO_interface.h"
+#include "../MCAL/TIMER_0/TIMER_0_Interface.h"
 #include "../MCAL/USART/USART_Interface.h"
 #include "../MCAL/EXT_INT/EXT_INT_Interface.h"
+#include "../MCAL/PWM/PWM_interface.h"
+#include "../MCAL/ADC/ADC_interface.h"
+#include "../MCAL/SPI/SPI_interface.h"
+#include "../MCAL/I2C/I2C_interface.h"
 
+/* Include all test implementations */
+#include "GPIO_test.c"
+#include "TIMER0_test.c"
+#include "UART_test.c"
+#include "EXT_INT_test.c"
+#include "PWM_test.c"
+#include "ADC_test.c"
+#include "SPI_test.c"
+#include "I2C_test.c"
 
-#define MOTOR_PORT GPIO_PORTC
-#define MOTOR_PIN1  GPIO_PIN0
-#define MOTOR_PIN2  GPIO_PIN2
-
-#define LED_PORT   GPIO_PORTC
-#define LED_PIN    GPIO_PIN1
-
-//u8 USART_data = 0;
-void Bluetooth_UART_Callback(u8 UART_data)
-{
-     //UART_Write(UART_data);
-    if (UART_data == 'f')  // forward
-    {
-        GPIO_SetPinValue(MOTOR_PORT, MOTOR_PIN1, GPIO_HIGH);
-        GPIO_SetPinValue(MOTOR_PORT, MOTOR_PIN2, GPIO_LOW);
-        GPIO_SetPinValue(LED_PORT, LED_PIN, GPIO_HIGH);
-    }
-    else if (UART_data == 's') // stop
-    {
-        GPIO_SetPinValue(MOTOR_PORT, MOTOR_PIN1, GPIO_LOW);
-        GPIO_SetPinValue(MOTOR_PORT, MOTOR_PIN2, GPIO_LOW);
-        GPIO_SetPinValue(LED_PORT, LED_PIN, GPIO_LOW);
-    }
-    
-
-}
+/* Function declarations */
+extern void GPIO_Test(void);
+extern void Timer0_Test(void);
+extern void UART_Test(void);
+extern void ExternalInterrupt_Test(void);
+extern void PWM_Test(void);
+extern void ADC_Test(void);
+extern void SPI_Test(void);
+extern void I2C_Test(void);
 
 int main(void)
 {
-    // Initialize GPIOs
+    /* Initialize all peripherals and run tests */
+
+    /* GPIO Test */
     GPIO_Init();
-    GPIO_SetPinDirection(MOTOR_PORT, MOTOR_PIN1, GPIO_OUTPUT);
-    GPIO_SetPinDirection(MOTOR_PORT, MOTOR_PIN2, GPIO_OUTPUT);
-    GPIO_SetPinDirection(LED_PORT, LED_PIN, GPIO_OUTPUT);
+    GPIO_Test();
 
-    // Initialize UART
-    UART_RX_Init();
-    UART_TX_Init();
-    //UART_Write('A');  // write  A  to the  Virtual Terminal
+    /* Timer0 Test */
+    // Timer0_Test();
 
+    /* UART Test */
+    // UART_Test();
 
-    // Set UART callback
-    UART_SetCallback(Bluetooth_UART_Callback);
+    /* External Interrupt Test */
+    // ExternalInterrupt_Test();
 
-    while(1)
-    {
-        // main loop can be empty because interrupts handle everything
-    }
+    /* PWM Test */
+    // PWM_Test();
+
+    /* ADC Test */
+    // ADC_Test();
+
+    /* SPI Test */
+    // SPI_Test();
+
+    /* I2C Test */
+    // I2C_Test();
 
     return 0;
 }

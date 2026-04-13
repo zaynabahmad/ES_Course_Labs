@@ -67,18 +67,3 @@ void EXT_INT_ISR(void)
     }
 
 }
-
-/*
-void interrupt() {
-    if (GET_BIT(INTCON, INTF_BIT)) {
-        // Clear the interrupt flag
-        CLR_BIT(INTCON, INTF_BIT);
-
-        // Call the registered callback function
-        if (EXT_INT_Callback != 0) {
-            EXT_INT_Callback();
-        }
-    }
-}
-
-*/
