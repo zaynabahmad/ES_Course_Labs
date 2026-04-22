@@ -15,6 +15,18 @@
 *.callertable.txt
 *.ini
 
+# XC8 build files
+*.cmf
+*.d
+*.elf
+*.hxl
+*.o
+*.p1
+*.rlf
+*.s
+*.sdb
+*.sym
+
 # OS files
 .DS_Store
 Thumbs.db
