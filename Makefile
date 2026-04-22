@@ -49,13 +49,12 @@ all: $(TARGET).hex
 $(TARGET).hex: $(SRCS)
 	$(CC) $(CFLAGS) -o $(TARGET).hex $(SRCS)
 
-# # Flash (PICkit2 example)
-# flash: $(TARGET).hex
-# 	pk2cmd -P$(MCU) -F$(TARGET).hex -M
+# Flash (PICkit2)
+flash: $(TARGET).hex
+	pk2cmd -P$(MCU) -F$(TARGET).hex -M
 
 # Clean
 clean:
 	rm -f *.hex *.elf *.o *.d *.map *.lst *.cmf *.d *.elf *.hxl *.o *.p1 *.rlf *.s *.sdb *.sym
 
-# .PHONY: all flash clean
-.PHONY: all clean
+.PHONY: all flash clean
