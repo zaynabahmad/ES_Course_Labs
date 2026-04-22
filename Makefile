@@ -14,13 +14,29 @@ TARGET = app
 SRCS = \
 APP/main.c \
 HAL/LED/LED.c \
-MCAL/GPIO/GPIO.c
+MCAL/GPIO/GPIO.c \
+MCAL/INT/INT.c \
+MCAL/INT_Manager/INT_Manager.c \
+MCAL/TIMER0/TIMER0.c \
+MCAL/PWM/PWM.c \
+MCAL/ADC/ADC.c \
+MCAL/UART/UART.c \
+MCAL/SPI/SPI.c \
+MCAL/I2C/I2C.c
 
 # Include directories
 INCLUDES = \
 -IAPP \
 -IHAL/LED \
 -IMCAL/GPIO \
+-IMCAL/INT \
+-IMCAL/INT_Manager \
+-IMCAL/TIMER0 \
+-IMCAL/PWM \
+-IMCAL/ADC \
+-IMCAL/UART \
+-IMCAL/SPI \
+-IMCAL/I2C \
 -ISERVICES
 
 # Flags
@@ -39,7 +55,7 @@ $(TARGET).hex: $(SRCS)
 
 # Clean
 clean:
-	rm -f *.hex *.elf *.o *.d *.map *.lst
+	rm -f *.hex *.elf *.o *.d *.map *.lst *.cmf *.d *.elf *.hxl *.o *.p1 *.rlf *.s *.sdb *.sym
 
 # .PHONY: all flash clean
 .PHONY: all clean
