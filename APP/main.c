@@ -141,7 +141,7 @@ void Peripherals_Init(void)
     UART_SendString((u8 *)"\r\n");
 }
 
-void main(void)
+int main(void)
 {
     Peripherals_Init();
 
@@ -159,4 +159,6 @@ void main(void)
 
         delay_ms(100);
     }
+
+    return 0;
 }
