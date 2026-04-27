@@ -1,0 +1,9 @@
+main
+	__CC2DW
+		____DoICP
+	GPIO_Test
+		GPIO_SetPinDirection
+			____DoICP
+		GPIO_WritePin
+			____DoICP
+interrupt
