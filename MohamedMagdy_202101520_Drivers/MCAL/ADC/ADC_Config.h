@@ -1,0 +1,8 @@
+#ifndef ADC_CONFIG_H
+#define ADC_CONFIG_H
+
+#define ADC_CLOCK_SEL       ADC_CLK_FOSC_32
+#define ADC_PORT_CONFIG     ADC_ADCON1_ALL_ANALOG
+#define ADC_ACQUISITION_DLY  20U
+
+#endif
