@@ -1,36 +1,33 @@
 #ifndef GPIO_INTERFACE_H
 #define GPIO_INTERFACE_H
 
-#include "../../SERVICES/STD_TYPES.h"
+#include "D:\Uni\Y4 S2\Embedded Systems\Final\SERVICES\STD_TYPES.h"
 
-/* Port IDs */
-#define GPIO_PORTA   0
-#define GPIO_PORTB   1
-#define GPIO_PORTC   2
-#define GPIO_PORTD   3
-#define GPIO_PORTE   4
+/* Return codes */
+#define GPIO_OK              0u
+#define GPIO_ERR_INVALID    0xFFu
 
-/* Pin IDs */
-#define GPIO_PIN0    0
-#define GPIO_PIN1    1
-#define GPIO_PIN2    2
-#define GPIO_PIN3    3
-#define GPIO_PIN4    4
-#define GPIO_PIN5    5
-#define GPIO_PIN6    6
-#define GPIO_PIN7    7
+/* ---- Public function prototypes ---- */
 
-/* Direction */
-#define GPIO_OUTPUT  0
-#define GPIO_INPUT   1
+unsigned char GPIO_voidSetPinDirection(unsigned char port,
+                                       unsigned char pin,
+                                       unsigned char dir);
 
-/* Values */
-#define GPIO_LOW     0
-#define GPIO_HIGH    1
+unsigned char GPIO_voidSetPinValue(unsigned char port,
+                                   unsigned char pin,
+                                   unsigned char val);
 
-void GPIO_SetPinDirection(unsigned char Port, u8 Pin, u8 Direction);
-void GPIO_SetPinValue(u8 Port, u8 Pin, u8 Value);
-u8   GPIO_GetPinValue(u8 Port, u8 Pin);
-void GPIO_Init(void);
 
-#endif
+unsigned char GPIO_u8GetPinValue(unsigned char port,
+                                 unsigned char pin);
+
+unsigned char GPIO_voidTogglePin(unsigned char port,
+                                 unsigned char pin);
+
+unsigned char GPIO_voidSetPortDirection(unsigned char port,
+                                        unsigned char dir_mask);
+
+unsigned char GPIO_voidSetPortValue(unsigned char port,
+                                    unsigned char value);
+
+#endif /* GPIO_INTERFACE_H */

@@ -1,34 +1,26 @@
-/*
- * main.c — Application entry point
- *
- * Each driver is tested by its dedicated test file.
- * This file only calls those test functions; no register access here.
- */
+#include "D:\Uni\Y4 S2\Embedded Systems\Final\MCAL\GPIO\GPIO_interface.h"
+#include "D:\Uni\Y4 S2\Embedded Systems\Final\MCAL\TIMER0\TIMER0_interface.h"
+#include "D:\Uni\Y4 S2\Embedded Systems\Final\MCAL\ADC\ADC_interface.h"
+#include "D:\Uni\Y4 S2\Embedded Systems\Final\MCAL\UART\UART_interface.h"
+#include "D:\Uni\Y4 S2\Embedded Systems\Final\MCAL\I2C\I2C_interface.h"
+#include "D:\Uni\Y4 S2\Embedded Systems\Final\MCAL\PWM\PWM_interface.h"
+#include "D:\Uni\Y4 S2\Embedded Systems\Final\MCAL\EXTI\EXTI_interface.h"
 
-#include "gpio_test.h"
-#include "ext_int_test.h"
-#include "timer0_test.h"
-#include "pwm_test.h"
-#include "adc_test.h"
-#include "uart_test.h"
-#include "spi_test.h"
-#include "i2c_test.h"
+void GPIO_Test(void);
+void TIMER_Test(void);
+void ADC_Test(void);
+void UART_Test(void);
+void I2C_Test(void);
+void PWM_Test(void);
+void EXTI_Test(void);
 
-int main(void)
+void main(void)
 {
-    GPIO_Test();        /* GPIO: direction, write, read           */
-    UART_Test();        /* UART: TX string, RX echo callback      */
-    EXT_INT_Test();     /* EXT INT: edge config, callback, enable */
-    TIMER0_Test();      /* Timer0: overflow callback, LED toggle  */
-    ADC_Test();         /* ADC: channel read, threshold LED       */
-    PWM_Test();         /* PWM: init, duty-cycle sweep            */
-    SPI_Test();         /* SPI: master init, send/receive         */
-    I2C_Test();         /* I2C: master init, write/read sequence  */
-
-    while(1)
-    {
-        /* Interrupt-driven tasks run in the background */
-    }
-
-    return 0;
+    GPIO_Test();
+    TIMER_Test();
+    ADC_Test();
+    UART_Test();
+    I2C_Test();
+    PWM_Test();
+    EXTI_Test();
 }
