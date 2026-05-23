@@ -1,95 +1,97 @@
 #include "TIMER_0_Interface.h"
+#include "TIMER_0_Private.h"
+#include "TIMER_0_Config.h"
+#include "../../SERVICES/BIT_MATH.h"
 
-/* =========================================================
-   Global callback pointer
-========================================================= */
+static void (*TIMER_0_Callback)(void) = 0;  /* static - not accessible outside */
 
-static void (*TIMER0_Callback)(void) = 0;
-
-/* =========================================================
-   TIMER0_Init
-   - Internal clock (Fosc/4)
-   - Prescaler from config
-   - Preload TMR0
-   - Interrupts NOT yet enabled (call TIMER0_Enable() separately)
-========================================================= */
-
-void TIMER0_Init(void)
+void TIMER_0_Init(void)
 {
-    CLR_BIT(OPTION_REG, T0CS_BIT);             /* Internal clock (timer mode) */
-    CLR_BIT(OPTION_REG, PSA_BIT);              /* Prescaler assigned to Timer0 */
+    /* Clear Timer0 counter */
+    TMR0 = 0x00;
 
-    /* Set prescaler bits PS2:PS0 without disturbing other OPTION_REG bits */
-    OPTION_REG = (OPTION_REG & ~PS_MASK) | (TIMER0_PRESCALER & PS_MASK);
+    /* Configure prescaler assignment */
+    CLR_BIT(OPTION_REG, PSA_BIT);   /* Assign prescaler to Timer0 */
 
-    TMR0 = TIMER0_PRELOAD;
+    /* Configure clock source based on mode */
+#if (TIMER_0_MODE == TIMER_0_MODE_TIMER)
+    CLR_BIT(OPTION_REG, T0CS_BIT);  /* Clock source = FOSC/4 (internal clock) */
+#else
+    SET_BIT(OPTION_REG, T0CS_BIT);  /* Clock source = RA4/T0CKI (external clock) */
+#endif
 
-    CLR_BIT(INTCON, T0IF_BIT);                 /* Clear any pending overflow flag */
-    CLR_BIT(INTCON, T0IE_BIT);                 /* Disable Timer0 interrupt (use TIMER0_Enable) */
-}
+    /* Configure prescaler bits */
+#if (TIMER_0_PRESCALER == TIMER_0_PRESCALER_2)
+    CLR_BIT(OPTION_REG, PS0_BIT);
+    CLR_BIT(OPTION_REG, PS1_BIT);
+    CLR_BIT(OPTION_REG, PS2_BIT);
+#elif (TIMER_0_PRESCALER == TIMER_0_PRESCALER_4)
+    SET_BIT(OPTION_REG, PS0_BIT);
+    CLR_BIT(OPTION_REG, PS1_BIT);
+    CLR_BIT(OPTION_REG, PS2_BIT);
+#elif (TIMER_0_PRESCALER == TIMER_0_PRESCALER_8)
+    CLR_BIT(OPTION_REG, PS0_BIT);
+    SET_BIT(OPTION_REG, PS1_BIT);
+    CLR_BIT(OPTION_REG, PS2_BIT);
+#elif (TIMER_0_PRESCALER == TIMER_0_PRESCALER_16)
+    SET_BIT(OPTION_REG, PS0_BIT);
+    SET_BIT(OPTION_REG, PS1_BIT);
+    CLR_BIT(OPTION_REG, PS2_BIT);
+#elif (TIMER_0_PRESCALER == TIMER_0_PRESCALER_32)
+    CLR_BIT(OPTION_REG, PS0_BIT);
+    CLR_BIT(OPTION_REG, PS1_BIT);
+    SET_BIT(OPTION_REG, PS2_BIT);
+#elif (TIMER_0_PRESCALER == TIMER_0_PRESCALER_64)
+    SET_BIT(OPTION_REG, PS0_BIT);
+    CLR_BIT(OPTION_REG, PS1_BIT);
+    SET_BIT(OPTION_REG, PS2_BIT);
+#elif (TIMER_0_PRESCALER == TIMER_0_PRESCALER_128)
+    CLR_BIT(OPTION_REG, PS0_BIT);
+    SET_BIT(OPTION_REG, PS1_BIT);
+    SET_BIT(OPTION_REG, PS2_BIT);
+#elif (TIMER_0_PRESCALER == TIMER_0_PRESCALER_256)
+    SET_BIT(OPTION_REG, PS0_BIT);
+    SET_BIT(OPTION_REG, PS1_BIT);
+    SET_BIT(OPTION_REG, PS2_BIT);
+#endif
 
-/* =========================================================
-   TIMER0_Enable
-========================================================= */
-
-void TIMER0_Enable(void)
-{
-    CLR_BIT(INTCON, T0IF_BIT);                 /* Clear flag before enabling */
-    SET_BIT(INTCON, T0IE_BIT);                 /* Enable Timer0 overflow interrupt */
-    SET_BIT(INTCON, GIE_BIT);                  /* Enable global interrupts */
-}
-
-/* =========================================================
-   TIMER0_Disable
-========================================================= */
-
-void TIMER0_Disable(void)
-{
-    CLR_BIT(INTCON, T0IE_BIT);                 /* Disable Timer0 overflow interrupt */
+    /* Clear Timer0 interrupt flag */
     CLR_BIT(INTCON, T0IF_BIT);
 }
 
-/* =========================================================
-   TIMER0_Reload
-========================================================= */
-
-void TIMER0_Reload(void)
+void TIMER_0_Enable(void)
 {
-    TMR0 = TIMER0_PRELOAD;
+    /* Clear Timer0 interrupt flag */
+    CLR_BIT(INTCON, T0IF_BIT);
+
+    /* Enable Timer0 interrupt */
+    SET_BIT(INTCON, T0IE_BIT);
+
+    /* Enable global interrupts */
+    SET_BIT(INTCON, GIE_BIT);
 }
 
-/* =========================================================
-   TIMER0_GetValue
-========================================================= */
-
-u8 TIMER0_GetValue(void)
+void TIMER_0_Disable(void)
 {
-    return TMR0;
+    /* Disable Timer0 interrupt */
+    CLR_BIT(INTCON, T0IE_BIT);
+
+    /* Clear Timer0 interrupt flag */
+    CLR_BIT(INTCON, T0IF_BIT);
 }
 
-/* =========================================================
-   TIMER0_SetCallback
-========================================================= */
-
-void TIMER0_SetCallback(void (*Callback)(void))
+void TIMER_0_SetCallback(void (*ptr)(void))
 {
-    if(Callback != 0)
-    {
-        TIMER0_Callback = Callback;
-    }
+    if(ptr != 0)
+        TIMER_0_Callback = ptr;
 }
 
-/* =========================================================
-   TIMER0_ISR  — called by Interrupt_Manager when T0IF=1
-========================================================= */
-
-void TIMER0_ISR(void)
+void TIMER_0_ISR(void)
 {
-    CLR_BIT(INTCON, T0IF_BIT);                 /* Clear overflow flag */
-    TMR0 = TIMER0_PRELOAD;                     /* Reload for next period */
+    /* Clear Timer0 interrupt flag */
+    CLR_BIT(INTCON, T0IF_BIT);
 
-    if(TIMER0_Callback != 0)
-    {
-        TIMER0_Callback();
-    }
+    /* Call user callback if set */
+    if(TIMER_0_Callback != 0)
+        TIMER_0_Callback();
 }

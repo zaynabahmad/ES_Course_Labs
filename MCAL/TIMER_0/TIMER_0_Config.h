@@ -1,25 +1,28 @@
 #ifndef TIMER_0_CONFIG_H
 #define TIMER_0_CONFIG_H
 
-/*
- * Timer0 Configuration for PIC16F877A @ 8 MHz
- *
- * Timer0 clock = Fosc/4 = 2 MHz
- * With prescaler 1:256: tick period = 128 us
- * Overflow at TMR0=0xFF -> period = 256 * 128 us = ~32.8 ms
- *
- * To get ~10 ms overflow: counts = 10000 / 128 ≈ 78
- *   preload = 256 - 78 = 178
- * Actual period = 78 * 128 us = 9984 us ≈ 9.98 ms
- */
+#include "../../SERVICES/STD_TYPES.h"
 
-/* Prescaler select (see TIMER_0_Private.h for values) */
-#define TIMER0_PRESCALER    TIMER0_PS_1_256
+/* Timer0 Mode Configuration */
+#define TIMER_0_MODE TIMER_0_MODE_TIMER
 
-/* Timer0 preload value (0–255): TMR0 reloaded in ISR each overflow */
-#define TIMER0_PRELOAD      178
+/* Timer0 Prescaler Configuration
+ * Prescaler 4  →  1 overflow = 256 × 4 × (1/5MHz) ≈ 204.8 µs
+ * Used by: Servo PWM (50 Hz, 98 overflows/period) and Buzzer tick */
+#define TIMER_0_PRESCALER TIMER_0_PRESCALER_4
 
-/* Clock source: use internal oscillator (timer mode) */
-#define TIMER0_CLK_INTERNAL 0
+/* Mode Options */
+#define TIMER_0_MODE_TIMER 0
+#define TIMER_0_MODE_COUNTER 1
+
+/* Prescaler Options */
+#define TIMER_0_PRESCALER_2 0
+#define TIMER_0_PRESCALER_4 1
+#define TIMER_0_PRESCALER_8 2
+#define TIMER_0_PRESCALER_16 3
+#define TIMER_0_PRESCALER_32 4
+#define TIMER_0_PRESCALER_64 5
+#define TIMER_0_PRESCALER_128 6
+#define TIMER_0_PRESCALER_256 7
 
 #endif

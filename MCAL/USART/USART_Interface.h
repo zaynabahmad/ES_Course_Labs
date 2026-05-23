@@ -12,12 +12,16 @@ void UART_TX_Init(void);
 
 /* Data Operations */
 void UART_Write(u8 Data);
-u8 UART_Read(void);
+u8   UART_Read(void);
+void UART_SendString(const char *Str);  /* null-terminated ASCII string  */
+void UART_SendUInt(u16 num);            /* decimal ASCII number          */
 
 /* Status */
 u8 UART_TX_Empty(void);
+u8 UART_DataAvailable(void);            /* 1 = byte waiting in RX buffer */
 
 void UART_SetCallback(void (*Callback)(u8));
+void UART_SetTXCallback(void (*Callback)(void));
 void UART_ISR(void);
 
 #endif

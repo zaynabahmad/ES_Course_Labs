@@ -1,74 +1,89 @@
-#include "PWM_Interface.h"
+#include "PWM_interface.h"
+#include "PWM_private.h"
+#include "PWM_config.h"
+#include "../../SERVICES/BIT_MATH.h"
+#include "../../SERVICES/MCU_CONFIG.h"
+#include "../GPIO/GPIO_interface.h"
 
-/* =========================================================
-   PWM_Init
-   - Configures RC2 as output (CCP1 pin)
-   - Sets Timer2 prescaler and period (PR2)
-   - Sets CCP1CON to PWM mode
-   - Starts with 0% duty cycle
-   - Timer2 is NOT started; call PWM_Start() to begin output
-========================================================= */
+/* PWM frequency storage for duty cycle calculation */
+static u16 pwm_frequency = 0;
+static u16 pwm_period = 0;
 
-void PWM_Init(void)
+void PWM_Init(u8 Channel, u16 Frequency)
 {
-    /* Configure CCP1 pin (RC2) as output via GPIO layer */
-    GPIO_SetPinDirection(GPIO_PORTC, GPIO_PIN2, GPIO_OUTPUT);
+    u8 prescaler;
+    u16 pr2_value;
 
-    /* Set Timer2 period register for desired frequency */
-    PR2 = PWM_PR2_VALUE;
+    /* Store frequency for later calculations */
+    pwm_frequency = Frequency;
 
-    /* Zero the duty cycle initially */
-    CCPR1L = 0;
-    CLR_BIT(CCP1CON, DC1B0_BIT);
-    CLR_BIT(CCP1CON, DC1B1_BIT);
+    /* Calculate PR2 value and prescaler based on frequency */
+    /* PWM Period = (PR2 + 1) * 4 * Tcy * Prescaler */
+    /* Tcy = 1/Fosc = 1/4MHz = 250ns */
 
-    /* Set CCP1 to PWM mode (bits 3:0 = 0b1100) */
-    CCP1CON = (CCP1CON & 0xF0) | CCP1_PWM_MODE;
+    /* Try prescaler 1:1 first */
+    pr2_value = (MCU_FOSC / (4 * Frequency)) - 1;
 
-    /* Configure T2CON: set prescaler, timer off until PWM_Start() */
-    T2CON = (T2CON & 0xF8) | (PWM_T2_PRESCALER & 0x03);
-    CLR_BIT(T2CON, TMR2ON_BIT);
+    if (pr2_value <= 255) {
+        prescaler = PRESCALER_1;  /* 1:1 */
+    }
+    else if (pr2_value <= 1020) {
+        prescaler = PRESCALER_4;  /* 1:4 */
+        pr2_value = (MCU_FOSC / (16 * Frequency)) - 1;
+    }
+    else {
+        prescaler = PRESCALER_16;  /* 1:16 */
+        pr2_value = (MCU_FOSC / (64 * Frequency)) - 1;
+    }
+
+    pwm_period = pr2_value;
+
+    /* Set PR2 register */
+    PR2 = pr2_value;
+
+    /* Configure Timer2 */
+    T2CON = (prescaler << T2CKPS0) | (1 << TMR2ON);
+
+    /* Set GPIO pins as outputs */
+    if (Channel == PWM_CHANNEL_1) {
+        GPIO_SetPinDirection(GPIO_PORTC, GPIO_PIN2, GPIO_OUTPUT);  /* RC2/CCP1 */
+        CCP1CON = PWM_MODE;  /* Set PWM mode */
+    }
+    else if (Channel == PWM_CHANNEL_2) {
+        GPIO_SetPinDirection(GPIO_PORTC, GPIO_PIN1, GPIO_OUTPUT);  /* RC1/CCP2 */
+        CCP2CON = PWM_MODE;  /* Set PWM mode */
+    }
+
+    /* Initialize duty cycle to 0% */
+    PWM_SetDutyCycle(Channel, 0);
 }
 
-/* =========================================================
-   PWM_SetDutyCycle
-   duty: 0–100 (percentage)
-   10-bit duty count = (PR2+1) * 4 * duty / 100
-========================================================= */
-
-void PWM_SetDutyCycle(u8 duty)
+void PWM_SetDutyCycle(u8 Channel, u8 DutyCycle)
 {
-    u16 duty_count;
+    u16 pwm_value;
 
-    if(duty > 100) { duty = 100; }
+    if (DutyCycle > 100)
+        DutyCycle = 100;
 
-    duty_count = (u16)(((u16)(PR2 + 1U) * 4U * (u16)duty) / 100U);
+    // Calculate PWM value (16-bit): DutyCycle% * (PR2 + 1) * 4
+    pwm_value = ((u32)DutyCycle * (pwm_period + 1) * 4) / 100;
 
-    /* Upper 8 bits → CCPR1L */
-    CCPR1L = (u8)(duty_count >> 2);
-
-    /* Lower 2 bits → CCP1CON<5:4> */
-    if(GET_BIT(duty_count, 0)) { SET_BIT(CCP1CON, DC1B0_BIT); }
-    else                        { CLR_BIT(CCP1CON, DC1B0_BIT); }
-
-    if(GET_BIT(duty_count, 1)) { SET_BIT(CCP1CON, DC1B1_BIT); }
-    else                        { CLR_BIT(CCP1CON, DC1B1_BIT); }
+    if (Channel == PWM_CHANNEL_1) {
+        CCPR1L = pwm_value >> 2;      // Upper 8 bits
+        CCP1CON = (CCP1CON & 0xCF) | ((pwm_value & 0x03) << 4); // Lower 2 bits -> CCP1CON<5:4>
+    }
+    else if (Channel == PWM_CHANNEL_2) {
+        CCPR2L = pwm_value >> 2;      // Upper 8 bits
+        CCP2CON = (CCP2CON & 0xCF) | ((pwm_value & 0x03) << 4); // Lower 2 bits -> CCP2CON<5:4>
+    }
 }
 
-/* =========================================================
-   PWM_Start — enable Timer2
-========================================================= */
-
-void PWM_Start(void)
+void PWM_Stop(u8 Channel)
 {
-    SET_BIT(T2CON, TMR2ON_BIT);
-}
-
-/* =========================================================
-   PWM_Stop — disable Timer2
-========================================================= */
-
-void PWM_Stop(void)
-{
-    CLR_BIT(T2CON, TMR2ON_BIT);
+    if (Channel == PWM_CHANNEL_1) {
+        CCP1CON = 0;  /* Disable PWM */
+    }
+    else if (Channel == PWM_CHANNEL_2) {
+        CCP2CON = 0;  /* Disable PWM */
+    }
 }

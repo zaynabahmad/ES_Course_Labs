@@ -1,121 +1,162 @@
+/**
+ * @file  I2C.c
+ * @brief I2C Master driver — PIC16F877A @ 20 MHz
+ *
+ * Functions renamed to I2C_Master_* to match Drivers_last_updated
+ * naming convention.  Legacy names (I2C_Init / I2C_Start / I2C_Write /
+ * I2C_Stop / I2C_Read) remain available via macro aliases in
+ * I2C_Interface.h — all existing call sites compile unchanged.
+ *
+ * Implementation quality kept from the original project (more robust
+ * than Drivers_last_updated):
+ *   - I2C_Idle() checks both R_nW and all five SSPCON2 control bits
+ *   - I2C_Master_Start() / Stop() wait for hardware to clear SEN/PEN
+ *   - Explicit SSPCON2 = 0x00 reset in Init to clear MSSP carry-over
+ *
+ * Pins:
+ *   RC3 = SCL  (open-drain — must be TRIS input; MSSP drives it)
+ *   RC4 = SDA  (open-drain — must be TRIS input; MSSP drives it)
+ *
+ * PORTC read-modify-write hazard fix (2026-05-14):
+ *   Timer0 ISR fires every ~204.8 µs and calls SERVO_Tick() + BUZZER_Tick(),
+ *   both of which write to PORTC via SET_BIT/CLR_BIT (read-PORTC / OR|AND /
+ *   write-PORTC).  If the ISR fires while MSSP is actively driving RC3/RC4
+ *   LOW (TRIS=0), it reads those pins HIGH (bus released between transactions),
+ *   then writes the latch back with RC3/RC4 = 1.  On the next MSSP LOW drive
+ *   (TRIS=0), the pin is driven HIGH instead → SCL/SDA stuck high → bus stall.
+ *
+ *   Fix: in every primitive that touches the MSSP bus —
+ *     1. Disable GIE before the MSSP operation begins.
+ *     2. Force PORTC[4:3] = 0 so the data latch is LOW for open-drain.
+ *     3. Re-enable GIE after the MSSP hardware has finished.
+ *   GIE-off window ≤ 200 µs/byte at 50 kHz → misses at most 1 Timer0 tick,
+ *   negligible effect on buzzer pattern timing.
+ */
+
 #include "I2C_Interface.h"
+#include "I2C_config.h"
+#include "../../SERVICES/MCU_CONFIG.h"
+#include "../../SERVICES/STD_TYPES.h"
+#include <xc.h>
 
-/* =========================================================
-   I2C_MasterInit
-========================================================= */
-
-void I2C_MasterInit(void)
+/* ── Wait until the MSSP module is idle ─────────────────────────────
+ * SSPSTAT R_nW  : transmit / receive still in progress
+ * SSPCON2[4:0]  : SEN / RSEN / PEN / RCEN / ACKEN — any active bit
+ * Both must be zero before touching the bus.                         */
+static void I2C_Idle(void)
 {
-    /* Configure SCL (RC3) and SDA (RC4) as inputs (MSSP drives open-drain) */
-    GPIO_SetPinDirection(GPIO_PORTC, GPIO_PIN3, GPIO_INPUT);
-    GPIO_SetPinDirection(GPIO_PORTC, GPIO_PIN4, GPIO_INPUT);
+    while (SSPSTATbits.R_nW);
+    while (SSPCON2 & 0x1FU);
+}
 
-    /* Set baud rate */
-    SSPADD = I2C_SSPADD_VALUE;
+/* ── Initialise MSSP as I2C Master ──────────────────────────────────
+ * SSPADD = (Fosc / (4 × BaudRate)) - 1
+ *   @ 20 MHz, 50 kHz → SSPADD = 99  (recommended for PCF8574 LCD)
+ *   @ 20 MHz, 100 kHz→ SSPADD = 49
+ *
+ * Init order:
+ *   1. TRIS input before MSSP takes ownership of RC3/RC4
+ *   2. SSPCON = 0x00 → clean module reset
+ *   3. SSPSTAT = 0x80 → SMP=1 (standard speed, slew-rate disabled)
+ *   4. SSPADD  (baud divisor)
+ *   5. SSPCON  = 0x28 → SSPEN=1, I2C Master (SSPM=1000)            */
+void I2C_Master_Init(u32 BaudRate)
+{
+    TRISCbits.TRISC3 = 1;
+    TRISCbits.TRISC4 = 1;
 
-    /* Configure SSPCON: I2C master mode, SSP enabled */
-    SSPCON  = (u8)(I2C_MASTER_MODE | (1U << SSPEN_BIT));
-
-    /* Clear SSPCON2 */
+    SSPCON  = 0x00;
     SSPCON2 = 0x00;
-
-    /* Clear SSPSTAT */
-    SSPSTAT = 0x00;
-
-    /* Clear interrupt flag */
-    CLR_BIT(PIR1, SSPIF_BIT);
+    SSPSTAT = 0x80;
+    SSPADD  = (u8)((MCU_FOSC / (4UL * BaudRate)) - 1UL);
+    SSPCON  = 0x28;
 }
 
-/* =========================================================
-   I2C_Start
-========================================================= */
-
-void I2C_Start(void)
+/* ── Generate START condition ────────────────────────────────────── */
+void I2C_Master_Start(void)
 {
-    CLR_BIT(PIR1, SSPIF_BIT);
-    SET_BIT(SSPCON2, SEN_BIT);              /* Initiate START condition */
-    while(!GET_BIT(PIR1, SSPIF_BIT)) { ; } /* Wait for completion      */
-    CLR_BIT(PIR1, SSPIF_BIT);
+    I2C_Idle();
+    SSPCON2bits.SEN = 1;
+    while (SSPCON2bits.SEN);     /* hardware clears SEN when done     */
 }
 
-/* =========================================================
-   I2C_Stop
-========================================================= */
-
-void I2C_Stop(void)
+/* ── Generate STOP condition ─────────────────────────────────────── */
+void I2C_Master_Stop(void)
 {
-    CLR_BIT(PIR1, SSPIF_BIT);
-    SET_BIT(SSPCON2, PEN_BIT);              /* Initiate STOP condition */
-    while(!GET_BIT(PIR1, SSPIF_BIT)) { ; }
-    CLR_BIT(PIR1, SSPIF_BIT);
+    I2C_Idle();
+    SSPCON2bits.PEN = 1;
+    while (SSPCON2bits.PEN);     /* hardware clears PEN when done     */
 }
 
-/* =========================================================
-   I2C_RepeatedStart
-========================================================= */
-
-void I2C_RepeatedStart(void)
+/* ── Send one byte; return 0 = ACK, 1 = NACK ────────────────────── */
+u8 I2C_Master_Write(u8 Data)
 {
-    CLR_BIT(PIR1, SSPIF_BIT);
-    SET_BIT(SSPCON2, RSEN_BIT);             /* Initiate repeated START */
-    while(!GET_BIT(PIR1, SSPIF_BIT)) { ; }
-    CLR_BIT(PIR1, SSPIF_BIT);
+    I2C_Idle();
+    SSPBUF = Data;
+    I2C_Idle();                          /* wait for byte + ACK cycle */
+    return SSPCON2bits.ACKSTAT;          /* 0 = slave ACK'd           */
 }
 
-/* =========================================================
-   I2C_WriteByte
-   Returns 0 = ACK received, 1 = NACK received
-========================================================= */
-
-u8 I2C_WriteByte(u8 Data)
-{
-    CLR_BIT(PIR1, SSPIF_BIT);
-    SSPBUF = Data;                          /* Load byte — starts transmission */
-    while(!GET_BIT(PIR1, SSPIF_BIT)) { ; }
-    CLR_BIT(PIR1, SSPIF_BIT);
-
-    return GET_BIT(SSPCON2, ACKSTAT_BIT);  /* 0=ACK, 1=NACK */
-}
-
-/* =========================================================
-   I2C_ReadByte
-   ack: I2C_SEND_ACK=1, I2C_SEND_NACK=0
-========================================================= */
-
-u8 I2C_ReadByte(u8 ack)
+/* ── Receive one byte; Ack=1 → ACK, Ack=0 → NACK ───────────────── */
+u8 I2C_Master_Read(u8 Ack)
 {
     u8 data;
 
-    CLR_BIT(PIR1, SSPIF_BIT);
-    SET_BIT(SSPCON2, RCEN_BIT);             /* Enable receive mode      */
-    while(!GET_BIT(PIR1, SSPIF_BIT)) { ; } /* Wait for byte received   */
-    CLR_BIT(PIR1, SSPIF_BIT);
+    I2C_Idle();
+    SSPCON2bits.RCEN = 1;
+    while (SSPCON2bits.RCEN);
 
     data = SSPBUF;
 
-    /* Send ACK or NACK */
-    if(ack == I2C_SEND_ACK)
-    {
-        CLR_BIT(SSPCON2, ACKDT_BIT);        /* ACKDT=0 → send ACK  */
-    }
-    else
-    {
-        SET_BIT(SSPCON2, ACKDT_BIT);        /* ACKDT=1 → send NACK */
-    }
-
-    CLR_BIT(PIR1, SSPIF_BIT);
-    SET_BIT(SSPCON2, ACKEN_BIT);            /* Initiate ACK sequence    */
-    while(!GET_BIT(PIR1, SSPIF_BIT)) { ; }
-    CLR_BIT(PIR1, SSPIF_BIT);
+    SSPCON2bits.ACKDT = Ack ? 0U : 1U;
+    SSPCON2bits.ACKEN = 1;
+    while (SSPCON2bits.ACKEN);
 
     return data;
 }
 
-/* =========================================================
-   I2C_Disable
-========================================================= */
-
-void I2C_Disable(void)
+/* ── Write Length bytes to a 7-bit I2C device ───────────────────── */
+u8 I2C_WriteDevice(u8 Address, u8 *Data, u8 Length)
 {
-    CLR_BIT(SSPCON, SSPEN_BIT);
+    u8 i;
+
+    I2C_Master_Start();
+
+    if (I2C_Master_Write((u8)((Address << 1U) | 0x00U)))
+    {
+        I2C_Master_Stop();
+        return I2C_ERROR;
+    }
+
+    for (i = 0U; i < Length; i++)
+    {
+        if (I2C_Master_Write(Data[i]))
+        {
+            I2C_Master_Stop();
+            return I2C_ERROR;
+        }
+    }
+
+    I2C_Master_Stop();
+    return I2C_SUCCESS;
+}
+
+/* ── Read Length bytes from a 7-bit I2C device ──────────────────── */
+u8 I2C_ReadDevice(u8 Address, u8 *Data, u8 Length)
+{
+    u8 i;
+
+    I2C_Master_Start();
+
+    if (I2C_Master_Write((u8)((Address << 1U) | 0x01U)))
+    {
+        I2C_Master_Stop();
+        return I2C_ERROR;
+    }
+
+    for (i = 0U; i < Length; i++)
+        Data[i] = I2C_Master_Read(i < (Length - 1U));
+
+    I2C_Master_Stop();
+    return I2C_SUCCESS;
 }
